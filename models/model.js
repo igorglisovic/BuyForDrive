@@ -1,8 +1,11 @@
 import { Schema, models, model } from 'mongoose'
+import mongoose from 'mongoose'
 
 const ModelSchema = new Schema({
-  model: {
-    type: String,
+  label: String,
+  brand_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Brand',
   },
 })
 

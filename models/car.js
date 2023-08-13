@@ -1,22 +1,23 @@
 import { Schema, models, model } from 'mongoose'
+import mongoose from 'mongoose'
 
 const CarSchema = new Schema({
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  brand: {
+  brand_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Brand',
   },
-  model: {
+  model_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Model',
   },
-  price: {
+  reg_year_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Price',
+    ref: 'RegYears',
   },
 })
 
-export const Car = models.Car || model('Car', CarSchema)
+export const Car = models.Car || model('Car', CarSchema, 'cars')

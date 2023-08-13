@@ -7,7 +7,7 @@ import Link from 'next/link'
 import Triangle from './Triangle'
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const Nav = () => {
   const [isOpened, setIsOpened] = useState(false)
@@ -44,7 +44,9 @@ const Nav = () => {
                 <Triangle />
               </span>
             </li>
-            <li className="cursor-pointer">Sell the car</li>
+            <li className="cursor-pointer">
+              <Link href="/sellacar">Sell a car</Link>
+            </li>
           </ul>
           {!session?.user ? (
             <ul className="flex justify-center gap-3">
@@ -62,6 +64,7 @@ const Nav = () => {
                 className="avatar w-[40px] h-[40px] rounded-full"
                 width={32}
                 height={32}
+                alt="avatar"
                 src={session?.user.image}
               />
               {isOpened && (

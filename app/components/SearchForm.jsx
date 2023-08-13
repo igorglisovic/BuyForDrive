@@ -1,32 +1,7 @@
-import { useRef, useState } from 'react'
 import Select from './Select'
 import Button from './Button'
 
 const SearchForm = () => {
-  const [selectValue, setSelectValue] = useState('All brands')
-  const [selectOpened, setSelectOpened] = useState(false)
-
-  const ref = useRef()
-  const selectRef = useRef()
-
-  const handleFocus = () => {
-    console.log('Focus')
-    setSelectOpened(true)
-    ref.current.focus()
-  }
-
-  const handleBlur = () => {
-    setSelectOpened(false)
-  }
-
-  const handleChange = () => {
-    // setSelectOpened(false)
-  }
-
-  const handleInputFocus = () => {
-    setSelectOpened(true)
-  }
-
   return (
     <form className="flex gap-4">
       <div className="flex flex-col gap-7">

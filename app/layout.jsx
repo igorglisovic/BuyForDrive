@@ -1,6 +1,9 @@
+'use client'
+
 import Nav from './components/Nav'
 import Provider from './components/Provider'
 import './globals.css'
+import { PostCarContextProvider } from './store/post-car'
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,10 +14,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Provider>
-          <Nav />
-          <main className="pt-16">{children}</main>
-        </Provider>
+        <PostCarContextProvider>
+          <Provider>
+            <Nav />
+            <main className="pt-16">{children}</main>
+          </Provider>
+        </PostCarContextProvider>
       </body>
     </html>
   )
