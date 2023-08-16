@@ -6,8 +6,16 @@ import {
   faCarSide,
   faLeftLong,
 } from '@fortawesome/free-solid-svg-icons'
+import { useLoadingBarContext } from '@app/store/loading-bar'
+import { useEffect } from 'react'
 
-const LoadingBar = ({ loadingState }) => {
+const LoadingBar = () => {
+  const { loadingBar } = useLoadingBarContext()
+
+  useEffect(() => {
+    console.log(loadingBar)
+  }, [loadingBar])
+
   return (
     <div className="py-7 bg-hero-pattern shadow-lg">
       <Container>
@@ -17,7 +25,10 @@ const LoadingBar = ({ loadingState }) => {
             <div className="absulute bottom-[50%] translate-y-[50%] w-full h-2.5 bg-gradient-light-gray rounded-full"></div>
             <div
               className={`absulute bottom-[50%] translate-y-[-50%] h-2.5 bg-green-400 rounded-s-full`}
-              style={{ width: `${loadingState.toString()}%` }}
+              style={{
+                width: `${loadingBar.toString()}%`,
+                transition: 'all 1s',
+              }}
             ></div>
           </div>
         </div>

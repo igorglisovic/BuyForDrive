@@ -5,7 +5,7 @@ export const GET = async req => {
   try {
     await connectToDB()
 
-    const brands = await Brand.find({})
+    const brands = await Brand.find({}).sort({ label: 1 })
 
     return new Response(JSON.stringify(brands), { status: 200 })
   } catch (error) {

@@ -3,28 +3,76 @@
 import Container from '@app/components/Container'
 import LoadingBar from '@app/components/LoadingBar'
 import PostACarBasic from '@app/components/PostACarBasic'
+import PostACarModel from '@app/components/PostACarModel'
+import { useLoadingBarContext } from '@app/store/loading-bar'
+import { usePostCarContext } from '@app/store/post-car'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const SellACar = () => {
+  const [goFurther, setGoFurther] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+
+  const { basicInfo, modelDetails } = usePostCarContext()
+
+  const { setLoadingBar } = useLoadingBarContext()
   const { data: session } = useSession()
   const router = useRouter()
 
   useEffect(() => {
-    if (!session?.user) {
-      router.push('/signin')
-    }
+    // if (!session?.user) {
+    //   router.push('/signin')
+    // }
   }, [])
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+
+    try {
+      setSubmitting(true)
+
+      const res = await fetch('/api/cars/new', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: session?.user.id,
+          brandId: basicInfo.brand._id,
+          modelId: basicInfo.model._id,
+          regYearId: basicInfo.regYear._id,
+          regMonthId: basicInfo.regMonth._id,
+          mileage: basicInfo.mileage,
+          doorsId: modelDetails.doors._id,
+          bodyTypeId: modelDetails.bodyType._id,
+        }),
+      })
+
+      if (res.ok) {
+        router.push('/')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoadingBar(60)
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div>
-      <LoadingBar loadingState={5} />
+      <LoadingBar />
       <section>
         <Container>
           <div className="flex justify-center">
-            <div className="py-8 px-10 bg-white mt-7 rounded-[30px] w-full md:w-[60%]">
-              <PostACarBasic />
+            <div className="py-8 px-10 bg-white mt-7 rounded-[30px] w-full md:w-[60%] shadow-lg">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+                <PostACarBasic setGoFurther={setGoFurther} />
+                {goFurther && <PostACarModel />}
+                {goFurther && (
+                  <button disabled={submitting} type="submit">
+                    submit
+                  </button>
+                )}
+              </form>
             </div>
           </div>
         </Container>

@@ -1,13 +1,23 @@
 import { createContext, useContext, useState } from 'react'
 
 const PostCarContext = createContext({
-  data: {
+  basicInfo: {
     brand: {},
     model: {},
     regYear: {},
+    regMonth: {},
+    mileage: '',
     updateBrand: () => {},
     updateModel: () => {},
     updateRegYear: () => {},
+    updateRegMonth: () => {},
+    updateMileage: () => {},
+  },
+  modelDetails: {
+    doors: {},
+    bodyType: {},
+    updateDoors: () => {},
+    updateBodyType: () => {},
   },
 })
 
@@ -17,6 +27,10 @@ export const PostCarContextProvider = ({ children }) => {
   const [brand, setBrand] = useState(null)
   const [model, setModel] = useState(null)
   const [regYear, setRegYear] = useState(null)
+  const [regMonth, setRegMonth] = useState(null)
+  const [mileage, setMileage] = useState(null)
+  const [doors, setDoors] = useState(null)
+  const [bodyType, setBodyType] = useState(null)
 
   const updateBrand = brand => {
     setBrand(brand)
@@ -30,17 +44,44 @@ export const PostCarContextProvider = ({ children }) => {
     setRegYear(regYear)
   }
 
-  const postCarValue = {
+  const updateRegMonth = regMonth => {
+    setRegMonth(regMonth)
+  }
+
+  const updateMileage = mileage => {
+    setMileage(mileage)
+  }
+
+  const updateDoors = doors => {
+    setDoors(doors)
+  }
+
+  const updateBodyType = bodyType => {
+    setBodyType(bodyType)
+  }
+
+  const basicInfo = {
     brand,
     model,
     regYear,
+    regMonth,
+    mileage,
     updateBrand,
     updateModel,
     updateRegYear,
+    updateRegMonth,
+    updateMileage,
+  }
+
+  const modelDetails = {
+    doors,
+    bodyType,
+    updateDoors,
+    updateBodyType,
   }
 
   return (
-    <PostCarContext.Provider value={{ data: postCarValue }}>
+    <PostCarContext.Provider value={{ basicInfo, modelDetails }}>
       {children}
     </PostCarContext.Provider>
   )

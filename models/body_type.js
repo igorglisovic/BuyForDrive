@@ -1,9 +1,8 @@
 import { Schema, models, model } from 'mongoose'
 
-const BodySchema = new Schema({
-  body_type: {
-    type: String,
-  },
+const BodyTypeSchema = new Schema({
+  label: String,
 })
 
-export const BodyType = models.BodyType || model('BodyType', BodySchema)
+export const BodyType =
+  models.BodyType || model('BodyType', BodyTypeSchema, 'body_type')

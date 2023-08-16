@@ -1,137 +1,89 @@
 import { useEffect, useState } from 'react'
-import Select from './Select'
 import { usePostCarContext } from '@app/store/post-car'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import useFetch from '@app/hooks/useFetch'
+import Select from './Select'
 
-const PostACarBasic = () => {
-  const [brands, setBrands] = useState([])
-  const [models, setModels] = useState([])
-  const [regYears, setRegYears] = useState([])
+const PostACarBasic = ({ setGoFurther }) => {
+  const [modelHasSelected, setModelHasSelected] = useState(false)
 
-  const [submitting, setSubmitting] = useState(false)
+  const { basicInfo } = usePostCarContext()
 
-  const { data: session } = useSession()
-  const router = useRouter()
+  const { data: brands } = useFetch('/api/brands', [], true)
+  const { data: models } = useFetch(
+    `/api/models/${basicInfo?.brand?._id}`,
+    [basicInfo.brand],
+    basicInfo.brand
+  )
+  const { data: regYears } = useFetch('/api/reg_years', [], true)
+  const { data: regMonths } = useFetch('/api/reg_months', [], true)
 
-  const { data: carValues } = usePostCarContext()
-
-  const handleSubmit = async e => {
-    e.preventDefault()
-    console.log('submitting')
-
-    try {
-      setSubmitting(true)
-
-      const res = await fetch('/api/cars/new', {
-        method: 'POST',
-        body: JSON.stringify({
-          userId: session?.user.id,
-          brandId: carValues.brand._id,
-          modelId: carValues.model._id,
-          regYearId: carValues.regYear._id,
-        }),
-      })
-
-      if (res.ok) {
-        router.push('/')
-      }
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setSubmitting(false)
+  useEffect(() => {
+    if (basicInfo.model) {
+      setModelHasSelected(true)
     }
+  }, [basicInfo.model])
+
+  const handleGoFurther = () => {
+    setGoFurther(true)
   }
 
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const res = await fetch('/api/brands')
-        const data = await res.json()
-
-        setBrands(data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchBrands()
-  }, [])
-
-  useEffect(() => {
-    const fetchModels = async () => {
-      try {
-        const res = await fetch(`/api/models/${carValues.brand._id}`)
-        const data = await res.json()
-
-        setModels(data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    if (carValues.brand) {
-      fetchModels()
-    }
-  }, [carValues.brand])
-
-  useEffect(() => {
-    const fetchRegYears = async () => {
-      try {
-        const res = await fetch(`/api/reg_years`)
-        const data = await res.json()
-
-        setRegYears(data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    if (carValues.model) {
-      fetchRegYears()
-    }
-  }, [carValues.model])
-
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3">
       <h2 className="text-xl font-semibold mb-2">Basic infomation</h2>
       <Select
         defaultValue="All brands"
         options={brands}
         type="full"
         label="Brand"
-        updateFunction={carValues.updateBrand}
-        lastValue={carValues.brand}
+        updateFunction={basicInfo.updateBrand}
+        lastValue={basicInfo.brand}
       />
       <Select
         defaultValue="All models"
         options={models}
         type="full"
         label="Model"
-        disabled={carValues.brand ? false : true}
-        updateFunction={carValues.updateModel}
-        lastValue={carValues.model}
+        disabled={basicInfo.brand ? false : true}
+        updateFunction={basicInfo.updateModel}
+        lastValue={basicInfo.model}
       />
+      <div className="flex items-end gap-4">
+        <Select
+          defaultValue="Year"
+          options={regYears}
+          type="half"
+          label="First registration"
+          disabled={modelHasSelected && basicInfo.brand ? false : true}
+          updateFunction={basicInfo.updateRegYear}
+          lastValue={basicInfo.regYear}
+        />
+        <Select
+          defaultValue="Month"
+          options={regMonths}
+          type="half"
+          label=""
+          disabled={basicInfo.regYear && basicInfo.brand ? false : true}
+          updateFunction={basicInfo.updateRegMonth}
+          lastValue={basicInfo.regMonth}
+        />
+      </div>
       <Select
-        defaultValue="Year"
-        options={regYears}
-        type="full"
-        label="First registration"
-        disabled={carValues.model ? false : true}
-        updateFunction={carValues.updateRegYear}
-        lastValue={carValues.regYear}
-      />
-      {/* <Select
         defaultValue="Mileage"
-        options={['BMW', 'Audi', 'Mercedes']}
-        type="full"
+        type="half"
         label="Mileage"
-      /> */}
+        disabled={basicInfo.regMonth && basicInfo.brand ? false : true}
+        updateFunction={basicInfo.updateMileage}
+        lastValue={basicInfo.mileage}
+      />
       <button
-        type="submit"
-        disabled={submitting}
-        className="bg-gray-200 rounded-full"
+        type="button"
+        disabled={basicInfo.mileage && basicInfo.brand ? false : true}
+        className="bg-gray-300 mt-4 py-1 rounded-full"
+        onClick={handleGoFurther}
       >
-        Post
+        Go further
       </button>
-    </form>
+    </div>
   )
 }
 

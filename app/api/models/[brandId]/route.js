@@ -5,7 +5,9 @@ export const GET = async (req, { params }) => {
   try {
     await connectToDB()
 
-    const models = await Model.find({ brand_id: params.brandId })
+    const models = await Model.find({ brand_id: params.brandId }).sort({
+      label: 1,
+    })
 
     return new Response(JSON.stringify(models), { status: 200 })
   } catch (error) {

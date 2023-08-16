@@ -5,9 +5,7 @@ export const GET = async req => {
   try {
     await connectToDB()
 
-    const regYears = await RegYears.find({})
-
-    const collectionName = RegYears.collection.name
+    const regYears = await RegYears.find({}).sort({ label: -1 })
 
     return new Response(JSON.stringify(regYears), { status: 200 })
   } catch (error) {
