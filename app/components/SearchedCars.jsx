@@ -1,113 +1,44 @@
-import useFetch from '@app/hooks/useFetch'
-import Select from './Select'
-import { useSearchContext } from '@app/store/search-car'
+'use client'
+
 import Container from './Container'
-import { useEffect } from 'react'
+import BigCard from './BigCard'
+import FilterCars from './FilterCars'
+import { useEffect, useState } from 'react'
+import BigCardMobile from './BigCardMobile'
 
-const SearchedCars = () => {
-  const {
-    brand,
-    model,
-    yearFrom,
-    yearTo,
-    updateBrand,
-    updateModel,
-    updateYearFrom,
-    updateYearTo,
-  } = useSearchContext()
+const SearchedCars = ({ searchedCars }) => {
+  const [mediaMatches, setMediaMatches] = useState(false)
 
-  const { data: brands } = useFetch('/api/brands', [], true)
-  const { data: models } = useFetch(`/api/models/${brand?._id}`, [brand], brand)
-  const { data: regYears } = useFetch('/api/reg_years', [], true)
+  let media = window.matchMedia('(max-width: 520px)')
 
-  useEffect(() => {}, [])
+  const getMediaMatches = () => {
+    if (media.matches) {
+      setMediaMatches(true)
+    } else {
+      setMediaMatches(false)
+    }
+  }
 
-  console.log(brand)
+  useEffect(() => {
+    getMediaMatches()
+    window.addEventListener('resize', getMediaMatches)
+
+    return window.removeEventListener('resize', getMediaMatches)
+  }, [])
 
   return (
     <section className="py-10">
       <Container>
-        <aside className="flex min-w-[20%] max-w-[30%] py-10 px-9 bg-white rounded-[45px] shadow-md">
-          <form className="flex flex-col gap-3">
-            <Select
-              defaultValue="All brands"
-              type="full"
-              options={brands}
-              updateFunction={updateBrand}
-              lastValue={brand}
-            />
-            <Select
-              defaultValue="All models"
-              options={models}
-              type="full"
-              updateFunction={updateModel}
-              lastValue={model}
-              disabled={brand ? false : true}
-            />
-            <div className="flex gap-2">
-              <Select
-                defaultValue="Price from"
-                options={['BMW', 'Audi', 'Mercedes']}
-                type="half"
-              />
-              <Select
-                defaultValue="To"
-                options={['BMW', 'Audi', 'Mercedes']}
-                type="half"
-              />
-            </div>
-            <div className="flex gap-2">
-              <Select
-                defaultValue="Year from"
-                options={regYears}
-                type="half"
-                updateFunction={updateYearFrom}
-                lastValue={yearFrom}
-              />
-              <Select
-                defaultValue="To"
-                options={regYears}
-                type="half"
-                updateFunction={updateYearTo}
-                lastValue={yearTo}
-              />
-            </div>
-            <div className="flex gap-2">
-              <Select
-                defaultValue="Km from"
-                options={['BMW', 'Audi', 'Mercedes']}
-                type="half"
-              />
-              <Select
-                defaultValue="To"
-                options={['BMW', 'Audi', 'Mercedes']}
-                type="half"
-              />
-            </div>
-            <Select
-              defaultValue="Body types"
-              options={['BMW', 'Audi', 'Mercedes']}
-              type="full"
-            />
-            <Select
-              defaultValue="Fuel types"
-              options={['BMW', 'Audi', 'Mercedes']}
-              type="full"
-            />
-            <div className="flex gap-2">
-              <Select
-                defaultValue="Power from"
-                options={['BMW', 'Audi', 'Mercedes']}
-                type="half"
-              />
-              <Select
-                defaultValue="To"
-                options={['BMW', 'Audi', 'Mercedes']}
-                type="half"
-              />
-            </div>
-          </form>
-        </aside>
+        <div className="flex xl:gap-10 gap-5">
+          <FilterCars />
+          <div className="flex flex-col gap-6">
+            {mediaMatches
+              ? searchedCars?.map(car => (
+                  <BigCardMobile key={car._id} car={car} />
+                ))
+              : searchedCars?.map(car => <BigCard key={car._id} car={car} />)}
+          </div>
+        </div>
       </Container>
     </section>
   )

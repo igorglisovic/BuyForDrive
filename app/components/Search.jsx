@@ -18,7 +18,9 @@ const Search = () => {
   return (
     <section className="bg-hero-pattern pb-12 shadow-lg">
       <Container>
-        <Breadcrumb />
+        <div className="flex">
+          <Breadcrumb />
+        </div>
         <div className="mt-6 w-full rounded-5xl shadow-md">
           <div className="px-8 py-0 bg-gradient-light-gray rounded-top-5xl">
             <ul className="flex">

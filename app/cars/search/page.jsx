@@ -5,34 +5,32 @@ import Container from '@app/components/Container'
 import SearchedCars from '@app/components/SearchedCars'
 import useFetch from '@app/hooks/useFetch'
 import useMakeUrl from '@app/hooks/useMakeUrl'
-import { usePathname, useSearchParams } from 'next/navigation'
-import React, { useEffect } from 'react'
 
-const page = ({ params, searchParams }) => {
+const page = ({ searchParams }) => {
   const paramsArray = Object.keys(searchParams).map(key => ({
     name: key,
     value: searchParams[key],
   }))
 
-  const { url } = useMakeUrl('/api/searched_cars?', paramsArray)
-  const { data } = useFetch(url)
+  console.log(paramsArray)
 
-  console.log(data)
+  const { url } = useMakeUrl('/api/searched_cars?', paramsArray)
+  const { data: searchedCars } = useFetch(url)
 
   return (
     <>
       <section className="bg-hero-pattern pb-2 shadow-lg">
         <Container>
-          <div className="flex justify-between min-h-[8rem]">
+          <div className="flex flex-col gap-16 justify-between">
             <Breadcrumb />
             <p className="self-end font-medium">
-              <span className="font-semibold">{data?.length}</span> offers match
-              your criteria
+              <span className="font-semibold">{searchedCars?.length}</span>{' '}
+              offers match your criteria
             </p>
           </div>
         </Container>
       </section>
-      <SearchedCars />
+      <SearchedCars searchedCars={searchedCars} />
     </>
   )
 }

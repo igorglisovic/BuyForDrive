@@ -27,6 +27,12 @@ module.exports = {
         active: 'white',
         'light-gray': '#EDEDED',
       },
+      screens: {
+        base: '950px',
+        'base-plus': '1100px',
+        'md-plus': '810px',
+        xs: '520px',
+      },
     },
   },
   plugins: [],

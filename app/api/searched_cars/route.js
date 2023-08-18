@@ -45,7 +45,7 @@ export const GET = async (req, { params }) => {
           as: 'brand',
         },
       },
-      { $unwind: '$brand_id' },
+      { $unwind: '$brand' },
       {
         $lookup: {
           from: 'models',
@@ -54,7 +54,7 @@ export const GET = async (req, { params }) => {
           as: 'model',
         },
       },
-      { $unwind: '$model_id' },
+      { $unwind: '$model' },
       {
         $lookup: {
           from: 'reg_years',
@@ -63,7 +63,7 @@ export const GET = async (req, { params }) => {
           as: 'reg_year',
         },
       },
-      { $unwind: '$reg_year_id' }
+      { $unwind: '$reg_year' }
     )
 
     if (yearFrom && yearTo) {
