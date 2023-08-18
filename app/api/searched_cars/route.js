@@ -4,19 +4,13 @@ import mongoose from 'mongoose'
 
 export const GET = async (req, { params }) => {
   const brandId =
-    req.nextUrl.searchParams.get('brandId') &&
-    new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('brandId'))
+    req.nextUrl.searchParams.get('brand_id') &&
+    new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('brand_id'))
   const modelId =
-    req.nextUrl.searchParams.get('modelId') &&
-    new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('modelId'))
-  const yearFrom = req.nextUrl.searchParams.get('yearFrom')
-  const yearTo = req.nextUrl.searchParams.get('yearTo')
-  // const yearFrom =
-  //   req.nextUrl.searchParams.get('yearFrom') &&
-  //   new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('yearFrom'))
-  // const yearTo =
-  //   req.nextUrl.searchParams.get('yearTo') &&
-  //   new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('yearTo'))
+    req.nextUrl.searchParams.get('model_id') &&
+    new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('model_id'))
+  const yearFrom = req.nextUrl.searchParams.get('year_from')
+  const yearTo = req.nextUrl.searchParams.get('year_to')
 
   console.log('brandId >>>> ', brandId)
   console.log('yearFrom >>>> ', yearFrom)
@@ -48,7 +42,7 @@ export const GET = async (req, { params }) => {
           from: 'brands',
           localField: 'brand_id',
           foreignField: '_id',
-          as: 'brand_id',
+          as: 'brand',
         },
       },
       { $unwind: '$brand_id' },
@@ -57,7 +51,7 @@ export const GET = async (req, { params }) => {
           from: 'models',
           localField: 'model_id',
           foreignField: '_id',
-          as: 'model_id',
+          as: 'model',
         },
       },
       { $unwind: '$model_id' },
@@ -66,7 +60,7 @@ export const GET = async (req, { params }) => {
           from: 'reg_years',
           localField: 'reg_year_id',
           foreignField: '_id',
-          as: 'reg_year_id',
+          as: 'reg_year',
         },
       },
       { $unwind: '$reg_year_id' }

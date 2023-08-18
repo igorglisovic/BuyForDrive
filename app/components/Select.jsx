@@ -105,7 +105,8 @@ const Select = ({
 
     // Filter options by value in the input
     if (options) {
-      const filteredOptions = value ? filterSelectOptions(value) : []
+      const filteredOptions =
+        value || (!value && !isOpened) ? filterSelectOptions(value) : []
       setFilteredOptions(filteredOptions)
     }
   }, [value])
@@ -157,7 +158,7 @@ const Select = ({
           filteredOptions.map((option, i) => (
             <li
               className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
-                i !== options.length - 1 && 'border-b-[1px] border-gray-300'
+                i !== options?.length - 1 && 'border-b-[1px] border-gray-300'
               }`}
               key={option._id}
               onClick={() => handleClick(option)}

@@ -3,23 +3,11 @@ import Button from './Button'
 import { useSearchContext } from '@app/store/search-car'
 import useFetch from '@app/hooks/useFetch'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import useMakeUrl from '@app/hooks/useMakeUrl'
 
-const fetchSearchedCars = async (initialUrl, items) => {
+const fetchSearchedCars = async url => {
   try {
-    let url = initialUrl
-
-    items?.forEach(item => {
-      if (url !== initialUrl && item.value) {
-        url += '&'
-      }
-
-      if (item?.value && !url.includes(item?.name)) {
-        url += `${item?.name}=${item?.value}`
-      }
-    })
-
-    console.log(url)
-
     const res = await fetch(url)
     const data = await res.json()
 
@@ -32,6 +20,8 @@ const fetchSearchedCars = async (initialUrl, items) => {
 const SearchForm = () => {
   const [countOffers, setCountOffers] = useState()
   const [searchedCars, setSearchedCars] = useState([])
+
+  const router = useRouter()
 
   const {
     brand,
@@ -51,35 +41,37 @@ const SearchForm = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
-    try {
-      const res = await fetch(
-        `/api/searched_cars?brandId=${brand._id}&modelId=${model._id}`
-      )
-      const data = await res.json()
-    } catch (error) {
-      console.log(error)
-    }
+    const { url } = useMakeUrl('/cars/search?', [
+      { name: 'brand_id', value: brand?._id },
+      { name: 'model_id', value: model?._id },
+      { name: 'year_from', value: yearFrom?.label },
+      { name: 'year_to', value: yearTo?.label },
+    ])
+
+    router.push(url)
   }
 
   useEffect(() => {
-    const fetchSearchedCars = async () => {
-      const data = await fetchSearchedCars('/api/searched_cars?', [
-        { name: 'brandId', value: brand?._id },
-        { name: 'modelId', value: model?._id },
-        { name: 'yearFrom', value: yearFrom?.label },
-        { name: 'yearTo', value: yearTo?.label },
+    const fetchSearchedCarsData = async () => {
+      const { url } = useMakeUrl('/api/searched_cars?', [
+        { name: 'brand_id', value: brand?._id },
+        { name: 'model_id', value: model?._id },
+        { name: 'year_from', value: yearFrom?.label },
+        { name: 'year_to', value: yearTo?.label },
       ])
+
+      const data = await fetchSearchedCars(url)
 
       setSearchedCars(data)
       setCountOffers(data?.length)
     }
-    if (brand || model || yearFrom || yearTo) fetchSearchedCars()
+    fetchSearchedCarsData()
   }, [brand, model, yearFrom, yearTo])
 
   useEffect(() => {
     const countNumOfAllOffers = async () => {
       const allCars = await fetchSearchedCars('/api/cars', [])
-      setCountOffers(allCars.length)
+      setCountOffers(allCars?.length)
       setSearchedCars(allCars)
     }
     countNumOfAllOffers()

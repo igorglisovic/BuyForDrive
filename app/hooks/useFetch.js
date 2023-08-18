@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const useFetch = (url, dependencies, statement) => {
+const useFetch = (url, dependencies = [], shouldFetch = true) => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
@@ -15,11 +15,11 @@ const useFetch = (url, dependencies, statement) => {
       }
     }
 
-    if (statement && !url.includes('undefined')) {
+    if (shouldFetch && !url.includes('undefined')) {
       fetchData()
     }
 
-    if (!statement) {
+    if (!shouldFetch) {
       setData(null)
     }
   }, dependencies)

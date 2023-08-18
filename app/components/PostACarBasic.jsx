@@ -8,14 +8,14 @@ const PostACarBasic = ({ setGoFurther }) => {
 
   const { basicInfo } = usePostCarContext()
 
-  const { data: brands } = useFetch('/api/brands', [], true)
+  const { data: brands } = useFetch('/api/brands')
   const { data: models } = useFetch(
     `/api/models/${basicInfo?.brand?._id}`,
     [basicInfo.brand],
     basicInfo.brand
   )
-  const { data: regYears } = useFetch('/api/reg_years', [], true)
-  const { data: regMonths } = useFetch('/api/reg_months', [], true)
+  const { data: regYears } = useFetch('/api/reg_years')
+  const { data: regMonths } = useFetch('/api/reg_months')
 
   useEffect(() => {
     if (basicInfo.model) {
