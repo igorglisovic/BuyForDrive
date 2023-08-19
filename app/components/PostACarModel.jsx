@@ -1,15 +1,21 @@
 import { usePostCarContext } from '@app/store/post-car'
 import Radio from './Radio'
-import Select from './Select'
 import useFetch from '@app/hooks/useFetch'
 import { useEffect } from 'react'
+import { useSearchContext } from '@app/store/search-car'
 
 const PostACarModel = () => {
   const { modelDetails } = usePostCarContext()
+  const { fuelType, updateFuelType } = useSearchContext()
 
   const { data: doors } = useFetch('/api/doors', [], true)
-
   const { data: bodyTypes } = useFetch('/api/body_type', [], true)
+  const { data: fuelTypes } = useFetch('/api/fuel_types', [], true)
+  const { data: transmissionTypes } = useFetch(
+    '/api/transmission_types',
+    [],
+    true
+  )
 
   useEffect(() => {
     console.log(modelDetails.doors)
@@ -32,6 +38,22 @@ const PostACarModel = () => {
         updateFunction={modelDetails.updateBodyType}
         disabled={modelDetails.doors ? false : true}
         lastCheckedValue={modelDetails.bodyType}
+      />
+      <Radio
+        name="fuel-type"
+        label="Fuel type"
+        options={fuelTypes}
+        updateFunction={modelDetails.updateFuelType}
+        disabled={modelDetails.bodyType ? false : true}
+        lastCheckedValue={modelDetails.fuelType}
+      />
+      <Radio
+        name="transmission-type"
+        label="Transmission type"
+        options={transmissionTypes}
+        updateFunction={modelDetails.updateTransmissionType}
+        disabled={modelDetails.fuelType ? false : true}
+        lastCheckedValue={modelDetails.transmissionType}
       />
     </div>
   )

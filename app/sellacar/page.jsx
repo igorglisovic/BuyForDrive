@@ -14,7 +14,7 @@ const SellACar = () => {
   const [goFurther, setGoFurther] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
-  const { basicInfo, modelDetails } = usePostCarContext()
+  const { basicInfo, modelDetails, resetStates } = usePostCarContext()
 
   const { setLoadingBar } = useLoadingBarContext()
   const { data: session } = useSession()
@@ -43,11 +43,14 @@ const SellACar = () => {
           mileage: basicInfo.mileage,
           doorsId: modelDetails.doors._id,
           bodyTypeId: modelDetails.bodyType._id,
+          fuelTypeId: modelDetails.fuelType._id,
+          transmissionTypeId: modelDetails.transmissionType._id,
         }),
       })
 
       if (res.ok) {
         router.push('/')
+        resetStates()
       }
     } catch (error) {
       console.log(error)

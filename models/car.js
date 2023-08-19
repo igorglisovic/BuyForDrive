@@ -31,6 +31,14 @@ const CarSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'BodyType',
   },
+  fuel_type_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'FuelType',
+  },
+  transmission_type_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'TransmissionType',
+  },
 })
 
 export const Car = models.Car || model('Car', CarSchema, 'cars')

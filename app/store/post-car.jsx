@@ -16,9 +16,14 @@ const PostCarContext = createContext({
   modelDetails: {
     doors: {},
     bodyType: {},
+    transmissionType: {},
+    fuelType: {},
     updateDoors: () => {},
     updateBodyType: () => {},
+    updateTransmissionType: () => {},
+    updateFuelType: () => {},
   },
+  resetStates: () => {},
 })
 
 export const usePostCarContext = () => useContext(PostCarContext)
@@ -31,6 +36,8 @@ export const PostCarContextProvider = ({ children }) => {
   const [mileage, setMileage] = useState(null)
   const [doors, setDoors] = useState(null)
   const [bodyType, setBodyType] = useState(null)
+  const [fuelType, setFuelType] = useState(null)
+  const [transmissionType, setTransmissionType] = useState(null)
 
   const updateBrand = brand => {
     setBrand(brand)
@@ -56,8 +63,28 @@ export const PostCarContextProvider = ({ children }) => {
     setDoors(doors)
   }
 
+  const updateFuelType = fuelType => {
+    setFuelType(fuelType)
+  }
+
   const updateBodyType = bodyType => {
     setBodyType(bodyType)
+  }
+
+  const updateTransmissionType = transmissionType => {
+    setTransmissionType(transmissionType)
+  }
+
+  const resetStates = () => {
+    setBrand(null)
+    setModel(null)
+    setRegYear(null)
+    setRegMonth(null)
+    setMileage(null)
+    setDoors(null)
+    setFuelType(null)
+    setBodyType(null)
+    setTransmissionType(null)
   }
 
   const basicInfo = {
@@ -76,12 +103,16 @@ export const PostCarContextProvider = ({ children }) => {
   const modelDetails = {
     doors,
     bodyType,
+    fuelType,
+    transmissionType,
     updateDoors,
     updateBodyType,
+    updateTransmissionType,
+    updateFuelType,
   }
 
   return (
-    <PostCarContext.Provider value={{ basicInfo, modelDetails }}>
+    <PostCarContext.Provider value={{ basicInfo, modelDetails, resetStates }}>
       {children}
     </PostCarContext.Provider>
   )

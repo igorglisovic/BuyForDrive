@@ -11,7 +11,11 @@ export const POST = async req => {
     mileage,
     doorsId,
     bodyTypeId,
+    fuelTypeId,
+    transmissionTypeId,
   } = await req.json()
+
+  console.log(fuelTypeId, transmissionTypeId)
 
   try {
     await connectToDB()
@@ -25,6 +29,8 @@ export const POST = async req => {
       mileage,
       doors_id: doorsId,
       body_type_id: bodyTypeId,
+      fuel_type_id: fuelTypeId,
+      transmission_type_id: transmissionTypeId,
     })
 
     await newCar.save()

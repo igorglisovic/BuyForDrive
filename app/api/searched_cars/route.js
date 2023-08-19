@@ -15,7 +15,7 @@ export const GET = async (req, { params }) => {
     req.nextUrl.searchParams.get('body_type_id') &&
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('body_type_id'))
 
-  console.log(bodyTypeId)
+  // console.log(bodyTypeId)
 
   try {
     await connectToDB()
@@ -111,7 +111,7 @@ export const GET = async (req, { params }) => {
 
     const cars = await Car.aggregate(pipeline)
 
-    console.log('serachedCars>> ', cars)
+    // console.log('serachedCars>> ', cars)
 
     return new Response(JSON.stringify(cars), { status: 200 })
   } catch (error) {

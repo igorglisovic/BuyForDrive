@@ -28,17 +28,22 @@ const SearchForm = () => {
     yearFrom,
     yearTo,
     bodyType,
+    fuelType,
     updateBrand,
     updateModel,
     updateYearFrom,
     updateYearTo,
     updateBodyType,
+    updateFuelType,
   } = useSearchContext()
 
   const { data: brands } = useFetch('/api/brands', [], true)
   const { data: models } = useFetch(`/api/models/${brand?._id}`, [brand], brand)
   const { data: regYears } = useFetch('/api/reg_years', [], true)
   const { data: bodyTypes } = useFetch('/api/body_type', [], true)
+  const { data: fuelTypes } = useFetch('/api/fuel_types', [], true)
+
+  console.log(fuelTypes)
 
   const makeUrlQueriesArray = [
     { name: 'brand_id', value: brand?._id },
@@ -78,7 +83,7 @@ const SearchForm = () => {
   }, [])
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-wrap gap-4">
+    <form onSubmit={handleSubmit} className="flex  gap-4">
       <div className="flex flex-col max-w-[320px] gap-7 ">
         <div className="relative">
           <Select
@@ -162,8 +167,10 @@ const SearchForm = () => {
         </div>
         <Select
           placeholder="Fuel types"
-          options={['BMW', 'Audi', 'Mercedes']}
+          options={fuelTypes}
           type="full"
+          updateFunction={updateFuelType}
+          lastValue={fuelType}
         />
         <Button>{countOffers} offers</Button>
       </div>
