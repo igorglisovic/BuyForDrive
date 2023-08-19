@@ -1,7 +1,6 @@
 import useFetch from '@app/hooks/useFetch'
 import Container from './Container'
 import SmallCard from './SmallCard'
-import { useEffect } from 'react'
 
 const RandomCars = () => {
   const { data: cars } = useFetch('/api/cars', [], true)

@@ -17,6 +17,7 @@ const searchCarContext = createContext({
   updateModel: () => {},
   updateYearFrom: () => {},
   updateYearTo: () => {},
+  updateBodyType: () => {},
 })
 
 export const useSearchContext = () => useContext(searchCarContext)
@@ -26,6 +27,7 @@ export const SearchContextProvider = ({ children }) => {
   const [model, setModel] = useState(null)
   const [yearFrom, setYearFrom] = useState(null)
   const [yearTo, setYearTo] = useState(null)
+  const [bodyType, setBodyType] = useState(null)
 
   const updateBrand = brand => {
     setBrand(brand)
@@ -43,15 +45,21 @@ export const SearchContextProvider = ({ children }) => {
     setYearTo(yearTo)
   }
 
+  const updateBodyType = bodyType => {
+    setBodyType(bodyType)
+  }
+
   const value = {
     brand,
     model,
     yearFrom,
     yearTo,
+    bodyType,
     updateBrand,
     updateModel,
     updateYearFrom,
     updateYearTo,
+    updateBodyType,
   }
 
   return (

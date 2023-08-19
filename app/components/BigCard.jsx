@@ -2,11 +2,10 @@ import Car from '@public/assets/car.jpg'
 import Image from 'next/image'
 
 const BigCard = ({ car }) => {
-  console.log(car)
   return (
     <div className="flex rounded-[33px] overflow-hidden shadow-md min-h-[150px]">
-      <div className="bg-car flex max-w-[35%] bg-cover bg-center shadow-md">
-        <Image src={Car} alt="" />
+      <div className="flex max-w-[35%] shadow-md">
+        <Image className="object-cover" src={Car} alt="" />
       </div>
       <article className="flex flex-grow flex-col justify-between bg-white px-5 py-2.5 ">
         <h3 className="font-semibold text-xl md:text-2xl">

@@ -6,31 +6,33 @@ import FilterCars from './FilterCars'
 import { useEffect, useState } from 'react'
 import BigCardMobile from './BigCardMobile'
 
-const SearchedCars = ({ searchedCars }) => {
+const SearchedCars = ({ searchedCars, paramsArray }) => {
   const [mediaMatches, setMediaMatches] = useState(false)
 
-  let media = window.matchMedia('(max-width: 520px)')
+  // let media = window.matchMedia('(max-width: 520px)')
 
-  const getMediaMatches = () => {
-    if (media.matches) {
-      setMediaMatches(true)
-    } else {
-      setMediaMatches(false)
-    }
-  }
+  // const getMediaMatches = () => {
+  //   if (media.matches) {
+  //     setMediaMatches(true)
+  //   } else {
+  //     setMediaMatches(false)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   getMediaMatches()
+  //   window.addEventListener('resize', getMediaMatches)
+  // }, [])
 
   useEffect(() => {
-    getMediaMatches()
-    window.addEventListener('resize', getMediaMatches)
-
-    return window.removeEventListener('resize', getMediaMatches)
-  }, [])
+    // console.log(mediaMatches)
+  }, [mediaMatches])
 
   return (
     <section className="py-10">
       <Container>
         <div className="flex xl:gap-10 gap-5">
-          <FilterCars />
+          <FilterCars paramsArray={paramsArray} />
           <div className="flex flex-col gap-6">
             {mediaMatches
               ? searchedCars?.map(car => (

@@ -3,30 +3,30 @@ import Image from 'next/image'
 
 const BigCardMobile = ({ car }) => {
   return (
-    <div className="flex rounded-[33px] overflow-hidden shadow-md min-h-[150px]">
-      <div className="bg-car flex max-w-[35%] bg-cover bg-center shadow-md">
-        <Image src={Car} alt="" />
+    <div className="flex flex-col rounded-[33px] overflow-hidden shadow-md bg-white">
+      <div className="flex">
+        <div className="flex max-w-[35%] max-h-[170px] xxs:max-h-[210px] min-h-[85px] min-w-full shadow-md">
+          <Image className="object-cover" src={Car} alt="" />
+        </div>
       </div>
-      <article className="flex flex-grow flex-col justify-between bg-red px-5 py-2.5 ">
+      <article className="flex flex-col justify-between  px-5 py-2.5">
         <h3 className="font-semibold text-xl md:text-2xl">
           {car.brand.label} {car.model.label}
         </h3>
         <div className="flex justify-between items-center">
           <span className="mr-5 font-medium text-base md:text-xl">$2.000</span>
         </div>
-        <div className="flex flex-col gap-[1px] font-normal text-[10px] text-xs xl:text-sm">
-          <div className="flex gap-1 items-center">
+      </article>
+      <article className="px-5 py-3 pt-0">
+        <div className="flex gap-6 font-normal text-[10px] text-xs xl:text-sm">
+          <div className="flex flex-col gap-2">
             <span>{car.reg_year.label}. Coupe</span>
-            <span> | </span>
             <span>{car.mileage}km</span>
-            <span> | </span>
             <span>Automatic</span>
           </div>
-          <div className="flex gap-1 items-center">
+          <div className="flex flex-col gap-2">
             <span>Petrol, 4999cm3</span>
-            <span> | </span>
             <span>310kW (421hp)</span>
-            <span> | </span>
             <span>2/3 doors</span>
           </div>
         </div>

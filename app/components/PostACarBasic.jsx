@@ -31,7 +31,7 @@ const PostACarBasic = ({ setGoFurther }) => {
     <div className="flex flex-col gap-3">
       <h2 className="text-xl font-semibold mb-2">Basic infomation</h2>
       <Select
-        defaultValue="All brands"
+        placeholder="All brands"
         options={brands}
         type="full"
         label="Brand"
@@ -39,7 +39,7 @@ const PostACarBasic = ({ setGoFurther }) => {
         lastValue={basicInfo.brand}
       />
       <Select
-        defaultValue="All models"
+        placeholder="All models"
         options={models}
         type="full"
         label="Model"
@@ -49,7 +49,7 @@ const PostACarBasic = ({ setGoFurther }) => {
       />
       <div className="flex items-end gap-4">
         <Select
-          defaultValue="Year"
+          placeholder="Year"
           options={regYears}
           type="half"
           label="First registration"
@@ -58,7 +58,7 @@ const PostACarBasic = ({ setGoFurther }) => {
           lastValue={basicInfo.regYear}
         />
         <Select
-          defaultValue="Month"
+          placeholder="Month"
           options={regMonths}
           type="half"
           label=""
@@ -68,7 +68,7 @@ const PostACarBasic = ({ setGoFurther }) => {
         />
       </div>
       <Select
-        defaultValue="Mileage"
+        placeholder="Mileage"
         type="half"
         label="Mileage"
         disabled={basicInfo.regMonth && basicInfo.brand ? false : true}

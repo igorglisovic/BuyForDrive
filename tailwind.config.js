@@ -32,6 +32,7 @@ module.exports = {
         'base-plus': '1100px',
         'md-plus': '810px',
         xs: '520px',
+        xxs: '400px',
       },
     },
   },

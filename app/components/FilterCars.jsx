@@ -2,7 +2,7 @@ import useFetch from '@app/hooks/useFetch'
 import Select from './Select'
 import { useSearchContext } from '@app/store/search-car'
 
-const FilterCars = () => {
+const FilterCars = ({ searchParams }) => {
   const {
     brand,
     model,
@@ -23,7 +23,7 @@ const FilterCars = () => {
       <h2 className="mb-4 text-xl font-semibold">Filter cars</h2>
       <form className="flex flex-col gap-3">
         <Select
-          defaultValue="All brands"
+          placeholder="All brands"
           type="full"
           options={brands}
           updateFunction={updateBrand}
@@ -31,7 +31,7 @@ const FilterCars = () => {
           label="Brand"
         />
         <Select
-          defaultValue="All models"
+          placeholder="All models"
           options={models}
           type="full"
           updateFunction={updateModel}
@@ -41,20 +41,20 @@ const FilterCars = () => {
         />
         <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
           <Select
-            defaultValue="Price from"
+            placeholder="Price from"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
             label="Price"
           />
           <Select
-            defaultValue="To"
+            placeholder="To"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
           />
         </div>
         <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
           <Select
-            defaultValue="Year from"
+            placeholder="Year from"
             options={regYears}
             type="half"
             updateFunction={updateYearFrom}
@@ -62,7 +62,7 @@ const FilterCars = () => {
             label="First registration"
           />
           <Select
-            defaultValue="To"
+            placeholder="To"
             options={regYears}
             type="half"
             updateFunction={updateYearTo}
@@ -71,38 +71,38 @@ const FilterCars = () => {
         </div>
         <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
           <Select
-            defaultValue="Km from"
+            placeholder="Km from"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
             label="Mileage"
           />
           <Select
-            defaultValue="To"
+            placeholder="To"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
           />
         </div>
         <Select
-          defaultValue="Body types"
+          placeholder="Body types"
           options={['BMW', 'Audi', 'Mercedes']}
           type="full"
           label="Body type"
         />
         <Select
-          defaultValue="Fuel types"
+          placeholder="Fuel types"
           options={['BMW', 'Audi', 'Mercedes']}
           type="full"
           label="Fuel type"
         />
         <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
           <Select
-            defaultValue="Power from"
+            placeholder="Power from"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
             label="Power"
           />
           <Select
-            defaultValue="To"
+            placeholder="To"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
           />

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 const Select = ({
   defaultValue,
+  placeholder,
   options,
   type,
   disabled = false,
@@ -42,12 +43,24 @@ const Select = ({
     }
   }, [lastValue])
 
+  useEffect(() => {
+    // console.log(defaultValue)
+    if (defaultValue) {
+      setValue(defaultValue.label)
+      updateFunction(defaultValue)
+    }
+  }, [defaultValue])
+
+  useEffect(() => {
+    console.log(value)
+  }, [value])
+
   // Track if current input value exists in fetched options
   useEffect(() => {
-    // If input has options
     const optionLabels = options?.map(option => option.label) || []
 
-    if (!optionLabels.includes(value)) {
+    // If input value is included in an options
+    if (!optionLabels.includes(value) && value) {
       setValue('')
 
       if (updateFunction) {
@@ -123,7 +136,7 @@ const Select = ({
       <input
         className={`select-${type} bg-white cursor-context-menu}`}
         type="text"
-        placeholder={defaultValue}
+        placeholder={placeholder}
         onFocus={handleFocus}
         disabled={disabled}
         value={value}

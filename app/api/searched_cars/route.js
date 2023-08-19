@@ -11,10 +11,11 @@ export const GET = async (req, { params }) => {
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('model_id'))
   const yearFrom = req.nextUrl.searchParams.get('year_from')
   const yearTo = req.nextUrl.searchParams.get('year_to')
+  const bodyTypeId =
+    req.nextUrl.searchParams.get('body_type_id') &&
+    new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('body_type_id'))
 
-  console.log('brandId >>>> ', brandId)
-  console.log('yearFrom >>>> ', yearFrom)
-  console.log('yearTo >>>> ', yearTo)
+  console.log(bodyTypeId)
 
   try {
     await connectToDB()
@@ -32,6 +33,14 @@ export const GET = async (req, { params }) => {
       pipeline.push({
         $match: {
           model_id: modelId,
+        },
+      })
+    }
+
+    if (bodyTypeId) {
+      pipeline.push({
+        $match: {
+          body_type_id: bodyTypeId,
         },
       })
     }
@@ -63,7 +72,16 @@ export const GET = async (req, { params }) => {
           as: 'reg_year',
         },
       },
-      { $unwind: '$reg_year' }
+      { $unwind: '$reg_year' },
+      {
+        $lookup: {
+          from: 'body_type',
+          localField: 'body_type_id',
+          foreignField: '_id',
+          as: 'body_type',
+        },
+      },
+      { $unwind: '$body_type' }
     )
 
     if (yearFrom && yearTo) {
@@ -89,7 +107,7 @@ export const GET = async (req, { params }) => {
       }
     }
 
-    console.log('pipe >>> ', pipeline)
+    // console.log('pipe >>> ', pipeline)
 
     const cars = await Car.aggregate(pipeline)
 
