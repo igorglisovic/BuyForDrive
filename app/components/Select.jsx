@@ -108,6 +108,17 @@ const Select = ({
 
   const handleChange = e => {
     setValue(e.target.value)
+    if (label === 'Mileage') {
+      // Remove any non-digit characters
+      let numericValue = e.target.value.replace(/\D/g, '')
+
+      // Convert the numeric value to a formatted string using Intl.NumberFormat
+      let formattedValue = `${new Intl.NumberFormat('en-US').format(
+        numericValue
+      )}`
+
+      setValue(formattedValue)
+    }
   }
 
   useEffect(() => {
@@ -142,44 +153,48 @@ const Select = ({
         value={value}
         onChange={handleChange}
       />
-      <ul
-        className={`option absolute overflow-y-scroll max-h-[40vh] z-50 w-full flex-col bg-white ${
-          isOpened ? 'flex' : 'hidden'
-        }`}
-      >
-        <li
-          className="py-2 px-2 hover:bg-gray-200 cursor-pointer border-b-[1px] border-gray-300"
-          onClick={handleClearInput}
+      {options && (
+        <ul
+          className={`option absolute overflow-y-scroll max-h-[40vh] z-50 w-full flex-col bg-white ${
+            isOpened ? 'flex' : 'hidden'
+          }`}
         >
-          Clear input
-        </li>
-        {options &&
-          !filteredOptions.length &&
-          !value &&
-          options.map((option, i) => (
+          {options && (
             <li
-              className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
-                i !== options.length - 1 && 'border-b-[1px] border-gray-300'
-              }`}
-              key={option._id}
-              onClick={() => handleClick(option)}
+              className="py-2 px-2 hover:bg-gray-200 cursor-pointer border-b-[1px] border-gray-300"
+              onClick={handleClearInput}
             >
-              {option.label}
+              Clear input
             </li>
-          ))}
-        {filteredOptions &&
-          filteredOptions.map((option, i) => (
-            <li
-              className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
-                i !== options?.length - 1 && 'border-b-[1px] border-gray-300'
-              }`}
-              key={option._id}
-              onClick={() => handleClick(option)}
-            >
-              {option.label}
-            </li>
-          ))}
-      </ul>
+          )}
+          {options &&
+            !filteredOptions.length &&
+            !value &&
+            options.map((option, i) => (
+              <li
+                className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
+                  i !== options.length - 1 && 'border-b-[1px] border-gray-300'
+                }`}
+                key={option._id}
+                onClick={() => handleClick(option)}
+              >
+                {option.label}
+              </li>
+            ))}
+          {filteredOptions &&
+            filteredOptions.map((option, i) => (
+              <li
+                className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
+                  i !== options?.length - 1 && 'border-b-[1px] border-gray-300'
+                }`}
+                key={option._id}
+                onClick={() => handleClick(option)}
+              >
+                {option.label}
+              </li>
+            ))}
+        </ul>
+      )}
     </div>
   )
 }

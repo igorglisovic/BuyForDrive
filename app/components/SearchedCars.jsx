@@ -9,20 +9,20 @@ import BigCardMobile from './BigCardMobile'
 const SearchedCars = ({ searchedCars, paramsArray }) => {
   const [mediaMatches, setMediaMatches] = useState(false)
 
-  // let media = window.matchMedia('(max-width: 520px)')
+  let media = window.matchMedia('(max-width: 520px)')
 
-  // const getMediaMatches = () => {
-  //   if (media.matches) {
-  //     setMediaMatches(true)
-  //   } else {
-  //     setMediaMatches(false)
-  //   }
-  // }
+  const getMediaMatches = () => {
+    if (media.matches) {
+      setMediaMatches(true)
+    } else {
+      setMediaMatches(false)
+    }
+  }
 
-  // useEffect(() => {
-  //   getMediaMatches()
-  //   window.addEventListener('resize', getMediaMatches)
-  // }, [])
+  useEffect(() => {
+    getMediaMatches()
+    window.addEventListener('resize', getMediaMatches)
+  }, [])
 
   useEffect(() => {
     // console.log(mediaMatches)

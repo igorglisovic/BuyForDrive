@@ -14,8 +14,11 @@ export const GET = async (req, { params }) => {
   const bodyTypeId =
     req.nextUrl.searchParams.get('body_type_id') &&
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('body_type_id'))
+  const fuelTypeId =
+    req.nextUrl.searchParams.get('fuel_type_id') &&
+    new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('fuel_type_id'))
 
-  // console.log(bodyTypeId)
+  console.log(fuelTypeId)
 
   try {
     await connectToDB()
@@ -41,6 +44,14 @@ export const GET = async (req, { params }) => {
       pipeline.push({
         $match: {
           body_type_id: bodyTypeId,
+        },
+      })
+    }
+
+    if (fuelTypeId) {
+      pipeline.push({
+        $match: {
+          fuel_type_id: fuelTypeId,
         },
       })
     }
@@ -81,14 +92,69 @@ export const GET = async (req, { params }) => {
           as: 'body_type',
         },
       },
+      { $unwind: '$body_type' },
+      {
+        $lookup: {
+          from: 'fuel_types',
+          localField: 'fuel_type_id',
+          foreignField: '_id',
+          as: 'fuel_type',
+        },
+      },
+      { $unwind: '$fuel_type' },
+      {
+        $lookup: {
+          from: 'transmission_types',
+          localField: 'transmission_type_id',
+          foreignField: '_id',
+          as: 'transmission_type',
+        },
+      },
+      { $unwind: '$transmission_type' },
+      {
+        $lookup: {
+          from: 'doors',
+          localField: 'doors_id',
+          foreignField: '_id',
+          as: 'doors',
+        },
+      },
+      { $unwind: '$doors' },
+      {
+        $lookup: {
+          from: 'body_type',
+          localField: 'body_type_id',
+          foreignField: '_id',
+          as: 'body_type',
+        },
+      },
       { $unwind: '$body_type' }
     )
+
+    if (yearFrom && !yearTo) {
+      pipeline.push({
+        $match: {
+          'reg_year.label': {
+            $gte: yearFrom,
+          },
+        },
+      })
+    }
+    if (!yearFrom && yearTo) {
+      pipeline.push({
+        $match: {
+          'reg_year.label': {
+            $lte: yearTo,
+          },
+        },
+      })
+    }
 
     if (yearFrom && yearTo) {
       if (+yearFrom <= +yearTo) {
         pipeline.push({
           $match: {
-            'reg_year_id.label': {
+            'reg_year.label': {
               $gte: yearFrom,
               $lte: yearTo,
             },
@@ -98,7 +164,7 @@ export const GET = async (req, { params }) => {
       if (+yearFrom >= +yearTo) {
         pipeline.push({
           $match: {
-            'reg_year_id.label': {
+            'reg_year.label': {
               $gte: yearTo,
               $lte: yearFrom,
             },
@@ -107,11 +173,11 @@ export const GET = async (req, { params }) => {
       }
     }
 
-    // console.log('pipe >>> ', pipeline)
+    console.log('pipe >>> ', pipeline)
 
     const cars = await Car.aggregate(pipeline)
 
-    // console.log('serachedCars>> ', cars)
+    console.log('serachedCars>> ', cars)
 
     return new Response(JSON.stringify(cars), { status: 200 })
   } catch (error) {

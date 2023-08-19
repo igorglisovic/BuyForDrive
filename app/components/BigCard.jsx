@@ -2,6 +2,7 @@ import Car from '@public/assets/car.jpg'
 import Image from 'next/image'
 
 const BigCard = ({ car }) => {
+  console.log(car)
   return (
     <div className="flex rounded-[33px] overflow-hidden shadow-md min-h-[150px]">
       <div className="flex max-w-[35%] shadow-md">
@@ -16,18 +17,20 @@ const BigCard = ({ car }) => {
         </div>
         <div className="flex flex-col gap-[1px] font-normal text-[10px] text-xs xl:text-sm">
           <div className="flex gap-1 items-center">
-            <span>{car.reg_year.label}. Coupe</span>
+            <span>
+              {car.reg_year.label}. {car.body_type.label}
+            </span>
             <span> | </span>
             <span>{car.mileage}km</span>
             <span> | </span>
-            <span>Automatic</span>
+            <span>{car.transmission_type.label}</span>
           </div>
           <div className="flex gap-1 items-center">
-            <span>Petrol, 4999cm3</span>
+            <span>{car.fuel_type.label}, 4999cm3</span>
             <span> | </span>
             <span>310kW (421hp)</span>
             <span> | </span>
-            <span>2/3 doors</span>
+            <span>{car.doors.label} doors</span>
           </div>
         </div>
       </article>

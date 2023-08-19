@@ -43,14 +43,13 @@ const SearchForm = () => {
   const { data: bodyTypes } = useFetch('/api/body_type', [], true)
   const { data: fuelTypes } = useFetch('/api/fuel_types', [], true)
 
-  console.log(fuelTypes)
-
   const makeUrlQueriesArray = [
     { name: 'brand_id', value: brand?._id },
     { name: 'model_id', value: model?._id },
     { name: 'year_from', value: yearFrom?.label },
     { name: 'year_to', value: yearTo?.label },
     { name: 'body_type_id', value: bodyType?._id },
+    { name: 'fuel_type_id', value: fuelType?._id },
   ]
 
   const handleSubmit = async e => {
@@ -72,7 +71,7 @@ const SearchForm = () => {
       console.log(url)
     }
     fetchSearchedCarsData()
-  }, [brand, model, yearFrom, yearTo, bodyType])
+  }, [brand, model, yearFrom, yearTo, bodyType, fuelType])
 
   useEffect(() => {
     const countNumOfAllOffers = async () => {

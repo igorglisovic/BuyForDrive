@@ -20,14 +20,16 @@ const BigCardMobile = ({ car }) => {
       <article className="px-5 py-3 pt-0">
         <div className="flex gap-6 font-normal text-[10px] text-xs xl:text-sm">
           <div className="flex flex-col gap-2">
-            <span>{car.reg_year.label}. Coupe</span>
+            <span>
+              {car.reg_year.label}. {car.body_type.label}
+            </span>
             <span>{car.mileage}km</span>
-            <span>Automatic</span>
+            <span>{car.transmission_type.label}</span>
           </div>
           <div className="flex flex-col gap-2">
-            <span>Petrol, 4999cm3</span>
+            <span>{car.fuel_type.label}, 4999cm3</span>
             <span>310kW (421hp)</span>
-            <span>2/3 doors</span>
+            <span>{car.doors.label} doors</span>
           </div>
         </div>
       </article>
