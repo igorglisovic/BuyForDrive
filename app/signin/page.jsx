@@ -4,7 +4,7 @@ import Container from '@app/components/Container'
 import Image from 'next/image'
 import GoogleImage from '@public/assets/google.png'
 import { useRouter } from 'next/navigation'
-import { signIn, getProviders, useSession } from 'next-auth/react'
+import { signIn, getProviders } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
 const SignIn = () => {

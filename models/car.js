@@ -39,6 +39,35 @@ const CarSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'TransmissionType',
   },
+  power: {
+    hp: String,
+    kw: String,
+  },
+  displacement: String,
+  seats_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Seat',
+  },
+  steering_side: String,
+  drivetrain_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Drivetrain',
+  },
+  color_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Color',
+  },
+  air_conditioning_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'AirConditioning',
+  },
+  price: String,
+  fixed_price: Boolean,
+  owners_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Owner',
+  },
+  description: String,
 })
 
 export const Car = models.Car || model('Car', CarSchema, 'cars')

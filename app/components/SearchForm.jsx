@@ -55,8 +55,17 @@ const SearchForm = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
-    const { url } = useMakeUrl('/cars/search?', makeUrlQueriesArray)
+    window.addEventListener('keydown', e => {
+      console.log(e.code)
+      if (e.code === 'Enter') {
+        console.log('first')
+        e.preventDefault()
+        return false
+      }
+    })
 
+    const { url } = useMakeUrl('/cars/search?', makeUrlQueriesArray)
+    console.log('submitted')
     router.push(url)
   }
 

@@ -1,9 +1,18 @@
 import Car from '@public/assets/car.jpg'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 const BigCardMobile = ({ car }) => {
+  const router = useRouter()
+  const handleClick = () => {
+    router.push(`/car/${car._id}`)
+  }
+
   return (
-    <div className="flex flex-col rounded-[33px] overflow-hidden shadow-md bg-white">
+    <div
+      onClick={handleClick}
+      className="flex flex-col rounded-[33px] cursor-pointer overflow-hidden shadow-md bg-white"
+    >
       <div className="flex">
         <div className="flex max-w-[35%] max-h-[170px] xxs:max-h-[210px] min-h-[85px] min-w-full shadow-md">
           <Image className="object-cover" src={Car} alt="" />
@@ -14,7 +23,9 @@ const BigCardMobile = ({ car }) => {
           {car.brand.label} {car.model.label}
         </h3>
         <div className="flex justify-between items-center">
-          <span className="mr-5 font-medium text-base md:text-xl">$2.000</span>
+          <span className="mr-5 font-medium text-base md:text-xl">
+            €{car?.price}
+          </span>
         </div>
       </article>
       <article className="px-5 py-3 pt-0">
@@ -27,8 +38,12 @@ const BigCardMobile = ({ car }) => {
             <span>{car.transmission_type.label}</span>
           </div>
           <div className="flex flex-col gap-2">
-            <span>{car.fuel_type.label}, 4999cm3</span>
-            <span>310kW (421hp)</span>
+            <span>
+              {car.fuel_type.label}, {car.displacement}cm<sup>3</sup>
+            </span>
+            <span>
+              {car.power?.hp}hp ({car.power?.kw}kW)
+            </span>
             <span>{car.doors.label} doors</span>
           </div>
         </div>

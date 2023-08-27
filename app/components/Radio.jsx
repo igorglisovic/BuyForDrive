@@ -27,10 +27,6 @@ const Radio = ({
     }
   }, [isSelected])
 
-  useEffect(() => {
-    console.log(modelDetails.doors)
-  }, [modelDetails])
-
   return (
     <div>
       {label && <label className="text-sm">{label}</label>}

@@ -42,6 +42,8 @@ export const GET = async () => {
       },
     ])
 
+    // console.log(cars)
+
     return new Response(JSON.stringify(cars), {
       status: 200,
     })

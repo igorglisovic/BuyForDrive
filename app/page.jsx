@@ -4,7 +4,7 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css' // Import the CSS
 
 import Search from './components/Search'
-import SmallCard from './components/SmallCard'
+import SmallCard from './components/cards/SmallCard'
 import Container from './components/Container'
 import RandomCars from './components/RandomCars'
 

@@ -3,6 +3,7 @@
 import Container from '@app/components/Container'
 import LoadingBar from '@app/components/LoadingBar'
 import PostACarBasic from '@app/components/PostACarBasic'
+import PostACarFinish from '@app/components/PostACarFinish'
 import PostACarModel from '@app/components/PostACarModel'
 import { useLoadingBarContext } from '@app/store/loading-bar'
 import { usePostCarContext } from '@app/store/post-car'
@@ -12,9 +13,11 @@ import { useEffect, useState } from 'react'
 
 const SellACar = () => {
   const [goFurther, setGoFurther] = useState(false)
+  const [goToFinish, setGoToFinish] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
-  const { basicInfo, modelDetails, resetStates } = usePostCarContext()
+  const { basicInfo, modelDetails, pricingDetails, resetStates } =
+    usePostCarContext()
 
   const { setLoadingBar } = useLoadingBarContext()
   const { data: session } = useSession()
@@ -45,6 +48,17 @@ const SellACar = () => {
           bodyTypeId: modelDetails.bodyType._id,
           fuelTypeId: modelDetails.fuelType._id,
           transmissionTypeId: modelDetails.transmissionType._id,
+          power: modelDetails.power,
+          displacement: modelDetails.displacement,
+          seatsId: modelDetails.seats._id,
+          steeringSide: modelDetails.steeringSide,
+          drivetrainId: modelDetails.drivetrain._id,
+          colorId: modelDetails.color._id,
+          airConditioningId: modelDetails.airConditioning._id,
+          price: pricingDetails.price,
+          fixedPrice: pricingDetails.fixedPrice,
+          ownersId: pricingDetails.owners._id,
+          description: pricingDetails.description,
         }),
       })
 
@@ -69,8 +83,10 @@ const SellACar = () => {
             <div className="py-8 px-10 bg-white mt-7 rounded-[30px] w-full md:w-[60%] shadow-lg">
               <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                 <PostACarBasic setGoFurther={setGoFurther} />
-                {goFurther && <PostACarModel />}
-                {goFurther && (
+                {goFurther && <PostACarModel setGoToFinish={setGoToFinish} />}
+                {/* <PostACarModel /> */}
+                {goToFinish && <PostACarFinish />}
+                {goFurther && goToFinish && (
                   <button disabled={submitting} type="submit">
                     submit
                   </button>

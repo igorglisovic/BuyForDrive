@@ -18,7 +18,7 @@ export const GET = async (req, { params }) => {
     req.nextUrl.searchParams.get('fuel_type_id') &&
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('fuel_type_id'))
 
-  console.log(fuelTypeId)
+  // console.log(fuelTypeId)
 
   try {
     await connectToDB()
@@ -173,11 +173,11 @@ export const GET = async (req, { params }) => {
       }
     }
 
-    console.log('pipe >>> ', pipeline)
+    // console.log('pipe >>> ', pipeline)
 
     const cars = await Car.aggregate(pipeline)
 
-    console.log('serachedCars>> ', cars)
+    // console.log('serachedCars>> ', cars)
 
     return new Response(JSON.stringify(cars), { status: 200 })
   } catch (error) {

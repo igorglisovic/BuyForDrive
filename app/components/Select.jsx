@@ -14,17 +14,73 @@ const Select = ({
   const [isOpened, setIsOpened] = useState(false)
   const [value, setValue] = useState('')
   const [filteredOptions, setFilteredOptions] = useState([])
+  const [highlightedOption, setHighlightedOption] = useState()
 
   const selectRef = useRef(null)
+  const containerRef = useRef(null)
 
   const { setLoadingBar } = useLoadingBarContext()
 
   const filterSelectOptions = searchText => {
-    const regex = new RegExp(value, 'i')
+    const regex = new RegExp(searchText, 'i')
     return options.filter(
       item => regex.test(item.label) || regex.test(item._id)
     )
   }
+
+  useEffect(() => {
+    const handler = e => {
+      switch (e.code) {
+        case 'ArrowUp':
+        case 'ArrowDown':
+          const newValue =
+            e.code === 'ArrowDown'
+              ? highlightedOption + 1
+              : highlightedOption - 1
+          if (filteredOptions) {
+            if (newValue >= 0 && newValue < filteredOptions.length) {
+              setHighlightedOption(newValue)
+              return
+            }
+          }
+          if (newValue >= 0 && newValue < options?.length) {
+            setHighlightedOption(newValue)
+          }
+          break
+        case 'Enter':
+          if (highlightedOption !== -1) {
+            if (filteredOptions.length) {
+              setValue(filteredOptions[highlightedOption].label)
+              updateFunction(filteredOptions[highlightedOption])
+              setIsOpened(false)
+              return
+            }
+            setValue(options[highlightedOption]?.label)
+            updateFunction(options[highlightedOption])
+            setIsOpened(false)
+            return
+          }
+          break
+        case 'Escape':
+          setIsOpened(false)
+          break
+        case 'Tab':
+          setIsOpened(false)
+          break
+      }
+    }
+    containerRef.current?.addEventListener('keydown', handler)
+    // console.log(highlightedOption)
+    // console.log(placeholder === 'All brands' && filteredOptions)
+
+    return () => {
+      containerRef.current?.removeEventListener('keydown', handler)
+    }
+  }, [highlightedOption, options, filteredOptions])
+
+  useEffect(() => {
+    if (isOpened) setHighlightedOption(-1)
+  }, [isOpened])
 
   useEffect(() => {
     const handleDocumentClick = event => {
@@ -44,16 +100,11 @@ const Select = ({
   }, [lastValue])
 
   useEffect(() => {
-    // console.log(defaultValue)
     if (defaultValue) {
       setValue(defaultValue.label)
       updateFunction(defaultValue)
     }
   }, [defaultValue])
-
-  useEffect(() => {
-    console.log(value)
-  }, [value])
 
   // Track if current input value exists in fetched options
   useEffect(() => {
@@ -68,6 +119,10 @@ const Select = ({
       }
     }
   }, [options])
+
+  useEffect(() => {
+    setHighlightedOption(0)
+  }, [filteredOptions])
 
   // If select is disabled, restart value to ''
   useEffect(() => {
@@ -108,7 +163,12 @@ const Select = ({
 
   const handleChange = e => {
     setValue(e.target.value)
-    if (label === 'Mileage') {
+    if (
+      label === 'Mileage' ||
+      label === 'Power' ||
+      label === 'Displacement' ||
+      label === 'Price'
+    ) {
       // Remove any non-digit characters
       let numericValue = e.target.value.replace(/\D/g, '')
 
@@ -145,12 +205,15 @@ const Select = ({
     <div className="flex flex-col relative" ref={selectRef}>
       {label && <label className="text-sm">{label}</label>}
       <input
-        className={`select-${type} bg-white cursor-context-menu}`}
+        className={`select-${type} ${
+          options && 'select'
+        } bg-white cursor-context-menu}`}
         type="text"
         placeholder={placeholder}
         onFocus={handleFocus}
         disabled={disabled}
         value={value}
+        ref={containerRef}
         onChange={handleChange}
       />
       {options && (
@@ -159,7 +222,7 @@ const Select = ({
             isOpened ? 'flex' : 'hidden'
           }`}
         >
-          {options && (
+          {options && !value && (
             <li
               className="py-2 px-2 hover:bg-gray-200 cursor-pointer border-b-[1px] border-gray-300"
               onClick={handleClearInput}
@@ -174,7 +237,7 @@ const Select = ({
               <li
                 className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
                   i !== options.length - 1 && 'border-b-[1px] border-gray-300'
-                }`}
+                } ${i === highlightedOption && 'bg-gray-200'}`}
                 key={option._id}
                 onClick={() => handleClick(option)}
               >
@@ -186,7 +249,7 @@ const Select = ({
               <li
                 className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
                   i !== options?.length - 1 && 'border-b-[1px] border-gray-300'
-                }`}
+                } ${i === highlightedOption && 'bg-gray-200'}`}
                 key={option._id}
                 onClick={() => handleClick(option)}
               >

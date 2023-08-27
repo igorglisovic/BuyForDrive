@@ -1,10 +1,10 @@
 'use client'
 
 import Container from './Container'
-import BigCard from './BigCard'
+import BigCard from './cards/BigCard'
 import FilterCars from './FilterCars'
 import { useEffect, useState } from 'react'
-import BigCardMobile from './BigCardMobile'
+import BigCardMobile from './cards/BigCardMobile'
 
 const SearchedCars = ({ searchedCars, paramsArray }) => {
   const [mediaMatches, setMediaMatches] = useState(false)

@@ -13,7 +13,7 @@ const LoadingBar = () => {
   const { loadingBar } = useLoadingBarContext()
 
   useEffect(() => {
-    console.log(loadingBar)
+    // console.log(loadingBar)
   }, [loadingBar])
 
   return (
