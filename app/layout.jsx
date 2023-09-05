@@ -4,6 +4,7 @@ import Nav from './components/Nav'
 import Provider from './components/Provider'
 import './globals.css'
 import { LoadingBarProvider } from './store/loading-bar'
+import { FiltersContextProvider } from './store/filters'
 import { PostCarContextProvider } from './store/post-car'
 import { SearchContextProvider } from './store/search-car'
 
@@ -19,10 +20,12 @@ export default function RootLayout({ children }) {
         <PostCarContextProvider>
           <LoadingBarProvider>
             <SearchContextProvider>
-              <Provider>
-                <Nav />
-                <main className="pt-16">{children}</main>
-              </Provider>
+              <FiltersContextProvider>
+                <Provider>
+                  <Nav />
+                  <main className="pt-16">{children}</main>
+                </Provider>
+              </FiltersContextProvider>
             </SearchContextProvider>
           </LoadingBarProvider>
         </PostCarContextProvider>

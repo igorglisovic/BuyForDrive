@@ -5,7 +5,7 @@ const loadingBarContext = createContext()
 export const useLoadingBarContext = () => useContext(loadingBarContext)
 
 export const LoadingBarProvider = ({ children }) => {
-  const [loadingBar, setLoadingBar] = useState(60)
+  const [loadingBar, setLoadingBar] = useState(0)
 
   return (
     <loadingBarContext.Provider value={{ loadingBar, setLoadingBar }}>

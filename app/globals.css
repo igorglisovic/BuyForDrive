@@ -65,6 +65,10 @@ input::placeholder {
   @apply rounded-[10px];
 }
 
+option {
+  @apply cursor-pointer;
+}
+
 /* Slider */
 
 .arrow {

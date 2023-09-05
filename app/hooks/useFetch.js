@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react'
 
 const useFetch = (url, dependencies = [], shouldFetch = true) => {
   const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(false)
-
-  // console.log(url)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,9 +10,9 @@ const useFetch = (url, dependencies = [], shouldFetch = true) => {
         setLoading(true)
 
         const res = await fetch(url)
-        const data = await res.json()
+        const fetchedData = await res.json()
 
-        setData(data)
+        setData(fetchedData)
       } catch (error) {
         console.log(error)
       } finally {
@@ -22,14 +20,14 @@ const useFetch = (url, dependencies = [], shouldFetch = true) => {
       }
     }
 
-    if (shouldFetch && !url.includes('undefined')) {
+    if (shouldFetch && typeof url === 'string' && url.trim() !== '') {
       fetchData()
     }
 
     if (!shouldFetch) {
       setData(null)
     }
-  }, dependencies)
+  }, [...dependencies])
 
   return { data, loading }
 }

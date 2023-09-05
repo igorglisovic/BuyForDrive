@@ -2,7 +2,7 @@ import { useLoadingBarContext } from '@app/store/loading-bar'
 import { useEffect, useRef, useState } from 'react'
 
 const Select = ({
-  defaultValue,
+  defaultValue = null,
   placeholder,
   options,
   type,
@@ -10,6 +10,7 @@ const Select = ({
   label,
   updateFunction,
   lastValue,
+  tabIndex,
 }) => {
   const [isOpened, setIsOpened] = useState(false)
   const [value, setValue] = useState('')
@@ -33,18 +34,24 @@ const Select = ({
       switch (e.code) {
         case 'ArrowUp':
         case 'ArrowDown':
-          const newValue =
-            e.code === 'ArrowDown'
-              ? highlightedOption + 1
-              : highlightedOption - 1
-          if (filteredOptions) {
+          let newValue
+          if (filteredOptions.length > 0) {
+            newValue =
+              e.code === 'ArrowDown'
+                ? highlightedOption + 1
+                : highlightedOption - 1
             if (newValue >= 0 && newValue < filteredOptions.length) {
               setHighlightedOption(newValue)
               return
             }
-          }
-          if (newValue >= 0 && newValue < options?.length) {
-            setHighlightedOption(newValue)
+          } else {
+            newValue =
+              e.code === 'ArrowDown'
+                ? highlightedOption + 1
+                : highlightedOption - 1
+            if (newValue >= 0 && newValue < options?.length) {
+              setHighlightedOption(newValue)
+            }
           }
           break
         case 'Enter':
@@ -70,8 +77,6 @@ const Select = ({
       }
     }
     containerRef.current?.addEventListener('keydown', handler)
-    // console.log(highlightedOption)
-    // console.log(placeholder === 'All brands' && filteredOptions)
 
     return () => {
       containerRef.current?.removeEventListener('keydown', handler)
@@ -100,8 +105,19 @@ const Select = ({
   }, [lastValue])
 
   useEffect(() => {
+    if (!lastValue) {
+      setValue('')
+    }
+  }, [lastValue])
+
+  useEffect(() => {
+    if (label === 'Model') {
+      console.log('model values>> ', defaultValue, lastValue)
+    }
+
     if (defaultValue) {
-      setValue(defaultValue.label)
+      console.log('default value>>> ', defaultValue)
+      setValue(defaultValue?.label)
       updateFunction(defaultValue)
     }
   }, [defaultValue])
@@ -128,21 +144,22 @@ const Select = ({
   useEffect(() => {
     if (disabled) {
       setValue('')
+      setFilteredOptions([])
     }
   }, [disabled])
 
   // update loading bar
   useEffect(() => {
     // if input has a value and has an options
-    if (value && options) {
+    if (lastValue && options) {
       setLoadingBar(prev => prev + 10)
     }
 
     // If input value is empty
-    if (!value) {
+    if (!lastValue && !disabled) {
       setLoadingBar(prev => prev - 10)
     }
-  }, [value])
+  }, [lastValue])
 
   const handleFocus = e => {
     setIsOpened(true)
@@ -155,7 +172,6 @@ const Select = ({
     // If input has options
     if (options) {
       updateFunction(option)
-
       setIsOpened(false)
       setValue(option.label)
     }
@@ -179,14 +195,20 @@ const Select = ({
 
       setValue(formattedValue)
     }
+
+    options?.map(option => {
+      if (option.label.toLowerCase() === e.target.value) {
+        updateFunction(option)
+        setValue(option.label)
+      }
+    })
   }
 
   useEffect(() => {
     // If input has no options
-    if (!options) {
+    if (!options && value) {
       updateFunction(value)
     }
-
     // Filter options by value in the input
     if (options) {
       const filteredOptions =
@@ -215,6 +237,7 @@ const Select = ({
         value={value}
         ref={containerRef}
         onChange={handleChange}
+        tabIndex={tabIndex}
       />
       {options && (
         <ul
@@ -226,6 +249,7 @@ const Select = ({
             <li
               className="py-2 px-2 hover:bg-gray-200 cursor-pointer border-b-[1px] border-gray-300"
               onClick={handleClearInput}
+              key={label}
             >
               Clear input
             </li>
@@ -235,10 +259,10 @@ const Select = ({
             !value &&
             options.map((option, i) => (
               <li
+                key={i}
                 className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
                   i !== options.length - 1 && 'border-b-[1px] border-gray-300'
                 } ${i === highlightedOption && 'bg-gray-200'}`}
-                key={option._id}
                 onClick={() => handleClick(option)}
               >
                 {option.label}
@@ -247,10 +271,10 @@ const Select = ({
           {filteredOptions &&
             filteredOptions.map((option, i) => (
               <li
+                key={i}
                 className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
                   i !== options?.length - 1 && 'border-b-[1px] border-gray-300'
                 } ${i === highlightedOption && 'bg-gray-200'}`}
-                key={option._id}
                 onClick={() => handleClick(option)}
               >
                 {option.label}

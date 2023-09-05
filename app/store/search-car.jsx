@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const searchCarContext = createContext({
   brand: {},
@@ -13,12 +13,15 @@ const searchCarContext = createContext({
   kmTo: {},
   powerFrom: {},
   powerTo: {},
+  sorting: '',
   updateBrand: () => {},
   updateModel: () => {},
   updateYearFrom: () => {},
   updateYearTo: () => {},
   updateBodyType: () => {},
   updateFuelType: () => {},
+  updateSorting: () => {},
+  resetStates: () => {},
 })
 
 export const useSearchContext = () => useContext(searchCarContext)
@@ -30,6 +33,7 @@ export const SearchContextProvider = ({ children }) => {
   const [yearTo, setYearTo] = useState(null)
   const [bodyType, setBodyType] = useState(null)
   const [fuelType, setFuelType] = useState(null)
+  const [sorting, setSorting] = useState('default_sorting')
 
   const updateBrand = brand => {
     setBrand(brand)
@@ -55,6 +59,20 @@ export const SearchContextProvider = ({ children }) => {
     setFuelType(fuelType)
   }
 
+  const updateSorting = sorting => {
+    setSorting(sorting)
+  }
+
+  const resetStates = () => {
+    setBrand(null)
+    setModel(null)
+    setYearFrom(null)
+    setYearTo(null)
+    setBodyType(null)
+    setFuelType(null)
+    setSorting('default_sorting')
+  }
+
   const value = {
     brand,
     model,
@@ -62,12 +80,15 @@ export const SearchContextProvider = ({ children }) => {
     yearTo,
     bodyType,
     fuelType,
+    sorting,
     updateBrand,
     updateModel,
     updateYearFrom,
     updateYearTo,
     updateBodyType,
     updateFuelType,
+    resetStates,
+    updateSorting,
   }
 
   return (

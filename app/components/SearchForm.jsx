@@ -2,26 +2,11 @@ import Select from './Select'
 import Button from './Button'
 import { useSearchContext } from '@app/store/search-car'
 import useFetch from '@app/hooks/useFetch'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import useMakeUrl from '@app/hooks/useMakeUrl'
-
-const fetchSearchedCars = async url => {
-  try {
-    const res = await fetch(url)
-    const data = await res.json()
-
-    return data
-  } catch (error) {
-    console.log(error)
-  }
-}
+import useCalcSearchedCars from '@app/hooks/useCalcSearchedCars'
+import { useFiltersContext } from '@app/store/filters'
+import { useEffect } from 'react'
 
 const SearchForm = () => {
-  const [countOffers, setCountOffers] = useState()
-
-  const router = useRouter()
-
   const {
     brand,
     model,
@@ -43,55 +28,14 @@ const SearchForm = () => {
   const { data: bodyTypes } = useFetch('/api/body_type', [], true)
   const { data: fuelTypes } = useFetch('/api/fuel_types', [], true)
 
-  const makeUrlQueriesArray = [
-    { name: 'brand_id', value: brand?._id },
-    { name: 'model_id', value: model?._id },
-    { name: 'year_from', value: yearFrom?.label },
-    { name: 'year_to', value: yearTo?.label },
-    { name: 'body_type_id', value: bodyType?._id },
-    { name: 'fuel_type_id', value: fuelType?._id },
-  ]
-
-  const handleSubmit = async e => {
-    e.preventDefault()
-
-    window.addEventListener('keydown', e => {
-      console.log(e.code)
-      if (e.code === 'Enter') {
-        console.log('first')
-        e.preventDefault()
-        return false
-      }
-    })
-
-    const { url } = useMakeUrl('/cars/search?', makeUrlQueriesArray)
-    console.log('submitted')
-    router.push(url)
-  }
-
-  useEffect(() => {
-    const fetchSearchedCarsData = async () => {
-      const { url } = useMakeUrl('/api/searched_cars?', makeUrlQueriesArray)
-
-      const data = await fetchSearchedCars(url)
-
-      setCountOffers(data?.length)
-
-      console.log(url)
-    }
-    fetchSearchedCarsData()
-  }, [brand, model, yearFrom, yearTo, bodyType, fuelType])
-
-  useEffect(() => {
-    const countNumOfAllOffers = async () => {
-      const allCars = await fetchSearchedCars('/api/cars', [])
-      setCountOffers(allCars?.length)
-    }
-    countNumOfAllOffers()
-  }, [])
+  const { countOffers, handleSubmit, handleKeyDown } = useCalcSearchedCars()
 
   return (
-    <form onSubmit={handleSubmit} className="flex  gap-4">
+    <form
+      onKeyDown={handleKeyDown}
+      onSubmit={handleSubmit}
+      className="flex gap-4"
+    >
       <div className="flex flex-col max-w-[320px] gap-7 ">
         <div className="relative">
           <Select
@@ -100,6 +44,7 @@ const SearchForm = () => {
             options={brands}
             updateFunction={updateBrand}
             lastValue={brand}
+            tabIndex={1}
           />
         </div>
         <div className="flex gap-2">
@@ -109,6 +54,7 @@ const SearchForm = () => {
             type="half"
             updateFunction={updateYearFrom}
             lastValue={yearFrom}
+            tabIndex={5}
           />
           <Select
             placeholder="To"
@@ -116,6 +62,7 @@ const SearchForm = () => {
             type="half"
             updateFunction={updateYearTo}
             lastValue={yearTo}
+            tabIndex={6}
           />
         </div>
         <div className="flex gap-2">
@@ -123,11 +70,13 @@ const SearchForm = () => {
             placeholder="Km from"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
+            tabIndex={9}
           />
           <Select
             placeholder="To"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
+            tabIndex={10}
           />
         </div>
       </div>
@@ -139,6 +88,7 @@ const SearchForm = () => {
           updateFunction={updateModel}
           lastValue={model}
           disabled={brand ? false : true}
+          tabIndex={2}
         />
         <Select
           placeholder="Body types"
@@ -146,17 +96,20 @@ const SearchForm = () => {
           type="full"
           updateFunction={updateBodyType}
           lastValue={bodyType}
+          tabIndex={7}
         />
         <div className="flex gap-2">
           <Select
             placeholder="Power from"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
+            tabIndex={11}
           />
           <Select
             placeholder="To"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
+            tabIndex={12}
           />
         </div>
       </div>
@@ -166,11 +119,13 @@ const SearchForm = () => {
             placeholder="Price from"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
+            tabIndex={3}
           />
           <Select
             placeholder="To"
             options={['BMW', 'Audi', 'Mercedes']}
             type="half"
+            tabIndex={4}
           />
         </div>
         <Select
@@ -179,8 +134,9 @@ const SearchForm = () => {
           type="full"
           updateFunction={updateFuelType}
           lastValue={fuelType}
+          tabIndex={8}
         />
-        <Button>{countOffers} offers</Button>
+        <Button tabIndex={13}>{countOffers} offers</Button>
       </div>
     </form>
   )

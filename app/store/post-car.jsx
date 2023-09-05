@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const PostCarContext = createContext({
   basicInfo: {
@@ -178,6 +178,8 @@ export const PostCarContextProvider = ({ children }) => {
     setAirConditioning(null)
     setPrice(null)
     setFixedPrice(true)
+    setDescription(null)
+    setOwners(null)
   }
 
   const basicInfo = {

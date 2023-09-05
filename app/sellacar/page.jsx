@@ -24,10 +24,30 @@ const SellACar = () => {
   const router = useRouter()
 
   useEffect(() => {
-    // if (!session?.user) {
-    //   router.push('/signin')
-    // }
+    if (!session?.user) {
+      router.push('/signin')
+    }
+    console.log(session?.user)
+  }, [session])
+
+  useEffect(() => {
+    if (
+      !basicInfo.brand ||
+      !basicInfo.model ||
+      !basicInfo.regMonth ||
+      !basicInfo.regYear ||
+      !basicInfo.mileage
+    ) {
+      setGoFurther(false)
+    }
   }, [])
+
+  const handleKeyDown = e => {
+    if (e.keyCode === 13) {
+      e.preventDefault()
+      console.log('Enter')
+    }
+  }
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -81,9 +101,20 @@ const SellACar = () => {
         <Container>
           <div className="flex justify-center">
             <div className="py-8 px-10 bg-white mt-7 rounded-[30px] w-full md:w-[60%] shadow-lg">
-              <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+              <form
+                onKeyDown={handleKeyDown}
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-8"
+              >
                 <PostACarBasic setGoFurther={setGoFurther} />
-                {goFurther && <PostACarModel setGoToFinish={setGoToFinish} />}
+                {goFurther &&
+                  basicInfo.brand &&
+                  basicInfo.model &&
+                  basicInfo.regYear &&
+                  basicInfo.regMonth &&
+                  basicInfo.mileage && (
+                    <PostACarModel setGoToFinish={setGoToFinish} />
+                  )}
                 {/* <PostACarModel /> */}
                 {goToFinish && <PostACarFinish />}
                 {goFurther && goToFinish && (

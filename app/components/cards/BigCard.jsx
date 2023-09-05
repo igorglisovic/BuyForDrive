@@ -3,8 +3,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 const BigCard = ({ car }) => {
-  console.log(car)
   const router = useRouter()
+
   const handleClick = () => {
     router.push(`/car/${car._id}`)
   }

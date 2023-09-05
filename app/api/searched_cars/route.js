@@ -3,6 +3,7 @@ import { Car } from '@models/car'
 import mongoose from 'mongoose'
 
 export const GET = async (req, { params }) => {
+  const sorting = req.nextUrl.searchParams.get('sort')
   const brandId =
     req.nextUrl.searchParams.get('brand_id') &&
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('brand_id'))
@@ -18,7 +19,7 @@ export const GET = async (req, { params }) => {
     req.nextUrl.searchParams.get('fuel_type_id') &&
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('fuel_type_id'))
 
-  // console.log(fuelTypeId)
+  console.log(sorting)
 
   try {
     await connectToDB()

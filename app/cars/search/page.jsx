@@ -13,7 +13,7 @@ const page = ({ searchParams }) => {
   }))
 
   const { url } = useMakeUrl('/api/searched_cars?', paramsArray)
-  const { data: searchedCars } = useFetch(url)
+  const { data: searchedCars, loading } = useFetch(url, [url])
 
   return (
     <>
@@ -28,7 +28,12 @@ const page = ({ searchParams }) => {
           </div>
         </Container>
       </section>
-      <SearchedCars paramsArray={paramsArray} searchedCars={searchedCars} />
+      <SearchedCars
+        paramsArray={paramsArray}
+        searchedCars={searchedCars}
+        loading={loading}
+        url={url}
+      />
     </>
   )
 }

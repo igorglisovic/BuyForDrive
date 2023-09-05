@@ -4,13 +4,21 @@ import Container from '@app/components/Container'
 import Image from 'next/image'
 import GoogleImage from '@public/assets/google.png'
 import { useRouter } from 'next/navigation'
-import { signIn, getProviders } from 'next-auth/react'
+import { signIn, getProviders, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
 const SignIn = () => {
   const [providers, setProviders] = useState()
 
+  const { data: session } = useSession()
   const router = useRouter()
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push('/')
+    }
+    console.log(session?.user)
+  }, [session])
 
   useEffect(() => {
     const getAuthProviders = async () => {
