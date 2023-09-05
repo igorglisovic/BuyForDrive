@@ -174,11 +174,77 @@ export const GET = async (req, { params }) => {
       }
     }
 
-    // console.log('pipe >>> ', pipeline)
+    if (sorting) {
+      pipeline.push({
+        $addFields: {
+          mileageNumeric: {
+            $toDouble: {
+              $replaceAll: {
+                input: '$mileage',
+                find: ',',
+                replacement: '',
+              },
+            },
+          },
+          priceNumeric: {
+            $toDouble: {
+              $replaceAll: {
+                input: '$price',
+                find: ',',
+                replacement: '',
+              },
+            },
+          },
+        },
+      })
+    }
+
+    switch (sorting) {
+      case 'price_asc':
+        pipeline.push({
+          $sort: {
+            priceNumeric: 1,
+          },
+        })
+        break
+      case 'price_desc':
+        pipeline.push({
+          $sort: {
+            priceNumeric: -1,
+          },
+        })
+        break
+      case 'reg_desc':
+        pipeline.push({
+          $sort: {
+            'reg_year.label': -1,
+          },
+        })
+        break
+      case 'reg_asc':
+        pipeline.push({
+          $sort: {
+            'reg_year.label': 1,
+          },
+        })
+        break
+      case 'mileage_asc':
+        pipeline.push({
+          $sort: {
+            mileageNumeric: 1,
+          },
+        })
+        break
+      case 'mileage_desc':
+        pipeline.push({
+          $sort: {
+            mileageNumeric: -1,
+          },
+        })
+        break
+    }
 
     const cars = await Car.aggregate(pipeline)
-
-    // console.log('serachedCars>> ', cars)
 
     return new Response(JSON.stringify(cars), { status: 200 })
   } catch (error) {

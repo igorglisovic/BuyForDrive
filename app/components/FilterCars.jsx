@@ -22,11 +22,8 @@ const FilterCars = ({ paramsArray, url }) => {
     updateYearTo,
     updateBodyType,
     updateFuelType,
+    updateSorting,
   } = useSearchContext()
-
-  useEffect(() => {
-    console.log(brand)
-  }, [brand])
 
   const { data: brands } = useFetch('/api/brands', [], true)
   const { data: models } = useFetch(`/api/models/${brand?._id}`, [brand], brand)
@@ -100,7 +97,6 @@ const FilterCars = ({ paramsArray, url }) => {
         case 'brand_id':
           const filterBrand2 = filterArrayById(brands, param.value)
           if (filterBrand?._id !== filterBrand2?._id) {
-            // console.log(filterBrand)
             updateFilterBrand(filterBrand2)
           }
           break
@@ -123,6 +119,9 @@ const FilterCars = ({ paramsArray, url }) => {
             updateFilterFuelType(filterFuelType2)
           }
           break
+        case 'sort':
+          updateSorting(param.value)
+          break
       }
     })
   }, [
@@ -139,8 +138,12 @@ const FilterCars = ({ paramsArray, url }) => {
   ])
 
   useEffect(() => {
-    clearFiltersArray()
-  }, [url])
+    const hasChanged = paramsArray.some(param => param.name !== 'sort')
+
+    if (hasChanged) {
+      clearFiltersArray()
+    }
+  }, [paramsArray])
 
   return (
     <aside className="base-plus:min-w-[20%] hidden md-plus:block min-w-[25%] max-w-[30%] base-plus:py-9 base-plus:px-9 px-6 py-6 bg-white rounded-[45px] shadow-md">

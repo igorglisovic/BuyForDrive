@@ -32,9 +32,14 @@ const useCalcSearchedCars = () => {
     { name: 'fuel_type_id', value: fuelType?._id },
   ]
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault()
 
+    const { url } = useMakeUrl('/cars/search?', queriesArray)
+    router.push(url)
+  }
+
+  const handleChange = () => {
     const { url } = useMakeUrl('/cars/search?', queriesArray)
     router.push(url)
   }
@@ -65,7 +70,7 @@ const useCalcSearchedCars = () => {
       fetchSearchedCarsData()
   }, [brand, model, yearFrom, yearTo, bodyType, fuelType])
 
-  return { countOffers, handleSubmit, handleKeyDown }
+  return { countOffers, handleSubmit, handleKeyDown, handleChange }
 }
 
 export default useCalcSearchedCars

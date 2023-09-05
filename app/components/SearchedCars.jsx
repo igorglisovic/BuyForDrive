@@ -18,12 +18,15 @@ const SearchedCars = ({ searchedCars, paramsArray, url, loading }) => {
 
   const { filtersArray } = useFiltersContext()
 
-  const { updateSorting } = useSearchContext()
-  const { handleSubmit } = useCalcSearchedCars()
+  const { sorting, updateSorting } = useSearchContext()
+  const { handleChange } = useCalcSearchedCars()
+
+  useEffect(() => {
+    handleChange()
+  }, [sorting])
 
   const handleSortingChange = e => {
     updateSorting(e.target.value)
-    handleSubmit(e)
   }
 
   const getMediaMatches = () => {
@@ -38,10 +41,6 @@ const SearchedCars = ({ searchedCars, paramsArray, url, loading }) => {
     getMediaMatches()
     window.addEventListener('resize', getMediaMatches)
   }, [])
-
-  useEffect(() => {
-    console.log('array>>> ', filtersArray)
-  }, [filtersArray])
 
   return (
     <section className="py-10">
@@ -66,6 +65,7 @@ const SearchedCars = ({ searchedCars, paramsArray, url, loading }) => {
                 <select
                   className="select-half select focus:border-[1px] focus:border-black focus:outline-none"
                   onChange={handleSortingChange}
+                  value={sorting}
                 >
                   <option className="text-sm" value="default_sorting">
                     Default Sorting
