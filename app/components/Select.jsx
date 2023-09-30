@@ -111,10 +111,6 @@ const Select = ({
   }, [lastValue])
 
   useEffect(() => {
-    if (label === 'Model') {
-      console.log('model values>> ', defaultValue, lastValue)
-    }
-
     if (defaultValue) {
       console.log('default value>>> ', defaultValue)
       setValue(defaultValue?.label)
@@ -159,6 +155,8 @@ const Select = ({
     if (!lastValue && !disabled) {
       setLoadingBar(prev => prev - 10)
     }
+
+    console.log('model values>> ', defaultValue, lastValue)
   }, [lastValue])
 
   const handleFocus = e => {

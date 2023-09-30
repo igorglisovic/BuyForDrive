@@ -6,9 +6,8 @@ import GoogleImage from '@public/assets/google.png'
 import { useRouter } from 'next/navigation'
 import { signIn, getProviders, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 
-const SignIn = () => {
+const SignUp = () => {
   const [providers, setProviders] = useState()
 
   const { data: session } = useSession()
@@ -46,22 +45,29 @@ const SignIn = () => {
             className="flex flex-col lg:min-w-[36%] md:min-w-[36%] min-w-[70%] gap-5 py-7 px-6 bg-white rounded-[30px]"
           >
             <div>
-              <h1 className="font-bold text-2xl">Sign in</h1>
+              <h1 className="font-bold text-2xl">Join now</h1>
               <p>Find your car.</p>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-5">
+              <input
+                className="input-full"
+                type="text"
+                placeholder="Username"
+              />
               <input className="input-full" type="text" placeholder="Email" />
               <input
-                className="input-full mt-5"
+                className="input-full"
                 type="text"
                 placeholder="Password"
               />
-              <button className="self-start mt-1.5 text-sm">
-                Forgot password?
-              </button>
+              <input
+                className="input-full"
+                type="text"
+                placeholder="Confirm password"
+              />
             </div>
             <button className="bg-[#8D8D8D] text-white py-2 rounded-full text-sm font-medium">
-              Sign in
+              Sign up
             </button>
             <div className="flex gap-2.5 items-center">
               <div className="h-[1px] w-full bg-[#ddd]"></div>
@@ -86,16 +92,10 @@ const SignIn = () => {
                 </button>
               ))}
           </form>
-          <p className="text-gray-500">
-            New to SellCars?{' '}
-            <Link className="text-black ml-1" href="/signup">
-              Join now!
-            </Link>
-          </p>
         </div>
       </Container>
     </div>
   )
 }
 
-export default SignIn
+export default SignUp

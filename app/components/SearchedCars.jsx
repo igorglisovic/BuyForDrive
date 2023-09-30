@@ -9,24 +9,33 @@ import Link from 'next/link'
 import SelectedFilter from './SelectedFilter'
 import { useFiltersContext } from '@app/store/filters'
 import { useSearchContext } from '@app/store/search-car'
-import useCalcSearchedCars from '@app/hooks/useCalcSearchedCars'
+import { useRouter } from 'next/navigation'
 
-const SearchedCars = ({ searchedCars, paramsArray, url, loading }) => {
+const SearchedCars = ({
+  searchedCars,
+  searchParams,
+  paramsArray,
+  url,
+  loading,
+}) => {
   const [mediaMatches, setMediaMatches] = useState(false)
 
   let media = window.matchMedia('(max-width: 520px)')
+  const router = useRouter()
 
   const { filtersArray } = useFiltersContext()
-
   const { sorting, updateSorting } = useSearchContext()
-  const { handleChange } = useCalcSearchedCars()
-
-  useEffect(() => {
-    handleChange()
-  }, [sorting])
 
   const handleSortingChange = e => {
-    updateSorting(e.target.value)
+    const newSorting = e.target.value
+    updateSorting(newSorting)
+
+    const newUrl = `/cars/search?sort=${newSorting}&${url
+      .split('&')
+      .slice(1)
+      .join('&')}`
+
+    router.push(newUrl)
   }
 
   const getMediaMatches = () => {
@@ -38,6 +47,10 @@ const SearchedCars = ({ searchedCars, paramsArray, url, loading }) => {
   }
 
   useEffect(() => {
+    console.log('defSortVal> ', sorting)
+  }, [sorting])
+
+  useEffect(() => {
     getMediaMatches()
     window.addEventListener('resize', getMediaMatches)
   }, [])
@@ -46,7 +59,11 @@ const SearchedCars = ({ searchedCars, paramsArray, url, loading }) => {
     <section className="py-10">
       <Container>
         <div className="flex xl:gap-10 gap-5">
-          <FilterCars url={url} paramsArray={paramsArray} />
+          <FilterCars
+            searchParams={searchParams}
+            url={url}
+            paramsArray={paramsArray}
+          />
           <div className="flex flex-col gap-6">
             <div className="flex justify-between">
               <div className="flex gap-2 flex-wrap">
@@ -101,8 +118,7 @@ const SearchedCars = ({ searchedCars, paramsArray, url, loading }) => {
                 <h3 className="text-lg font-medium">
                   There are currently no results matching your search criteria.
                   We advise you to advertise the purchase of the vehicle you are
-                  looking for, and we will notify you when such a vehicle
-                  appears on the site.
+                  looking for.
                 </h3>
                 <Link href="/sellacar">
                   <button className="self-end py-1.5 px-8 rounded-3xl bg-gray-300 font-semibold ">

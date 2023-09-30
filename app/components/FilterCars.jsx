@@ -8,7 +8,7 @@ import { useFiltersContext } from '@app/store/filters'
 
 const filterArrayById = (array, id) => array?.find(item => item._id === id)
 
-const FilterCars = ({ paramsArray, url }) => {
+const FilterCars = ({ paramsArray, searchParams, url }) => {
   const {
     brand,
     model,
@@ -16,6 +16,7 @@ const FilterCars = ({ paramsArray, url }) => {
     yearTo,
     bodyType,
     fuelType,
+    sorting,
     updateBrand,
     updateModel,
     updateYearFrom,
@@ -23,6 +24,7 @@ const FilterCars = ({ paramsArray, url }) => {
     updateBodyType,
     updateFuelType,
     updateSorting,
+    updateDefaultSortValue,
   } = useSearchContext()
 
   const { data: brands } = useFetch('/api/brands', [], true)
@@ -42,10 +44,11 @@ const FilterCars = ({ paramsArray, url }) => {
     updateFilterBodyType,
     updateFilterFuelType,
     clearFiltersArray,
+    resetStates,
   } = useFiltersContext()
 
   useEffect(() => {
-    const urlHasBrand = paramsArray.find(param => param.name === 'brand_id')
+    const urlHasBrand = paramsArray?.find(param => param.name === 'brand_id')
       ? true
       : false
 
@@ -56,7 +59,7 @@ const FilterCars = ({ paramsArray, url }) => {
       updateModel(null)
     }
 
-    const urlHasModel = paramsArray.find(param => param.name === 'model_id')
+    const urlHasModel = paramsArray?.find(param => param.name === 'model_id')
       ? true
       : false
 
@@ -65,7 +68,7 @@ const FilterCars = ({ paramsArray, url }) => {
       updateModel(null)
     }
 
-    const urlHasBodyType = paramsArray.find(
+    const urlHasBodyType = paramsArray?.find(
       param => param.name === 'body_type_id'
     )
       ? true
@@ -76,7 +79,7 @@ const FilterCars = ({ paramsArray, url }) => {
       updateBodyType(null)
     }
 
-    const urlHasFuelType = paramsArray.find(
+    const urlHasFuelType = paramsArray?.find(
       param => param.name === 'fuel_type_id'
     )
       ? true
@@ -92,6 +95,7 @@ const FilterCars = ({ paramsArray, url }) => {
 
   useEffect(() => {
     console.log('parray>> ', paramsArray)
+
     paramsArray?.forEach(param => {
       switch (param.name) {
         case 'brand_id':
@@ -119,9 +123,6 @@ const FilterCars = ({ paramsArray, url }) => {
             updateFilterFuelType(filterFuelType2)
           }
           break
-        case 'sort':
-          updateSorting(param.value)
-          break
       }
     })
   }, [
@@ -138,11 +139,26 @@ const FilterCars = ({ paramsArray, url }) => {
   ])
 
   useEffect(() => {
-    const hasChanged = paramsArray.some(param => param.name !== 'sort')
+    // const filterBrand2 = filterArrayById(brands, searchParams['brand_id'])
+    // if (filterBrand?._id !== filterBrand2?._id) {
+    //   updateFilterBrand(filterBrand2)
+    // }
+  }, [searchParams])
 
-    if (hasChanged) {
-      clearFiltersArray()
-    }
+  useEffect(() => {
+    paramsArray?.forEach(param => {
+      if (param.name === 'sort') {
+        console.log(param)
+        if (sorting !== param.name) {
+          updateSorting(param.value)
+        }
+      }
+    })
+  }, [paramsArray])
+
+  useEffect(() => {
+    clearFiltersArray()
+    resetStates()
   }, [paramsArray])
 
   return (

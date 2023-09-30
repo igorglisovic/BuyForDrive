@@ -14,6 +14,9 @@ const searchCarContext = createContext({
   powerFrom: {},
   powerTo: {},
   sorting: '',
+  defaultSortValue: '',
+  page: '',
+  limit: '',
   updateBrand: () => {},
   updateModel: () => {},
   updateYearFrom: () => {},
@@ -21,7 +24,10 @@ const searchCarContext = createContext({
   updateBodyType: () => {},
   updateFuelType: () => {},
   updateSorting: () => {},
+  updateDefaultSortValue: () => {},
   resetStates: () => {},
+  updatePage: () => {},
+  updateLimit: () => {},
 })
 
 export const useSearchContext = () => useContext(searchCarContext)
@@ -33,7 +39,10 @@ export const SearchContextProvider = ({ children }) => {
   const [yearTo, setYearTo] = useState(null)
   const [bodyType, setBodyType] = useState(null)
   const [fuelType, setFuelType] = useState(null)
-  const [sorting, setSorting] = useState('default_sorting')
+  const [sorting, setSorting] = useState('')
+  const [defaultSortValue, setDefaultSortValue] = useState('')
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(10)
 
   const updateBrand = brand => {
     setBrand(brand)
@@ -63,6 +72,18 @@ export const SearchContextProvider = ({ children }) => {
     setSorting(sorting)
   }
 
+  const updateDefaultSortValue = value => {
+    setDefaultSortValue(value)
+  }
+
+  const updatePage = value => {
+    setPage(value)
+  }
+
+  const updateLimit = value => {
+    setLimit(value)
+  }
+
   const resetStates = () => {
     setBrand(null)
     setModel(null)
@@ -81,6 +102,9 @@ export const SearchContextProvider = ({ children }) => {
     bodyType,
     fuelType,
     sorting,
+    defaultSortValue,
+    page,
+    limit,
     updateBrand,
     updateModel,
     updateYearFrom,
@@ -89,6 +113,9 @@ export const SearchContextProvider = ({ children }) => {
     updateFuelType,
     resetStates,
     updateSorting,
+    updateDefaultSortValue,
+    updatePage,
+    updateLimit,
   }
 
   return (

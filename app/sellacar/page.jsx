@@ -18,16 +18,16 @@ const SellACar = () => {
 
   const { basicInfo, modelDetails, pricingDetails, resetStates } =
     usePostCarContext()
-
   const { setLoadingBar } = useLoadingBarContext()
-  const { data: session } = useSession()
+
+  const { data: session, status } = useSession()
   const router = useRouter()
 
+  // Redirect user if not logged in
   useEffect(() => {
-    if (!session?.user) {
-      router.push('/signin')
+    if (!session?.user && status === 'unauthenticated') {
+      router.replace('/signin')
     }
-    console.log(session?.user)
   }, [session])
 
   useEffect(() => {
@@ -42,10 +42,10 @@ const SellACar = () => {
     }
   }, [])
 
+  // Remove form submittiong on clicking 'Enter' hotkey
   const handleKeyDown = e => {
     if (e.keyCode === 13) {
       e.preventDefault()
-      console.log('Enter')
     }
   }
 

@@ -10,21 +10,24 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
 
   const router = useRouter()
 
-  const handleClick = () => {
+  const handleDelete = () => {
     paramsArray?.forEach(param => {
+      // Find param which is same as clicked filter
       if (param.value === filter._id) {
+        console.log('deleted param', param.value)
         const urlParts = url.split('&')
 
-        // Create a new array with parameters that do not include 'model_id'
+        // Create a new array with params without deleted param
         const filteredUrlParts = urlParts.filter(
-          part => !part.includes(`${param.name}=`)
+          part => !part.includes(`${param.name}`)
         )
 
         // Join the filtered parts back into a single string
-        const updatedUrl = filteredUrlParts.join('&')
+        const updatedUrl =
+          '/cars/search?' + filteredUrlParts.join('&').split('?')[1]
 
         setIsHidden(true)
-        router.push(`/cars/search${updatedUrl.slice(18)}`)
+        router.push(updatedUrl)
       }
     })
   }
@@ -36,7 +39,7 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
           className={`flex h-fit items-center gap-2 capitalize bg-white shadow-sm max-w-fit py-1 px-4 rounded-full hover:text-gray-600`}
         >
           <span className="text-sm">{children}</span>
-          <button className="text-gray-800 text-sm" onClick={handleClick}>
+          <button className="text-gray-800 text-sm" onClick={handleDelete}>
             <FontAwesomeIcon icon={faClose} />
           </button>
         </div>

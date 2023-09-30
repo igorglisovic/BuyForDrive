@@ -47,7 +47,7 @@ export const FiltersContextProvider = ({ children }) => {
   }, [filterBrand, filterModel, filterBodyType, filterFuelType])
 
   useEffect(() => {
-    console.log('farray>> ', filtersArray)
+    // console.log('farray>> ', filtersArray)
   }, [filtersArray])
 
   const updateFilterBrand = filterBrand => {

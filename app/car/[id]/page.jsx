@@ -6,18 +6,25 @@ import CarAdditionalInfo from '@app/components/car/CarAdditionalInfo'
 import CarDescription from '@app/components/car/CarDescription'
 import CarDetails from '@app/components/car/CarDetails'
 import CarInformation from '@app/components/car/CarInformation'
-import CarSlider from '@app/components/car/CarSlider'
+import CarSlider from '@app/components/car/CarImgsSlider'
 import useFetch from '@app/hooks/useFetch'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
+import CarsSlider from '@app/components/car/CarsSlider'
 
 const CarPage = ({ params }) => {
   const { data } = useFetch(`/api/car/${params.id}`)
   const car = data && data[0]
 
-  const { data: session } = useSession()
+  console.log(car)
 
-  console.log(session?.user)
+  let { data: otherCars } = useFetch(`/api/cars/${car?.creator._id}`, [
+    car?.creator._id,
+  ])
+
+  otherCars = otherCars?.filter(otherCar => otherCar._id !== car._id)
+
+  console.log('othercars>> ', otherCars)
 
   return (
     <div className="bg-hero-pattern">
@@ -46,6 +53,9 @@ const CarPage = ({ params }) => {
               </button>
             </div>
           </aside>
+        </div>
+        <div className="flex flex-col">
+          <CarsSlider cars={otherCars} title="Other cars from this seller" />
         </div>
       </Container>
     </div>

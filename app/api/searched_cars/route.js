@@ -18,8 +18,10 @@ export const GET = async (req, { params }) => {
   const fuelTypeId =
     req.nextUrl.searchParams.get('fuel_type_id') &&
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('fuel_type_id'))
+  const page = req.nextUrl.searchParams.get('page')
+  const limit = req.nextUrl.searchParams.get('limit')
 
-  console.log(sorting)
+  console.log(page, limit)
 
   try {
     await connectToDB()
@@ -244,7 +246,20 @@ export const GET = async (req, { params }) => {
         break
     }
 
+    if (page && limit) {
+      const skip = (+page - 1) * +limit
+      console.log(skip)
+
+      pipeline.push({
+        $skip: +skip,
+      })
+
+      pipeline.push({ $limit: +limit })
+    }
+
     const cars = await Car.aggregate(pipeline)
+
+    console.log(cars)
 
     return new Response(JSON.stringify(cars), { status: 200 })
   } catch (error) {

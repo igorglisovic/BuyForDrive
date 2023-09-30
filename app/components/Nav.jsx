@@ -7,12 +7,16 @@ import Link from 'next/link'
 import Triangle from './Triangle'
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Nav = () => {
   const [isOpened, setIsOpened] = useState(false)
 
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+
+  useEffect(() => {
+    // console.log('load> ', status)
+  }, [status])
 
   const handleClick = () => {
     setIsOpened(prev => !prev)
@@ -48,13 +52,15 @@ const Nav = () => {
               <Link href="/sellacar">Sell a car</Link>
             </li>
           </ul>
-          {!session?.user ? (
+          {status === 'loading' ? (
+            <p>...loading</p>
+          ) : !session?.user && status === 'unauthenticated' ? (
             <ul className="flex justify-center gap-3">
               <li>
                 <Link href="/signin">Sign in</Link>
               </li>
               <li>
-                <Link href="/register">Register</Link>
+                <Link href="/signup">Join now</Link>
               </li>
             </ul>
           ) : (

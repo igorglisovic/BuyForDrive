@@ -7,13 +7,14 @@ import useFetch from '@app/hooks/useFetch'
 import useMakeUrl from '@app/hooks/useMakeUrl'
 
 const page = ({ searchParams }) => {
-  const paramsArray = Object.keys(searchParams).map(key => ({
-    name: key,
-    value: searchParams[key],
-  }))
-
-  const { url } = useMakeUrl('/api/searched_cars?', paramsArray)
-  const { data: searchedCars, loading } = useFetch(url, [url])
+  // Based on current url and make api url, and make an array of params
+  const { url: apiUrl, paramsArray } = useMakeUrl(
+    '/api/searched_cars?',
+    null,
+    searchParams
+  )
+  // Fetch cars based on api url every time if url changed
+  const { data: searchedCars, loading } = useFetch(apiUrl, [apiUrl])
 
   return (
     <>
@@ -30,9 +31,10 @@ const page = ({ searchParams }) => {
       </section>
       <SearchedCars
         paramsArray={paramsArray}
+        searchParams={searchParams}
         searchedCars={searchedCars}
         loading={loading}
-        url={url}
+        url={apiUrl}
       />
     </>
   )

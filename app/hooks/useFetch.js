@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 
 const useFetch = (url, dependencies = [], shouldFetch = true) => {
+  console.log(url)
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async url => {
       try {
         setLoading(true)
 
@@ -21,7 +22,7 @@ const useFetch = (url, dependencies = [], shouldFetch = true) => {
     }
 
     if (shouldFetch && typeof url === 'string' && url.trim() !== '') {
-      fetchData()
+      fetchData(url)
     }
 
     if (!shouldFetch) {
