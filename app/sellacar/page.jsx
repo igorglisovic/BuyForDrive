@@ -5,6 +5,7 @@ import LoadingBar from '@app/components/LoadingBar'
 import PostACarBasic from '@app/components/PostACarBasic'
 import PostACarFinish from '@app/components/PostACarFinish'
 import PostACarModel from '@app/components/PostACarModel'
+import UploadImages from '@app/components/UploadImages'
 import { useLoadingBarContext } from '@app/store/loading-bar'
 import { usePostCarContext } from '@app/store/post-car'
 import { useSession } from 'next-auth/react'
@@ -58,6 +59,7 @@ const SellACar = () => {
       const res = await fetch('/api/cars/new', {
         method: 'POST',
         body: JSON.stringify({
+          images: [],
           userId: session?.user.id,
           brandId: basicInfo.brand._id,
           modelId: basicInfo.model._id,
@@ -101,6 +103,7 @@ const SellACar = () => {
         <Container>
           <div className="flex justify-center">
             <div className="py-8 px-10 bg-white mt-7 rounded-[30px] w-full md:w-[60%] shadow-lg">
+              <UploadImages />
               <form
                 onKeyDown={handleKeyDown}
                 onSubmit={handleSubmit}

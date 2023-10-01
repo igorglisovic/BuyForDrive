@@ -21,7 +21,7 @@ export const GET = async (req, { params }) => {
   const page = req.nextUrl.searchParams.get('page')
   const limit = req.nextUrl.searchParams.get('limit')
 
-  console.log(page, limit)
+  // console.log(page, limit)
 
   try {
     await connectToDB()
@@ -259,7 +259,7 @@ export const GET = async (req, { params }) => {
 
     const cars = await Car.aggregate(pipeline)
 
-    console.log(cars)
+    // console.log(cars)
 
     return new Response(JSON.stringify(cars), { status: 200 })
   } catch (error) {

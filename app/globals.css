@@ -48,7 +48,8 @@ textarea:focus {
 
 input:disabled,
 button:disabled,
-textarea:disabled {
+textarea:disabled,
+div:disabled {
   @apply bg-gray-100;
 }
 
