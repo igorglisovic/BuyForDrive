@@ -35,15 +35,17 @@ const CarSlider = ({ car }) => {
       </div>
       <div className="flex justify-center relative rounded-[30px] bg-white shadow-xl">
         <div ref={sliderRef} className="keen-slider rounded-[30px]">
-          <div className="keen-slider__slide min-w-full">
-            <Image className="m-auto" src={Car} alt="" />
-          </div>
-          <div className="keen-slider__slide">
-            <Image className="m-auto" src={Car} alt="" />
-          </div>
-          <div className="keen-slider__slide">
-            <Image className="m-auto" src={Car} alt="" />
-          </div>
+          {car?.images.map(image => (
+            <div className="flex keen-slider__slide min-w-full">
+              <Image
+                className="m-auto w-auto h-auto"
+                src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${image.version}/${image.public_id}`}
+                width={500}
+                height={300}
+                alt=""
+              />
+            </div>
+          ))}
         </div>
         {loaded && instanceRef.current && (
           <>
@@ -56,7 +58,7 @@ const CarSlider = ({ car }) => {
               onClick={e => e.stopPropagation() || instanceRef.current?.next()}
               isDisabled={
                 currentSlide ===
-                instanceRef.current.track.details.slides.length - 1
+                instanceRef.current.track.details?.slides.length - 1
               }
             />
           </>

@@ -1,5 +1,6 @@
 'use client'
 
+import { getSignature, saveToDatabase } from '@app/_actions'
 import Container from '@app/components/Container'
 import LoadingBar from '@app/components/LoadingBar'
 import PostACarBasic from '@app/components/PostACarBasic'
@@ -16,6 +17,8 @@ const SellACar = () => {
   const [goFurther, setGoFurther] = useState(false)
   const [goToFinish, setGoToFinish] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  // const [imagesArray, setImagesArray] = useState([])
+  const [files, setFiles] = useState([])
 
   const { basicInfo, modelDetails, pricingDetails, resetStates } =
     usePostCarContext()
@@ -50,16 +53,50 @@ const SellACar = () => {
     }
   }
 
-  const handleSubmit = async e => {
-    e.preventDefault()
+  async function action() {
+    let imagesArray = []
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i]
+
+      if (!file) return
+
+      // get a signature using server action
+      const { timestamp, signature } = await getSignature()
+
+      // upload to cloudinary using the signature
+      const formData = new FormData()
+
+      formData.append('file', file)
+      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY)
+      formData.append('signature', signature)
+      formData.append('timestamp', timestamp)
+
+      const endpoint = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL
+      const data = await fetch(endpoint, {
+        method: 'POST',
+        body: formData,
+      }).then(res => res.json())
+
+      imagesArray.push({
+        public_id: data.public_id,
+        version: data.version.toString(),
+      })
+
+      // write to database using server actions
+      await saveToDatabase({
+        version: data?.version,
+        signature: data?.signature,
+        public_id: data?.public_id,
+      })
+    }
 
     try {
+      console.log('data')
       setSubmitting(true)
-
       const res = await fetch('/api/cars/new', {
         method: 'POST',
         body: JSON.stringify({
-          images: [],
+          images: imagesArray,
           userId: session?.user.id,
           brandId: basicInfo.brand._id,
           modelId: basicInfo.model._id,
@@ -83,7 +120,6 @@ const SellACar = () => {
           description: pricingDetails.description,
         }),
       })
-
       if (res.ok) {
         router.push('/')
         resetStates()
@@ -103,10 +139,10 @@ const SellACar = () => {
         <Container>
           <div className="flex justify-center">
             <div className="py-8 px-10 bg-white mt-7 rounded-[30px] w-full md:w-[60%] shadow-lg">
-              <UploadImages />
+              <UploadImages setFiles={setFiles} files={files} />
               <form
+                action={action}
                 onKeyDown={handleKeyDown}
-                onSubmit={handleSubmit}
                 className="flex flex-col gap-8"
               >
                 <PostACarBasic setGoFurther={setGoFurther} />
@@ -118,7 +154,6 @@ const SellACar = () => {
                   basicInfo.mileage && (
                     <PostACarModel setGoToFinish={setGoToFinish} />
                   )}
-                {/* <PostACarModel /> */}
                 {goToFinish && <PostACarFinish />}
                 {goFurther && goToFinish && (
                   <button disabled={submitting} type="submit">

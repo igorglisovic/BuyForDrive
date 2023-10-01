@@ -11,8 +11,7 @@ import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-const UploadImages = () => {
-  const [files, setFiles] = useState([])
+const UploadImages = ({ setImagesArray, files, setFiles }) => {
   const [rejected, setRejected] = useState([])
   const [isInfoOpened, setIsInfoOpened] = useState(false)
 
@@ -53,10 +52,10 @@ const UploadImages = () => {
   }, [])
 
   useEffect(() => {
+    console.log('slike> ', files)
     const isLimitReached = files.length >= 3 ? true : false
 
     if (isLimitReached) {
-      console.log('slike> ', files)
       const trimmedFiles = files.slice(0, 3)
 
       if (trimmedFiles.length !== files.length) {
@@ -89,40 +88,6 @@ const UploadImages = () => {
     setRejected(files => files.filter(({ file }) => file.name !== name))
   }
 
-  async function action() {
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i]
-
-      if (!file) return
-
-      // get a signature using server action
-      const { timestamp, signature } = await getSignature()
-
-      // upload to cloudinary using the signature
-      const formData = new FormData()
-
-      formData.append('file', file)
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY)
-      formData.append('signature', signature)
-      formData.append('timestamp', timestamp)
-
-      const endpoint = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL
-      const data = await fetch(endpoint, {
-        method: 'POST',
-        body: formData,
-      }).then(res => res.json())
-
-      console.log('data ', data)
-
-      // write to database using server actions
-      await saveToDatabase({
-        version: data?.version,
-        signature: data?.signature,
-        public_id: data?.public_id,
-      })
-    }
-  }
-
   const handleInfo = () => {
     setIsInfoOpened(prev => !prev)
   }
@@ -147,7 +112,7 @@ const UploadImages = () => {
   }, [])
 
   return (
-    <form action={action}>
+    <div>
       <h2 className="relative flex items-center max-w-fit text-xl font-semibold mb-2">
         Upload images
         <FontAwesomeIcon
@@ -258,7 +223,7 @@ const UploadImages = () => {
           </button>
         </div>
       </section>
-    </form>
+    </div>
   )
 }
 

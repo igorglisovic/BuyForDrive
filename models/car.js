@@ -68,6 +68,12 @@ const CarSchema = new Schema({
     ref: 'Owner',
   },
   description: String,
+  images: [
+    {
+      public_id: String,
+      version: String,
+    },
+  ],
 })
 
 export const Car = models.Car || model('Car', CarSchema, 'cars')

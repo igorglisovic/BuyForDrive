@@ -5,7 +5,9 @@ const Arrow = ({ isDisabled, left, onClick }) => {
   return (
     <svg
       onClick={onClick}
-      className={`arrow ${left ? 'arrow--left' : 'arrow--right'} ${disabled}`}
+      className={`arrow ${
+        left ? 'arrow--left' : 'arrow--right'
+      } stroke-gray-500 ${disabled}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >
