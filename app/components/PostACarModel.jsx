@@ -1,15 +1,18 @@
 import { usePostCarContext } from '@app/store/post-car'
 import Radio from './Radio'
 import useFetch from '@app/hooks/useFetch'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchContext } from '@app/store/search-car'
 import Select from './Select'
 import Image from 'next/image'
 import steeringLeft from '../../public/assets/steering-left.jpg'
 import steeringRight from '../../public/assets/steering-right.jpg'
+import { useLoadingBarContext } from '@app/store/loading-bar'
 
 const PostACarModel = ({ setGoToFinish }) => {
+  const [isSelected, setIsSelected] = useState(false)
   const { modelDetails } = usePostCarContext()
+  const { increaseLoadingBar } = useLoadingBarContext()
 
   const { data: doors } = useFetch('/api/doors', [], true)
   const { data: bodyTypes } = useFetch('/api/body_type', [], true)
@@ -25,16 +28,22 @@ const PostACarModel = ({ setGoToFinish }) => {
   const { data: airConditioning } = useFetch('/api/air_conditioning')
 
   const handleChange = e => {
-    console.log(e.target.value)
+    setIsSelected(true)
     modelDetails.updateSteeringSide(e.target.value)
   }
+
+  useEffect(() => {
+    if (isSelected) {
+      increaseLoadingBar(5)
+    }
+  }, [isSelected])
 
   const handleGoToFinish = () => {
     setGoToFinish(true)
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 border-t-[1px] pt-4 border-gray-400">
       <h2 className="text-xl font-semibold mb-2">Model details</h2>
       <Radio
         name="doors"
@@ -103,7 +112,7 @@ const PostACarModel = ({ setGoToFinish }) => {
             } ${modelDetails.seats && 'hover:brightness-200'}`}
             htmlFor="steering-left"
           >
-            <Image src={steeringLeft} />
+            <Image alt="car interior" src={steeringLeft} />
           </label>
           <input
             className="opacity-0 absolute z-[-1]"
@@ -120,7 +129,7 @@ const PostACarModel = ({ setGoToFinish }) => {
             } ${modelDetails.seats && 'hover:brightness-200'}`}
             htmlFor="steering-right"
           >
-            <Image src={steeringRight} />
+            <Image alt="car interior" src={steeringRight} />
           </label>
           <input
             className="opacity-0 absolute z-[-1]"

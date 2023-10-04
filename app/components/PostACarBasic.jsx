@@ -36,8 +36,8 @@ const PostACarBasic = ({ setGoFurther }) => {
   }, [models])
 
   return (
-    <div className="flex flex-col gap-3">
-      <h2 className="text-xl font-semibold mb-2">Basic infomation</h2>
+    <div className="flex flex-col gap-3 border-t-[1px] pt-4 border-gray-400">
+      <h2 className="text-xl font-semibold ">Basic infomation</h2>
       <Select
         placeholder="All brands"
         options={brands}

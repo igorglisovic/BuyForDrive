@@ -16,11 +16,14 @@ const Select = ({
   const [value, setValue] = useState('')
   const [filteredOptions, setFilteredOptions] = useState([])
   const [highlightedOption, setHighlightedOption] = useState()
+  const [initialRender, setInitialRender] = useState(true)
+  const [isLoadingBarIncreased, setIsLoadingBarIncreased] = useState(false)
+  const [isLoadingBarDecreased, setIsLoadingBarDecreased] = useState(false)
 
   const selectRef = useRef(null)
   const containerRef = useRef(null)
 
-  const { setLoadingBar } = useLoadingBarContext()
+  const { increaseLoadingBar, decreaseLoadingBar } = useLoadingBarContext()
 
   const filterSelectOptions = searchText => {
     const regex = new RegExp(searchText, 'i')
@@ -112,7 +115,7 @@ const Select = ({
 
   useEffect(() => {
     if (defaultValue) {
-      console.log('default value>>> ', defaultValue)
+      // console.log('default value>>> ', defaultValue)
       setValue(defaultValue?.label)
       updateFunction(defaultValue)
     }
@@ -146,18 +149,38 @@ const Select = ({
 
   // update loading bar
   useEffect(() => {
+    if (initialRender) {
+      // Skip the code block on the first render
+      setInitialRender(false)
+      return
+    }
+
     // if input has a value and has an options
     if (lastValue && options) {
-      setLoadingBar(prev => prev + 10)
+      increaseLoadingBar(5)
     }
 
     // If input value is empty
     if (!lastValue && !disabled) {
-      setLoadingBar(prev => prev - 10)
+      decreaseLoadingBar(5)
     }
 
-    console.log('model values>> ', defaultValue, lastValue)
-  }, [lastValue])
+    if (!options) {
+      console.log('lvalue ', lastValue)
+    }
+
+    if (lastValue && !options && !isLoadingBarIncreased) {
+      increaseLoadingBar(5)
+      setIsLoadingBarIncreased(true)
+      setIsLoadingBarDecreased(false)
+    }
+
+    if (!lastValue && !options && !isLoadingBarDecreased) {
+      decreaseLoadingBar(5)
+      setIsLoadingBarDecreased(true)
+      setIsLoadingBarIncreased(false)
+    }
+  }, [lastValue, isLoadingBarDecreased, isLoadingBarIncreased])
 
   const handleFocus = e => {
     setIsOpened(true)

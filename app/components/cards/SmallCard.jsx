@@ -10,13 +10,30 @@ const SmallCard = ({ car }) => {
     router.push(`/car/${car._id}`)
   }
 
+  console.log(car)
+
   return (
     <div
       onClick={handleClick}
       className="flex flex-col h-fit rounded-[33px] cursor-pointer overflow-hidden shadow-md mb-3"
     >
-      <div className="flex flex-grow shadow-md">
-        <Image src={Car} alt="" />
+      <div className="flex flex-grow shadow-md w-full relative pb-[56.25%] overflow-hidden">
+        {car?.images?.length ? (
+          <Image
+            src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${car?.images[0]?.version}/${car?.images[0]?.public_id}`}
+            width={220}
+            height={150}
+            // src={Car}
+            alt=""
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          />
+        ) : (
+          <Image
+            src={Car}
+            className="absolute top-0 left-0 w-full h-full object-cover"
+            alt=""
+          />
+        )}
       </div>
       <article className="flex flex-grow flex-col gap-1 bg-white px-5 py-2.5 ">
         <h3 className="font-medium text-sm">

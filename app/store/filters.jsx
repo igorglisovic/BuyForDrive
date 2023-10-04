@@ -40,7 +40,7 @@ export const FiltersContextProvider = ({ children }) => {
       uniqueFilters.add(filterFuelType)
     }
 
-    console.log('filterBrand>> ', filterBrand)
+    // console.log('filterBrand>> ', filterBrand)
 
     // Convert the Set back to an array and update filtersArray.
     setFiltersArray(Array.from(uniqueFilters))

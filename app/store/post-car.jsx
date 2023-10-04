@@ -48,6 +48,8 @@ const PostCarContext = createContext({
     updateDescription: () => {},
   },
   resetStates: () => {},
+  headerInView: true,
+  updateHeaderInView: () => {},
 })
 
 export const usePostCarContext = () => useContext(PostCarContext)
@@ -73,6 +75,7 @@ export const PostCarContextProvider = ({ children }) => {
   const [fixedPrice, setFixedPrice] = useState(true)
   const [owners, setOwners] = useState(true)
   const [description, setDescription] = useState(null)
+  const [headerInView, setHeaderInView] = useState(true)
 
   const updateBrand = brand => {
     setBrand(brand)
@@ -144,6 +147,10 @@ export const PostCarContextProvider = ({ children }) => {
 
   const updateDescription = description => {
     setDescription(description)
+  }
+
+  const updateHeaderInView = value => {
+    setHeaderInView(value)
   }
 
   const updatePower = power => {
@@ -233,7 +240,14 @@ export const PostCarContextProvider = ({ children }) => {
 
   return (
     <PostCarContext.Provider
-      value={{ basicInfo, modelDetails, pricingDetails, resetStates }}
+      value={{
+        basicInfo,
+        modelDetails,
+        pricingDetails,
+        resetStates,
+        updateHeaderInView,
+        headerInView,
+      }}
     >
       {children}
     </PostCarContext.Provider>

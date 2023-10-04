@@ -1,9 +1,18 @@
+'use client'
+
 import { usePostCarContext } from '@app/store/post-car'
 import Select from './Select'
 import useFetch from '@app/hooks/useFetch'
+import { useEffect, useState } from 'react'
+import { useLoadingBarContext } from '@app/store/loading-bar'
 
 const PostACarFinish = () => {
+  const [isLoadingBarIncreased, setIsLoadingBarIncreased] = useState(false)
+  const [isLoadingBarDecreased, setIsLoadingBarDecreased] = useState(false)
+  const [initialRender, setInitialRender] = useState(true)
+
   const { pricingDetails } = usePostCarContext()
+  const { increaseLoadingBar, decreaseLoadingBar } = useLoadingBarContext()
 
   const { data: owners } = useFetch('/api/owners')
 
@@ -15,8 +24,28 @@ const PostACarFinish = () => {
     pricingDetails.updateDescription(e.target.value)
   }
 
+  useEffect(() => {
+    if (initialRender) {
+      // Skip the code block on the first render
+      setInitialRender(false)
+      return
+    }
+
+    if (pricingDetails.description && !isLoadingBarIncreased) {
+      increaseLoadingBar(5)
+      setIsLoadingBarIncreased(true)
+      setIsLoadingBarDecreased(false)
+    }
+
+    if (!pricingDetails.description && !isLoadingBarDecreased) {
+      decreaseLoadingBar(5)
+      setIsLoadingBarDecreased(true)
+      setIsLoadingBarIncreased(false)
+    }
+  }, [pricingDetails.description, isLoadingBarDecreased, isLoadingBarIncreased])
+
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 border-t-[1px] pt-4 border-gray-400">
       <h2 className="text-xl font-semibold mb-2">Pricing details</h2>
       <Select
         placeholder="Number of owners"

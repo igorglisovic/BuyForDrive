@@ -26,7 +26,7 @@ const CarSlider = ({ car }) => {
   console.log(car)
 
   return (
-    <section className="">
+    <section>
       <div className="flex justify-between items-end">
         <h1 className="text-3xl font-semibold mb-2">
           {car?.brand.label} {car?.model.label}

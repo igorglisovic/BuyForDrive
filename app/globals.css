@@ -70,6 +70,108 @@ option {
   @apply cursor-pointer;
 }
 
+@keyframes slideDownUp {
+  from {
+    transform: translateY(20px);
+  }
+
+  to {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes slideDownUp2 {
+  from {
+    transform: translateY(15px);
+  }
+
+  to {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(0) translateY(0);
+  }
+
+  to {
+    transform: translateX(-156px) translateY(10px);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-110px) translateY(10px);
+  }
+
+  to {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes reduceSize {
+  from {
+    width: 40px;
+    height: 40px;
+  }
+
+  to {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@keyframes increaseSize {
+  from {
+    width: 35px;
+    height: 35px;
+  }
+
+  to {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animation {
+  animation: slideDownUp 1s ease-out;
+}
+
+.animation2 {
+  animation: slideDownUp2 1s ease-out;
+}
+
+.avatar {
+  animation: slideLeft 0.7s ease-out forwards;
+}
+
+.avatar img {
+  animation: reduceSize 1s ease-out forwards;
+}
+
+.avatar2 {
+  animation: slideRight 0.7s ease-out forwards;
+}
+
+.avatar2 img {
+  animation: increaseSize 1s ease-out forwards;
+}
+
+.username {
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
 /* Slider */
 
 .arrow {

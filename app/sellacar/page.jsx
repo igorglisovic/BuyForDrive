@@ -14,15 +14,15 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const SellACar = () => {
+  const [goToBasic, setGoToBasic] = useState(false)
   const [goFurther, setGoFurther] = useState(false)
   const [goToFinish, setGoToFinish] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  // const [imagesArray, setImagesArray] = useState([])
   const [files, setFiles] = useState([])
 
   const { basicInfo, modelDetails, pricingDetails, resetStates } =
     usePostCarContext()
-  const { setLoadingBar } = useLoadingBarContext()
+  const { setLoadingBar, resetLoadingBar } = useLoadingBarContext()
 
   const { data: session, status } = useSession()
   const router = useRouter()
@@ -42,11 +42,40 @@ const SellACar = () => {
       !basicInfo.regYear ||
       !basicInfo.mileage
     ) {
-      setGoFurther(false)
+      // setGoFurther(false)
+      // setGoToFinish(false)
     }
+  }, [
+    basicInfo.brand,
+    basicInfo.model,
+    basicInfo.regMonth,
+    basicInfo.regYear,
+    basicInfo.mileage,
+  ])
+
+  useEffect(() => {
+    if (files.length) {
+      setGoToBasic(true)
+    }
+  }, [files])
+
+  useEffect(() => {
+    console.log('gotofinish> ', goToFinish)
+  }, [goToFinish])
+
+  useEffect(() => {
+    console.log('gotofurther> ', goFurther)
+  }, [goFurther])
+
+  useEffect(() => {
+    console.log('gotobasic> ', goToBasic)
+  }, [goToBasic])
+
+  useEffect(() => {
+    resetLoadingBar()
   }, [])
 
-  // Remove form submittiong on clicking 'Enter' hotkey
+  // Remove form submitting on clicking 'Enter' hotkey
   const handleKeyDown = e => {
     if (e.keyCode === 13) {
       e.preventDefault()
@@ -54,6 +83,8 @@ const SellACar = () => {
   }
 
   async function action() {
+    setSubmitting(true)
+
     let imagesArray = []
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
@@ -92,7 +123,6 @@ const SellACar = () => {
 
     try {
       console.log('data')
-      setSubmitting(true)
       const res = await fetch('/api/cars/new', {
         method: 'POST',
         body: JSON.stringify({
@@ -139,23 +169,16 @@ const SellACar = () => {
         <Container>
           <div className="flex justify-center">
             <div className="py-8 px-10 bg-white mt-7 rounded-[30px] w-full md:w-[60%] shadow-lg">
-              <UploadImages setFiles={setFiles} files={files} />
               <form
                 action={action}
                 onKeyDown={handleKeyDown}
                 className="flex flex-col gap-8"
               >
-                <PostACarBasic setGoFurther={setGoFurther} />
-                {goFurther &&
-                  basicInfo.brand &&
-                  basicInfo.model &&
-                  basicInfo.regYear &&
-                  basicInfo.regMonth &&
-                  basicInfo.mileage && (
-                    <PostACarModel setGoToFinish={setGoToFinish} />
-                  )}
+                <UploadImages setFiles={setFiles} files={files} />
+                {goToBasic && <PostACarBasic setGoFurther={setGoFurther} />}
+                {goFurther && <PostACarModel setGoToFinish={setGoToFinish} />}
                 {goToFinish && <PostACarFinish />}
-                {goFurther && goToFinish && (
+                {goFurther && goToFinish && goToBasic && (
                   <button disabled={submitting} type="submit">
                     submit
                   </button>

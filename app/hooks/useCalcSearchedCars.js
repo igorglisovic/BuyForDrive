@@ -58,10 +58,10 @@ const useCalcSearchedCars = () => {
           param => !param.startsWith('page=') && !param.startsWith('limit=')
         )
         .join('&')
-      console.log('first ', urlWithoutPageAndLimit)
+      // console.log('first ', urlWithoutPageAndLimit)
 
       const data = await fetchSearchedCars(urlWithoutPageAndLimit)
-      console.log('apurl>> ', apiUrl)
+      // console.log('apurl>> ', apiUrl)
 
       setCountOffers(data?.length)
     }

@@ -11,10 +11,21 @@ const BigCard = ({ car }) => {
   return (
     <div
       onClick={handleClick}
-      className="flex rounded-[33px] overflow-hidden cursor-pointer shadow-md min-h-[150px]"
+      className="flex rounded-[33px] overflow-hidden cursor-pointer shadow-md h-[160px]"
     >
-      <div className="flex max-w-[35%] shadow-md">
-        <Image className="object-cover" src={Car} alt="" />
+      <div className="flex max-w-[35%] max-h-max overflow-hidden shadow-md">
+        {car?.images?.length ? (
+          <Image
+            src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${car?.images[0]?.version}/${car?.images[0]?.public_id}`}
+            width={220}
+            height={150}
+            // src={Car}
+            alt=""
+            className="object-cover"
+          />
+        ) : (
+          <Image src={Car} className="w-full h-full object-cover" alt="" />
+        )}
       </div>
       <article className="flex flex-grow flex-col justify-between bg-white px-5 py-2.5 ">
         <h3 className="font-semibold text-xl md:text-2xl">

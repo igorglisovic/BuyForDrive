@@ -10,20 +10,18 @@ const Radio = ({
   label,
   lastCheckedValue,
 }) => {
-  const [isSelected, setIsSelected] = useState(0)
+  const [isSelected, setIsSelected] = useState(false)
 
-  const { modelDetails } = usePostCarContext()
-
-  const { setLoadingBar } = useLoadingBarContext()
+  const { increaseLoadingBar } = useLoadingBarContext()
 
   const handleChange = option => {
-    setIsSelected(prev => prev + 1)
+    setIsSelected(true)
     updateFunction(option)
   }
 
   useEffect(() => {
-    if (isSelected === 1) {
-      setLoadingBar(prev => prev + 10)
+    if (isSelected) {
+      increaseLoadingBar(5)
     }
   }, [isSelected])
 

@@ -4,7 +4,6 @@ import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import {} from ''
 
 const SelectedFilter = ({ paramsArray, filter, url, children }) => {
   const [isHidden, setIsHidden] = useState(false)

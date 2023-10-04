@@ -1,6 +1,7 @@
 'use client'
 
 import { getSignature, saveToDatabase } from '@app/_actions'
+import { useLoadingBarContext } from '@app/store/loading-bar'
 import {
   faClose,
   faCloudUpload,
@@ -14,9 +15,14 @@ import { useDropzone } from 'react-dropzone'
 const UploadImages = ({ setImagesArray, files, setFiles }) => {
   const [rejected, setRejected] = useState([])
   const [isInfoOpened, setIsInfoOpened] = useState(false)
+  const [isLoadingBarIncreased, setIsLoadingBarIncreased] = useState(false)
+  const [isLoadingBarDecreased, setIsLoadingBarDecreased] = useState(false)
+  const [initialRender, setInitialRender] = useState(true)
 
   const infoRef = useRef(null)
   const infoIconRef = useRef(null)
+
+  const { increaseLoadingBar, decreaseLoadingBar } = useLoadingBarContext()
 
   const duplicateValidator = file => {
     const isDuplicate = files.some(item => item.name === file.name) || false
@@ -63,6 +69,29 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
       }
     }
   }, [files])
+
+  // Update loading bar
+  useEffect(() => {
+    if (initialRender) {
+      // Skip the code block on the first render
+      setInitialRender(false)
+      return
+    }
+
+    if (files.length && !isLoadingBarIncreased) {
+      console.log('increased')
+      increaseLoadingBar(5)
+      setIsLoadingBarIncreased(true)
+      setIsLoadingBarDecreased(false)
+    }
+
+    if (!files.length && !isLoadingBarDecreased) {
+      console.log('decreased')
+      decreaseLoadingBar(5)
+      setIsLoadingBarDecreased(true)
+      setIsLoadingBarIncreased(false)
+    }
+  }, [files, isLoadingBarIncreased, isLoadingBarDecreased])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
@@ -119,6 +148,7 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
           icon={faInfoCircle}
           ref={infoIconRef}
           className="text-sm ml-1 text-gray-600 cursor-pointer"
+          width="14px"
           onClick={handleInfo}
         />
         {isInfoOpened && (
@@ -145,6 +175,7 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
           <FontAwesomeIcon
             className="text-2xl text-gray-600"
             icon={faCloudUpload}
+            width="30px"
           />
           {isDragActive ? (
             <p className="text-sm">Drop the images here ...</p>
@@ -191,7 +222,7 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
         </ul>
 
         {/* Rejected Files */}
-        <ul className="mt-6 flex flex-col">
+        <ul className="mt-12 flex flex-col">
           {rejected.map(({ file, errors }) => (
             <li key={file.name} className="flex items-start justify-between">
               <div>
@@ -214,14 +245,6 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
             </li>
           ))}
         </ul>
-        <div className="flex gap-4">
-          <button
-            type="submit"
-            className="ml-auto mt-1 rounded-md border border-purple-400 px-3 text-[12px] font-bold uppercase tracking-wider text-stone-500 transition-colors hover:bg-purple-400 hover:text-white"
-          >
-            Upload to Cloudinary
-          </button>
-        </div>
       </section>
     </div>
   )

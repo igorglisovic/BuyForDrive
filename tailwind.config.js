@@ -16,7 +16,7 @@ module.exports = {
         'search-icon': '',
         btn: 'linear-gradient(273.12deg, #38A0FF -36.12%, rgba(69, 69, 69, 0.424219) -36.1%, rgba(240, 240, 240, 0.33) 131.29%), url("/assets/search-icon.png")',
         'gradient-light-gray':
-          'linear-gradient(90.3deg, #D9D9D9 49.74%, rgba(255,255,255, 0.7) 103.61%)',
+          'linear-gradient(90.3deg, #D9D9D9 35.74%, rgba(255,255,255, 0.7) 133.61%)',
         'btn-2':
           'linear-gradient(90.3deg, #D9D9D9 49.74%, rgba(255,255,255, 0.7) 103.61%)',
       },

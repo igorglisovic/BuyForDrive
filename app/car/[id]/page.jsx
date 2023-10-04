@@ -31,7 +31,7 @@ const CarPage = ({ params }) => {
       <Container>
         <Breadcrumb />
         <div className="flex flex-col md:flex-row md:gap-8">
-          <div className="flex flex-col max-w-full md:max-w-[70%] gap-8 mt-10 mb-10">
+          <div className="flex flex-col max-w-full md:max-w-[70%] min-w-[70%] gap-8 mt-10 mb-10">
             <CarSlider car={car} />
             <CarDetails car={car} />
             <CarInformation car={car} />
@@ -41,7 +41,7 @@ const CarPage = ({ params }) => {
           <aside className="w-full md:mt-10 md:block">
             <div className="flex flex-col items-center gap-3 bg-white p-6 rounded-[30px] shadow-xl">
               <Image
-                className="avatar w-[80px] h-[80px] rounded-full"
+                className="w-[80px] h-[80px] rounded-full"
                 width={80}
                 height={80}
                 alt="avatar"
