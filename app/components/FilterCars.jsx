@@ -146,6 +146,10 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
   }, [searchParams])
 
   useEffect(() => {
+    console.log('vall ', paramsArray)
+  }, [paramsArray])
+
+  useEffect(() => {
     paramsArray?.forEach(param => {
       if (param.name === 'sort') {
         console.log(param)
@@ -162,7 +166,7 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
   }, [paramsArray])
 
   return (
-    <aside className="base-plus:min-w-[20%] hidden md-plus:block min-w-[25%] max-w-[30%] base-plus:py-9 base-plus:px-9 px-6 py-6 bg-white rounded-[45px] shadow-md">
+    <aside className="base-plus:min-w-[20%] flex-1 hidden md-plus:block base-plus:py-9 base-plus:px-9 px-6 py-6 bg-white rounded-[45px] shadow-md">
       <h2 className="mb-4 text-xl font-semibold">Filter cars</h2>
       <form
         onSubmit={handleSubmit}

@@ -1,7 +1,39 @@
 import { useEffect, useRef, useState } from 'react'
-import useMakeUrl from './useMakeUrl'
 import { useRouter } from 'next/navigation'
 import { useSearchContext } from '@app/store/search-car'
+
+const makeUrl = (initialUrl, items, searchParams = null) => {
+  let paramsArray = []
+  let url = ''
+
+  if (searchParams) {
+    const makeParamsArray = Object.keys(searchParams).map(key => ({
+      name: key,
+      value: searchParams[key],
+    }))
+
+    paramsArray = makeParamsArray
+  }
+
+  if (paramsArray.length && !items.length) {
+    items = paramsArray
+  }
+
+  items?.forEach(item => {
+    if (item?.value) {
+      url += `&${item?.name}=${item?.value}`
+    }
+  })
+
+  // e.g. "/cars/search?" + "sort=...&brand=..."
+  url = initialUrl + url?.slice(1)
+
+  if (paramsArray.length) {
+    return { url, paramsArray }
+  } else {
+    return url
+  }
+}
 
 const fetchSearchedCars = async url => {
   try {
@@ -17,6 +49,8 @@ const fetchSearchedCars = async url => {
 const useCalcSearchedCars = () => {
   const [countOffers, setCountOffers] = useState()
   const [queriesArray, setQueriesArray] = useState()
+  const [apiUrl, setApiUrl] = useState('')
+  const [routeUrl, setRouteUrl] = useState('')
 
   const router = useRouter()
 
@@ -46,8 +80,17 @@ const useCalcSearchedCars = () => {
     ])
   }, [brand, model, yearFrom, yearTo, bodyType, fuelType, sorting, page, limit])
 
-  const { url: routeUrl } = useMakeUrl('/cars/search?', queriesArray)
-  const { url: apiUrl } = useMakeUrl('/api/searched_cars?', queriesArray)
+  useEffect(() => {
+    const routeUrlValue = makeUrl('/cars/search?', queriesArray)
+    const apiUrlValue = makeUrl('/api/searched_cars?', queriesArray)
+
+    setApiUrl(apiUrlValue)
+    setRouteUrl(routeUrlValue)
+  }, [queriesArray])
+
+  useEffect(() => {
+    // console.log('queriesArray: ', routeUrl)
+  }, [routeUrl])
 
   // Count number of searched cars
   useEffect(() => {
@@ -65,9 +108,9 @@ const useCalcSearchedCars = () => {
 
       setCountOffers(data?.length)
     }
-    if (brand || model || yearFrom || yearTo || bodyType || fuelType || sorting)
-      fetchSearchedCarsData()
-  }, [brand, model, yearFrom, yearTo, bodyType, fuelType, sorting, apiUrl])
+    // if (brand || model || yearFrom || yearTo || bodyType || fuelType || sorting)
+    fetchSearchedCarsData()
+  }, [apiUrl])
 
   // Count number of all cars
   useEffect(() => {

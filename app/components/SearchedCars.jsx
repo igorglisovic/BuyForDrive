@@ -10,6 +10,14 @@ import SelectedFilter from './SelectedFilter'
 import { useFiltersContext } from '@app/store/filters'
 import { useSearchContext } from '@app/store/search-car'
 import { useRouter } from 'next/navigation'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+
+const changePageInUrl = (url, newPage) => {
+  const urlSearchParams = new URLSearchParams(url)
+  urlSearchParams.set('page', newPage)
+  return `/cars/search?${urlSearchParams.toString()}`
+}
 
 const SearchedCars = ({
   searchedCars,
@@ -17,10 +25,14 @@ const SearchedCars = ({
   paramsArray,
   url,
   loading,
+  countCars,
 }) => {
   const [mediaMatches, setMediaMatches] = useState(false)
+  const [pagesArray, setPagesArray] = useState([])
+  const [currentPage, setCurrentPage] = useState(searchParams?.page)
 
-  let media = window.matchMedia('(max-width: 520px)')
+  // let media = window.matchMedia('(max-width: 520px)')
+  let media = ''
   const router = useRouter()
 
   const { filtersArray } = useFiltersContext()
@@ -38,6 +50,35 @@ const SearchedCars = ({
     router.push(newUrl)
   }
 
+  useEffect(() => {
+    setCurrentPage(searchParams?.page)
+    console.log('first ', searchParams)
+  }, [searchParams])
+
+  useEffect(() => {
+    if (countCars?.length) {
+      if (countCars.length < 10) {
+        setPagesArray([])
+        return
+      }
+
+      const numOfPages = Math.trunc(countCars.length / 3 + 1)
+      let pagesArr = []
+
+      for (let i = 0; i < numOfPages; i++) {
+        pagesArr.push({
+          number: i + 1,
+          title: `${i + 1}`,
+          active: +currentPage === i + 1,
+        })
+      }
+
+      console.log('pages ', pagesArr)
+
+      setPagesArray(pagesArr)
+    }
+  }, [countCars, currentPage])
+
   const getMediaMatches = () => {
     if (media.matches) {
       setMediaMatches(true)
@@ -47,13 +88,30 @@ const SearchedCars = ({
   }
 
   useEffect(() => {
-    console.log('defSortVal> ', sorting)
-  }, [sorting])
-
-  useEffect(() => {
     getMediaMatches()
     window.addEventListener('resize', getMediaMatches)
   }, [])
+
+  const handlePageChange = page => {
+    const newPage = changePageInUrl(url.slice(18), page.number)
+
+    console.log(newPage)
+    router.push(newPage)
+  }
+
+  const handleNextPage = () => {
+    const newPage = changePageInUrl(url.slice(18), +currentPage + 1)
+
+    console.log(newPage)
+    router.push(newPage)
+  }
+
+  const handlePrevPage = () => {
+    const newPage = changePageInUrl(url.slice(18), +currentPage - 1)
+
+    console.log(newPage)
+    router.push(newPage)
+  }
 
   return (
     <section className="py-10">
@@ -64,7 +122,7 @@ const SearchedCars = ({
             url={url}
             paramsArray={paramsArray}
           />
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-1 flex-grow-[3] flex-col gap-6">
             <div className="flex justify-between">
               <div className="flex gap-2 flex-wrap">
                 {filtersArray?.map((filter, i) => (
@@ -127,6 +185,101 @@ const SearchedCars = ({
                 </Link>
               </div>
             )}
+            <div>
+              <ul className="flex gap-3 items-center">
+                {
+                  // pagesArray?.length > 5 &&
+                  +currentPage !== 1 && (
+                    <>
+                      <li>
+                        <button onClick={handlePrevPage}>
+                          <FontAwesomeIcon icon={faAngleLeft} />
+                        </button>
+                      </li>
+                      {+currentPage !== 2 && +currentPage !== 3 && <li>...</li>}
+                    </>
+                  )
+                }
+                {pagesArray?.map((page, i) => {
+                  if (+currentPage === 1 && i > 2) {
+                    return ''
+                  }
+
+                  if (
+                    +currentPage === pagesArray.length &&
+                    i < currentPage - 3
+                  ) {
+                    return ''
+                  }
+
+                  if (+currentPage === 2 && i > 3) {
+                    return ''
+                  }
+
+                  if (
+                    +currentPage === pagesArray.length - 1 &&
+                    i < pagesArray.length - 4
+                  ) {
+                    return ''
+                  }
+
+                  if (
+                    +currentPage > 2 &&
+                    currentPage < pagesArray.length - 1 &&
+                    i < +currentPage - 3
+                  ) {
+                    return ''
+                  }
+
+                  if (
+                    +currentPage > 2 &&
+                    currentPage < pagesArray.length - 1 &&
+                    i > +currentPage + 1
+                  ) {
+                    return ''
+                  }
+
+                  if (
+                    +currentPage > 2 &&
+                    currentPage < pagesArray.length - 1 &&
+                    i < +currentPage - 3
+                  ) {
+                    return ''
+                  }
+                  console.log('jeste ', i)
+
+                  return (
+                    <li key={page.title}>
+                      <button
+                        className={`${
+                          page.active
+                            ? 'bg-white shadow-md cursor-default'
+                            : 'bg-transparent shadow-none cursor-pointer'
+                        } py-1 px-2 rounded-lg`}
+                        onClick={() => {
+                          handlePageChange(page)
+                        }}
+                        disabled={page.active}
+                      >
+                        {page.title}
+                      </button>
+                    </li>
+                  )
+                })}
+                {pagesArray?.length > 3 &&
+                  +currentPage !== pagesArray.length && (
+                    <>
+                      {+currentPage !== pagesArray.length - 1 &&
+                        +currentPage !== pagesArray.length - 2 && <li>...</li>}
+                      <li>
+                        <button onClick={handleNextPage}>
+                          <FontAwesomeIcon icon={faAngleRight} />
+                        </button>
+                      </li>
+                    </>
+                  )}
+              </ul>
+            </div>
           </div>
         </div>
       </Container>
