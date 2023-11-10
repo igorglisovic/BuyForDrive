@@ -32,7 +32,7 @@ const SearchedCars = ({
   const [currentPage, setCurrentPage] = useState(searchParams?.page)
 
   let media = window.matchMedia('(max-width: 520px)')
-  // let media = ''
+  // let media = ''d
   const router = useRouter()
 
   const { filtersArray } = useFiltersContext()
