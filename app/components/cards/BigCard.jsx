@@ -11,28 +11,27 @@ const BigCard = ({ car }) => {
   return (
     <div
       onClick={handleClick}
-      className="flex rounded-[33px] overflow-hidden cursor-pointer shadow-md h-[160px]"
+      className="flex rounded-[33px] overflow-hidden cursor-pointer shadow-md h-[220px]"
     >
-      <div className="flex max-w-[35%] max-h-max overflow-hidden shadow-md">
+      <div className="flex-1 overflow-hidden shadow-md">
         {car?.images?.length ? (
           <Image
             src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${car?.images[0]?.version}/${car?.images[0]?.public_id}`}
             width={220}
             height={150}
-            // src={Car}
             alt=""
-            className="object-cover"
+            className="object-cover w-full h-full"
           />
         ) : (
           <Image src={Car} className="w-full h-full object-cover" alt="" />
         )}
       </div>
-      <article className="flex flex-grow flex-col justify-between bg-white px-5 py-2.5 ">
-        <h3 className="font-semibold text-xl md:text-2xl">
+      <article className="flex flex-1 flex-grow-[1.6] flex-col justify-between bg-white px-6 py-5 ">
+        <h3 className="font-semibold text-xl md:text-[1.6rem]">
           {car.brand.label} {car.model.label}
         </h3>
         <div className="flex justify-between items-center">
-          <span className="mr-5 font-medium text-base md:text-xl">
+          <span className="mr-5 font-medium text-base md:text-[1.4rem]">
             €{car?.price}
           </span>
         </div>

@@ -8,9 +8,11 @@ const LoadingBar = () => {
   const { loadingBar } = useLoadingBarContext()
   const { headerInView } = usePostCarContext()
 
+  console.log('header ', headerInView)
+
   return (
     <div
-      className={`py-7 bg-hero-pattern shadow-lg ${
+      className={`py-7 static bg-hero-pattern shadow-lg ${
         headerInView ? 'static' : 'fixed min-w-full left-0 top-0 z-50'
       }`}
     >

@@ -20,7 +20,7 @@ const SellACar = () => {
   const [submitting, setSubmitting] = useState(false)
   const [files, setFiles] = useState([])
 
-  const { basicInfo, modelDetails, pricingDetails, resetStates } =
+  const { basicInfo, modelDetails, pricingDetails, headerInView, resetStates } =
     usePostCarContext()
   const { setLoadingBar, resetLoadingBar } = useLoadingBarContext()
 
@@ -30,7 +30,7 @@ const SellACar = () => {
   // Redirect user if not logged in
   useEffect(() => {
     if (!session?.user && status === 'unauthenticated') {
-      router.replace('/signin')
+      // router.replace('/signin')
     }
   }, [session])
 
@@ -168,7 +168,11 @@ const SellACar = () => {
       <section>
         <Container>
           <div className="flex justify-center">
-            <div className="py-8 px-10 bg-white mt-7 rounded-[30px] w-full md:w-[60%] shadow-lg">
+            <div
+              className={`py-8 px-10 bg-white mt-8 mb-16 rounded-[30px] w-full md:w-[60%] shadow-lg ${
+                !headerInView && 'mt-28'
+              }`}
+            >
               <form
                 action={action}
                 onKeyDown={handleKeyDown}

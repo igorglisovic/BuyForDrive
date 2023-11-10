@@ -31,8 +31,8 @@ const SearchedCars = ({
   const [pagesArray, setPagesArray] = useState([])
   const [currentPage, setCurrentPage] = useState(searchParams?.page)
 
-  // let media = window.matchMedia('(max-width: 520px)')
-  let media = ''
+  let media = window.matchMedia('(max-width: 520px)')
+  // let media = ''
   const router = useRouter()
 
   const { filtersArray } = useFiltersContext()
@@ -57,12 +57,15 @@ const SearchedCars = ({
 
   useEffect(() => {
     if (countCars?.length) {
-      if (countCars.length < 10) {
+      if (countCars.length <= 10) {
         setPagesArray([])
         return
       }
 
-      const numOfPages = Math.trunc(countCars.length / 3 + 1)
+      const numOfPages =
+        countCars.length % 10 === 0
+          ? Math.trunc(countCars.length / 10)
+          : Math.trunc(countCars.length / 10 + 1)
       let pagesArr = []
 
       for (let i = 0; i < numOfPages; i++) {
@@ -114,7 +117,7 @@ const SearchedCars = ({
   }
 
   return (
-    <section className="py-10">
+    <section className="pt-10 pb-16">
       <Container>
         <div className="flex xl:gap-10 gap-5">
           <FilterCars
@@ -186,20 +189,20 @@ const SearchedCars = ({
               </div>
             )}
             <div>
-              <ul className="flex gap-3 items-center">
-                {
-                  // pagesArray?.length > 5 &&
-                  +currentPage !== 1 && (
-                    <>
-                      <li>
-                        <button onClick={handlePrevPage}>
-                          <FontAwesomeIcon icon={faAngleLeft} />
-                        </button>
-                      </li>
-                      {+currentPage !== 2 && +currentPage !== 3 && <li>...</li>}
-                    </>
-                  )
-                }
+              <ul className="flex gap-3 items-center md:text-lg md:justify-start justify-center">
+                {pagesArray?.length > 1 && +currentPage !== 1 && (
+                  <>
+                    <li>
+                      <button
+                        className="flex items-center"
+                        onClick={handlePrevPage}
+                      >
+                        <FontAwesomeIcon icon={faAngleLeft} />
+                      </button>
+                    </li>
+                    {+currentPage !== 2 && +currentPage !== 3 && <li>...</li>}
+                  </>
+                )}
                 {pagesArray?.map((page, i) => {
                   if (+currentPage === 1 && i > 2) {
                     return ''
@@ -253,12 +256,13 @@ const SearchedCars = ({
                       <button
                         className={`${
                           page.active
-                            ? 'bg-white shadow-md cursor-default'
+                            ? 'shadow-md cursor-default'
                             : 'bg-transparent shadow-none cursor-pointer'
-                        } py-1 px-2 rounded-lg`}
+                        } py-1 px-3 rounded-lg`}
                         onClick={() => {
                           handlePageChange(page)
                         }}
+                        style={{ backgroundColor: page.active && '#fff' }}
                         disabled={page.active}
                       >
                         {page.title}
@@ -266,13 +270,16 @@ const SearchedCars = ({
                     </li>
                   )
                 })}
-                {pagesArray?.length > 3 &&
+                {pagesArray?.length > 1 &&
                   +currentPage !== pagesArray.length && (
                     <>
                       {+currentPage !== pagesArray.length - 1 &&
                         +currentPage !== pagesArray.length - 2 && <li>...</li>}
                       <li>
-                        <button onClick={handleNextPage}>
+                        <button
+                          className="flex items-center"
+                          onClick={handleNextPage}
+                        >
                           <FontAwesomeIcon icon={faAngleRight} />
                         </button>
                       </li>
