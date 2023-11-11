@@ -28,8 +28,6 @@ export const LoadingBarProvider = ({ children }) => {
     if (loadingBar < 0) {
       setLoadingBar(0)
     }
-
-    console.log('loading ', loadingBar)
   }, [loadingBar])
 
   return (

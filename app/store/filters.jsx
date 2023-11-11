@@ -40,14 +40,34 @@ export const FiltersContextProvider = ({ children }) => {
       uniqueFilters.add(filterFuelType)
     }
 
-    // console.log('filterBrand>> ', filterBrand)
-
     // Convert the Set back to an array and update filtersArray.
     setFiltersArray(Array.from(uniqueFilters))
   }, [filterBrand, filterModel, filterBodyType, filterFuelType])
 
   useEffect(() => {
-    // console.log('farray>> ', filtersArray)
+    if (
+      !filtersArray.length &&
+      (filterBrand || filterModel || filterFuelType || filterBodyType)
+    ) {
+      // Create a Set to store unique filters.
+      const uniqueFilters = new Set([...filtersArray])
+
+      if (filterBrand) {
+        uniqueFilters.add(filterBrand)
+      }
+      if (filterModel) {
+        uniqueFilters.add(filterModel)
+      }
+      if (filterBodyType) {
+        uniqueFilters.add(filterBodyType)
+      }
+      if (filterFuelType) {
+        uniqueFilters.add(filterFuelType)
+      }
+
+      // Convert the Set back to an array and update filtersArray.
+      setFiltersArray(Array.from(uniqueFilters))
+    }
   }, [filtersArray])
 
   const updateFilterBrand = filterBrand => {

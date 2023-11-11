@@ -10,8 +10,6 @@ const SmallCard = ({ car }) => {
     router.push(`/car/${car._id}`)
   }
 
-  console.log(car)
-
   return (
     <div
       onClick={handleClick}

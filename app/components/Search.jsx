@@ -17,20 +17,20 @@ const vehicleTypes = [
 const Search = () => {
   return (
     <section className="bg-hero-pattern pb-12 shadow-lg">
-      <Container>
+      <Container className="sm:max-w-7xl mx-auto sm:px-16">
         <div className="flex">
           <Breadcrumb />
         </div>
-        <div className="mt-6 w-full rounded-5xl shadow-md">
-          <div className="px-8 py-0 bg-gradient-light-gray rounded-top-5xl">
+        <div className="mt-6 w-full sm:rounded-5xl rounded-3xl shadow-md">
+          <div className="sm:px-8 px-4 py-0 bg-gradient-light-gray sm:rounded-top-5xl rounded-t-3xl">
             <ul className="flex">
-              <li className="text-center font-semibold text-lg leading-5 mr-2.5 py-3.5">
+              <li className="hidden sm:block text-center font-semibold text-lg leading-5 mr-2.5 py-3.5">
                 Vehicle <br /> type
               </li>
               {vehicleTypes.map(item => (
                 <li
                   key={item.id}
-                  className={`flex items-center text-2xl px-4 hover:bg-white cursor-pointer transition-colors ${
+                  className={`flex items-center text-2xl px-4 py-4 sm:py-0 hover:bg-white cursor-pointer transition-colors ${
                     item.active && 'bg-active'
                   }`}
                 >
@@ -39,7 +39,7 @@ const Search = () => {
               ))}
             </ul>
           </div>
-          <div className="bg-white rounded-bottom-5xl px-8 py-7">
+          <div className="bg-white rounded-bottom-5xl sm:px-8 px-4 py-7">
             <SearchForm />
           </div>
         </div>

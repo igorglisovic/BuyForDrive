@@ -60,18 +60,6 @@ const SellACar = () => {
   }, [files])
 
   useEffect(() => {
-    console.log('gotofinish> ', goToFinish)
-  }, [goToFinish])
-
-  useEffect(() => {
-    console.log('gotofurther> ', goFurther)
-  }, [goFurther])
-
-  useEffect(() => {
-    console.log('gotobasic> ', goToBasic)
-  }, [goToBasic])
-
-  useEffect(() => {
     resetLoadingBar()
   }, [])
 
@@ -122,7 +110,6 @@ const SellACar = () => {
     }
 
     try {
-      console.log('data')
       const res = await fetch('/api/cars/new', {
         method: 'POST',
         body: JSON.stringify({
@@ -169,8 +156,8 @@ const SellACar = () => {
         <Container>
           <div className="flex justify-center">
             <div
-              className={`py-8 px-10 bg-white mt-8 mb-16 rounded-[30px] w-full md:w-[60%] shadow-lg ${
-                !headerInView && 'mt-28'
+              className={`py-8 px-10 bg-white mb-16 rounded-[30px] w-full md:w-[60%] shadow-lg ${
+                !headerInView ? 'mt-28' : 'mt-8'
               }`}
             >
               <form

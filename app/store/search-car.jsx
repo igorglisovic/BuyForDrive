@@ -9,8 +9,8 @@ const searchCarContext = createContext({
   priceTo: '',
   bodyType: {},
   fuelType: {},
-  kmFrom: {},
-  kmTo: {},
+  mileageFrom: {},
+  mileageTo: {},
   powerFrom: {},
   powerTo: {},
   sorting: '',
@@ -28,6 +28,12 @@ const searchCarContext = createContext({
   resetStates: () => {},
   updatePage: () => {},
   updateLimit: () => {},
+  updatePriceFrom: () => {},
+  updatePriceTo: () => {},
+  updateMileageFrom: () => {},
+  updateMileageTo: () => {},
+  updatePowerFrom: () => {},
+  updatePowerTo: () => {},
 })
 
 export const useSearchContext = () => useContext(searchCarContext)
@@ -37,6 +43,12 @@ export const SearchContextProvider = ({ children }) => {
   const [model, setModel] = useState(null)
   const [yearFrom, setYearFrom] = useState(null)
   const [yearTo, setYearTo] = useState(null)
+  const [priceFrom, setPriceFrom] = useState(null)
+  const [priceTo, setPriceTo] = useState(null)
+  const [mileageFrom, setMileageFrom] = useState(null)
+  const [mileageTo, setMileageTo] = useState(null)
+  const [powerFrom, setPowerFrom] = useState(null)
+  const [powerTo, setPowerTo] = useState(null)
   const [bodyType, setBodyType] = useState(null)
   const [fuelType, setFuelType] = useState(null)
   const [sorting, setSorting] = useState('')
@@ -84,6 +96,30 @@ export const SearchContextProvider = ({ children }) => {
     setLimit(value)
   }
 
+  const updatePriceFrom = value => {
+    setPriceFrom(value)
+  }
+
+  const updatePriceTo = value => {
+    setPriceTo(value)
+  }
+
+  const updateMileageFrom = value => {
+    setMileageFrom(value)
+  }
+
+  const updateMileageTo = value => {
+    setMileageTo(value)
+  }
+
+  const updatePowerFrom = value => {
+    setPowerFrom(value)
+  }
+
+  const updatePowerTo = value => {
+    setPowerTo(value)
+  }
+
   const resetStates = () => {
     setBrand(null)
     setModel(null)
@@ -105,6 +141,12 @@ export const SearchContextProvider = ({ children }) => {
     defaultSortValue,
     page,
     limit,
+    priceFrom,
+    priceTo,
+    mileageFrom,
+    mileageTo,
+    powerFrom,
+    powerTo,
     updateBrand,
     updateModel,
     updateYearFrom,
@@ -116,6 +158,12 @@ export const SearchContextProvider = ({ children }) => {
     updateDefaultSortValue,
     updatePage,
     updateLimit,
+    updatePriceFrom,
+    updatePriceTo,
+    updateMileageFrom,
+    updateMileageTo,
+    updatePowerFrom,
+    updatePowerTo,
   }
 
   return (

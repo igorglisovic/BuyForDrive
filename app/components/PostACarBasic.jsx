@@ -27,14 +27,6 @@ const PostACarBasic = ({ setGoFurther }) => {
     setGoFurther(true)
   }
 
-  useEffect(() => {
-    console.log(basicInfo.brand)
-  }, [basicInfo.brand])
-
-  useEffect(() => {
-    console.log(models)
-  }, [models])
-
   return (
     <div className="flex flex-col gap-3 border-t-[1px] pt-4 border-gray-400">
       <h2 className="text-xl font-semibold ">Basic infomation</h2>

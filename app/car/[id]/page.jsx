@@ -16,19 +16,15 @@ const CarPage = ({ params }) => {
   const { data } = useFetch(`/api/car/${params.id}`)
   const car = data && data[0]
 
-  console.log(car)
-
   let { data: otherCars } = useFetch(`/api/cars/${car?.creator._id}`, [
     car?.creator._id,
   ])
 
   otherCars = otherCars?.filter(otherCar => otherCar._id !== car._id)
 
-  console.log('othercars>> ', otherCars)
-
   return (
     <div className="bg-hero-pattern">
-      <Container>
+      <Container className="sm:max-w-7xl mx-auto sm:px-16">
         <Breadcrumb />
         <div className="flex flex-col md:flex-row md:gap-8">
           <div className="flex flex-col max-w-full md:max-w-[70%] min-w-[70%] gap-8 mt-10 mb-10">

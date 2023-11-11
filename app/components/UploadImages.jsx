@@ -37,12 +37,10 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
   }
 
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-    console.log('slike2> ', acceptedFiles)
     if (acceptedFiles?.length) {
       const uniqueAcceptedFiles = acceptedFiles.filter(newFile => {
         return !files.some(existingFile => existingFile.name === newFile.name)
       })
-      console.log('jeste> ', uniqueAcceptedFiles)
 
       setFiles(prevFiles => [
         ...prevFiles,
@@ -79,14 +77,12 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
     }
 
     if (files.length && !isLoadingBarIncreased) {
-      console.log('increased')
       increaseLoadingBar(5)
       setIsLoadingBarIncreased(true)
       setIsLoadingBarDecreased(false)
     }
 
     if (!files.length && !isLoadingBarDecreased) {
-      console.log('decreased')
       decreaseLoadingBar(5)
       setIsLoadingBarDecreased(true)
       setIsLoadingBarIncreased(false)

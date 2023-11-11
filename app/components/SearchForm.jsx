@@ -3,8 +3,6 @@ import Button from './Button'
 import { useSearchContext } from '@app/store/search-car'
 import useFetch from '@app/hooks/useFetch'
 import useCalcSearchedCars from '@app/hooks/useCalcSearchedCars'
-import { useFiltersContext } from '@app/store/filters'
-import { useEffect } from 'react'
 
 const SearchForm = () => {
   const {
@@ -14,12 +12,24 @@ const SearchForm = () => {
     yearTo,
     bodyType,
     fuelType,
+    priceFrom,
+    priceTo,
+    mileageTo,
+    mileageFrom,
+    powerFrom,
+    powerTo,
     updateBrand,
     updateModel,
     updateYearFrom,
     updateYearTo,
     updateBodyType,
     updateFuelType,
+    updatePriceFrom,
+    updatePriceTo,
+    updateMileageFrom,
+    updateMileageTo,
+    updatePowerFrom,
+    updatePowerTo,
   } = useSearchContext()
 
   const { data: brands } = useFetch('/api/brands', [], true)
@@ -27,6 +37,27 @@ const SearchForm = () => {
   const { data: regYears } = useFetch('/api/reg_years', [], true)
   const { data: bodyTypes } = useFetch('/api/body_type', [], true)
   const { data: fuelTypes } = useFetch('/api/fuel_types', [], true)
+  const { data: pricesData } = useFetch('/api/prices', [], true)
+  const { data: mileagesData } = useFetch('/api/mileages', [], true)
+  const { data: powersData } = useFetch('/api/powers', [], true)
+
+  // Convert price to numeric and add €
+  const prices = pricesData?.map(price => ({
+    ...price,
+    label: new Intl.NumberFormat('en-US').format(price.label) + ' €',
+  }))
+
+  // Convert mileages to numeric and add km
+  const mileages = mileagesData?.map(mileage => ({
+    ...mileage,
+    label: new Intl.NumberFormat('en-US').format(mileage.label) + ' km',
+  }))
+
+  // Convert price to numeric and add €
+  const powers = powersData?.map(power => ({
+    ...power,
+    label: `${Math.trunc(+power.label * 0.745699872)}kW (${power.label} hp)`,
+  }))
 
   const { countOffers, handleSubmit, handleKeyDown } = useCalcSearchedCars()
 
@@ -34,9 +65,9 @@ const SearchForm = () => {
     <form
       onKeyDown={handleKeyDown}
       onSubmit={handleSubmit}
-      className="flex gap-4"
+      className="sm:flex gap-y-4 gap-x-2 grid grid-cols-2 "
     >
-      <div className="flex flex-col max-w-[320px] gap-7 ">
+      <div className="flex flex-col max-w-[320px] sm:gap-7 gap-4">
         <div className="relative">
           <Select
             placeholder="All brands"
@@ -47,7 +78,7 @@ const SearchForm = () => {
             tabIndex={1}
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex sm:gap-2 gap-1">
           <Select
             placeholder="Year from"
             options={regYears}
@@ -65,22 +96,27 @@ const SearchForm = () => {
             tabIndex={6}
           />
         </div>
-        <div className="flex gap-2">
+        <div className="hidden invisible sm:flex sm:gap-2">
           <Select
             placeholder="Km from"
-            options={['BMW', 'Audi', 'Mercedes']}
+            options={mileages}
             type="half"
             tabIndex={9}
+            updateFunction={updateMileageFrom}
+            lastValue={mileageFrom}
           />
           <Select
             placeholder="To"
-            options={['BMW', 'Audi', 'Mercedes']}
+            options={mileages}
             type="half"
             tabIndex={10}
+            updateFunction={updateMileageTo}
+            lastValue={mileageTo}
           />
         </div>
       </div>
-      <div className="flex flex-col max-w-[320px] gap-7">
+
+      <div className="flex flex-col max-w-[320px] sm:sm:gap-7 gap-4 col-start-2 col-end-3">
         <Select
           placeholder="All models"
           options={models}
@@ -98,34 +134,80 @@ const SearchForm = () => {
           lastValue={bodyType}
           tabIndex={7}
         />
-        <div className="flex gap-2">
+        <div className="hidden invisible sm:flex sm:gap-2">
           <Select
             placeholder="Power from"
-            options={['BMW', 'Audi', 'Mercedes']}
+            options={powers}
             type="half"
+            updateFunction={updatePowerFrom}
+            lastValue={powerFrom}
             tabIndex={11}
           />
           <Select
             placeholder="To"
-            options={['BMW', 'Audi', 'Mercedes']}
+            options={powers}
             type="half"
+            updateFunction={updatePowerTo}
+            lastValue={powerTo}
             tabIndex={12}
           />
         </div>
       </div>
-      <div className="flex flex-col max-w-[320px] gap-7">
-        <div className="flex gap-2">
+      <div className="flex flex-col gap-4 col-span-2">
+        <div className="sm:hidden sm:invisible flex gap-2">
           <Select
-            placeholder="Price from"
-            options={['BMW', 'Audi', 'Mercedes']}
+            placeholder="Km from"
+            options={mileages}
             type="half"
-            tabIndex={3}
+            tabIndex={9}
+            updateFunction={updateMileageFrom}
+            lastValue={mileageFrom}
           />
           <Select
             placeholder="To"
-            options={['BMW', 'Audi', 'Mercedes']}
+            options={mileages}
+            type="half"
+            tabIndex={10}
+            updateFunction={updateMileageTo}
+            lastValue={mileageTo}
+          />
+        </div>
+        <div className="sm:hidden sm:invisible flex gap-2">
+          <Select
+            placeholder="Power from"
+            options={powers}
+            type="half"
+            updateFunction={updatePowerFrom}
+            lastValue={powerFrom}
+            tabIndex={11}
+          />
+          <Select
+            placeholder="To"
+            options={powers}
+            type="half"
+            updateFunction={updatePowerTo}
+            lastValue={powerTo}
+            tabIndex={12}
+          />
+        </div>
+      </div>
+      <div className="flex flex-col sm:max-w-[320px] col-start-1 col-end-3 colum sm:gap-7 gap-4">
+        <div className="flex gap-2">
+          <Select
+            placeholder="Price from"
+            options={prices}
+            type="half"
+            tabIndex={3}
+            updateFunction={updatePriceFrom}
+            lastValue={priceFrom}
+          />
+          <Select
+            placeholder="To"
+            options={prices}
             type="half"
             tabIndex={4}
+            updateFunction={updatePriceTo}
+            lastValue={priceTo}
           />
         </div>
         <Select
@@ -136,8 +218,19 @@ const SearchForm = () => {
           lastValue={fuelType}
           tabIndex={8}
         />
-        <Button tabIndex={13}>{countOffers} offers</Button>
+        <Button
+          className="hidden invisible sm:visible sm:inline-block"
+          tabIndex={13}
+        >
+          {countOffers} offers
+        </Button>
       </div>
+      <Button
+        className="sm:hidden sm:invisible col-span-2 justify-self-center"
+        tabIndex={13}
+      >
+        {countOffers} offers
+      </Button>
     </form>
   )
 }

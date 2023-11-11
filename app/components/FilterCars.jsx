@@ -2,7 +2,7 @@ import useFetch from '@app/hooks/useFetch'
 import Select from './Select'
 import { useSearchContext } from '@app/store/search-car'
 import Button from './Button'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import useCalcSearchedCars from '@app/hooks/useCalcSearchedCars'
 import { useFiltersContext } from '@app/store/filters'
 
@@ -16,6 +16,12 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
     yearTo,
     bodyType,
     fuelType,
+    priceFrom,
+    priceTo,
+    mileageTo,
+    mileageFrom,
+    powerFrom,
+    powerTo,
     sorting,
     updateBrand,
     updateModel,
@@ -23,8 +29,13 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
     updateYearTo,
     updateBodyType,
     updateFuelType,
+    updatePriceFrom,
+    updatePriceTo,
+    updateMileageFrom,
+    updateMileageTo,
+    updatePowerFrom,
+    updatePowerTo,
     updateSorting,
-    updateDefaultSortValue,
   } = useSearchContext()
 
   const { data: brands } = useFetch('/api/brands', [], true)
@@ -32,6 +43,29 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
   const { data: regYears } = useFetch('/api/reg_years', [], true)
   const { data: bodyTypes } = useFetch('/api/body_type', [], true)
   const { data: fuelTypes } = useFetch('/api/fuel_types', [], true)
+  const { data: pricesData } = useFetch('/api/prices', [], true)
+  const { data: mileagesData } = useFetch('/api/mileages', [], true)
+  const { data: powersData } = useFetch('/api/powers', [], true)
+
+  // Convert price to numeric and add €
+  const prices = pricesData?.map(price => ({
+    ...price,
+    label: new Intl.NumberFormat('en-US').format(price.label) + ' €',
+  }))
+
+  // Convert mileages to numeric and add km
+  const mileages = mileagesData?.map(mileage => ({
+    ...mileage,
+    label: new Intl.NumberFormat('en-US').format(mileage.label) + ' km',
+  }))
+
+  // Convert price to numeric and add €
+  const powers = powersData?.map(power => ({
+    ...power,
+    label: `${Math.trunc(+power.label * 0.745699872)}kW (${power.label} hp)`,
+  }))
+
+  const { filtersArray } = useFiltersContext()
 
   const { countOffers, handleSubmit, handleKeyDown } = useCalcSearchedCars()
   const {
@@ -44,7 +78,6 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
     updateFilterBodyType,
     updateFilterFuelType,
     clearFiltersArray,
-    resetStates,
   } = useFiltersContext()
 
   useEffect(() => {
@@ -89,13 +122,9 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
       updateFilterFuelType(null)
       updateFuelType(null)
     }
-
-    console.log('has>> ', urlHasBrand, urlHasModel)
   }, [paramsArray])
 
   useEffect(() => {
-    console.log('parray>> ', paramsArray)
-
     paramsArray?.forEach(param => {
       switch (param.name) {
         case 'brand_id':
@@ -106,7 +135,6 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
           break
         case 'model_id':
           const filterModel2 = filterArrayById(models, param.value)
-          console.log('filter model updated to>> ', filterModel, filterModel2)
           if (filterModel?._id !== filterModel2?._id) {
             updateFilterModel(filterModel2)
           }
@@ -139,16 +167,8 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
   ])
 
   useEffect(() => {
-    // const filterBrand2 = filterArrayById(brands, searchParams['brand_id'])
-    // if (filterBrand?._id !== filterBrand2?._id) {
-    //   updateFilterBrand(filterBrand2)
-    // }
-  }, [searchParams])
-
-  useEffect(() => {
     paramsArray?.forEach(param => {
       if (param.name === 'sort') {
-        console.log(param)
         if (sorting !== param.name) {
           updateSorting(param.value)
         }
@@ -158,7 +178,6 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
 
   useEffect(() => {
     clearFiltersArray()
-    resetStates()
   }, [paramsArray])
 
   return (
@@ -191,14 +210,18 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
         <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
           <Select
             placeholder="Price from"
-            options={['BMW', 'Audi', 'Mercedes']}
             type="half"
             label="Price"
+            options={prices}
+            updateFunction={updatePriceFrom}
+            lastValue={priceFrom}
           />
           <Select
             placeholder="To"
-            options={['BMW', 'Audi', 'Mercedes']}
             type="half"
+            options={prices}
+            updateFunction={updatePriceTo}
+            lastValue={priceTo}
           />
         </div>
         <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
@@ -221,14 +244,18 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
         <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
           <Select
             placeholder="Km from"
-            options={['BMW', 'Audi', 'Mercedes']}
             type="half"
             label="Mileage"
+            options={mileages}
+            updateFunction={updateMileageFrom}
+            lastValue={mileageFrom}
           />
           <Select
             placeholder="To"
-            options={['BMW', 'Audi', 'Mercedes']}
             type="half"
+            options={mileages}
+            updateFunction={updateMileageTo}
+            lastValue={mileageTo}
           />
         </div>
         <Select
@@ -252,14 +279,18 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
         <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
           <Select
             placeholder="Power from"
-            options={['BMW', 'Audi', 'Mercedes']}
             type="half"
             label="Power"
+            options={powers}
+            updateFunction={updatePowerFrom}
+            lastValue={powerFrom}
           />
           <Select
             placeholder="To"
-            options={['BMW', 'Audi', 'Mercedes']}
             type="half"
+            options={powers}
+            updateFunction={updatePowerTo}
+            lastValue={powerTo}
           />
         </div>
         <Button style={{ alignSelf: 'start' }}>{countOffers} offers</Button>

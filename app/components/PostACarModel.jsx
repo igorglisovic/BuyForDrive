@@ -78,7 +78,7 @@ const PostACarModel = ({ setGoToFinish }) => {
       />
       <div className="flex gap-5">
         <Select
-          placeholder="Power"
+          placeholder="Power (hp)"
           type="half"
           label="Power"
           updateFunction={modelDetails.updatePower}
@@ -86,7 +86,7 @@ const PostACarModel = ({ setGoToFinish }) => {
           lastValue={modelDetails.power}
         />
         <Select
-          placeholder="Displacement"
+          placeholder="Displacement (cc)"
           type="half"
           label="Displacement"
           updateFunction={modelDetails.updateDisplacement}

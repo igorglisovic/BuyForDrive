@@ -27,7 +27,7 @@ const CarSlider = ({ car }) => {
 
   return (
     <section>
-      <div className="flex justify-between items-end">
+      <div className="flex justify-between items-end px-6">
         <h1 className="text-3xl font-semibold mb-2">
           {car?.brand.label} {car?.model.label}
         </h1>

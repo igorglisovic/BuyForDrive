@@ -104,12 +104,11 @@ const useCalcSearchedCars = () => {
       // console.log('first ', urlWithoutPageAndLimit)
 
       const data = await fetchSearchedCars(urlWithoutPageAndLimit)
-      // console.log('apurl>> ', apiUrl)
 
       setCountOffers(data?.length)
     }
-    // if (brand || model || yearFrom || yearTo || bodyType || fuelType || sorting)
-    fetchSearchedCarsData()
+    if (brand || model || yearFrom || yearTo || bodyType || fuelType || sorting)
+      fetchSearchedCarsData()
   }, [apiUrl])
 
   // Count number of all cars

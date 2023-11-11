@@ -52,7 +52,6 @@ const page = ({ searchParams }) => {
 
     setUrlForCount(urlWithoutPageAndLimit)
 
-    console.log('urlwith ', paramsArrayValue)
     setApiUrl(url)
     setParamsArray(paramsArrayValue)
   }, [searchParams])

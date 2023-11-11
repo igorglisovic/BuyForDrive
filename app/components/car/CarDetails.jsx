@@ -9,7 +9,7 @@ import {
 
 const CarDetails = ({ car }) => {
   return (
-    <section className="w-full grid grid-cols-3 gap-4 p-10 bg-white shadow-xl rounded-[30px]">
+    <section className="w-full grid grid-cols-2 md:grid-cols-3 gap-4 p-6 sm:p-10 bg-white shadow-xl rounded-[30px]">
       <div className="flex items-center gap-3">
         <MileageIcon />
         <div>

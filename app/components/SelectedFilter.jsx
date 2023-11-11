@@ -1,5 +1,6 @@
 'use client'
 
+import { useFiltersContext } from '@app/store/filters'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/navigation'
@@ -10,17 +11,37 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
 
   const router = useRouter()
 
+  const { filtersArray } = useFiltersContext()
+
   const handleDelete = () => {
+    let modelId
+
+    // Get model Id if brand_id is deleted
+    filtersArray.forEach(item => {
+      if (item.brand_id === filter._id) {
+        modelId = item._id
+      }
+    })
+
     paramsArray?.forEach(param => {
       // Find param which is same as clicked filter
       if (param.value === filter._id) {
-        console.log('deleted param', param.value)
         const urlParts = url.split('&')
 
-        // Create a new array with params without deleted param
-        const filteredUrlParts = urlParts.filter(
-          part => !part.includes(`${param.name}`)
-        )
+        let filteredUrlParts
+
+        // If brand_id is deleted
+        if (modelId) {
+          // Create a new array with params without deleted param
+          filteredUrlParts = urlParts
+            .filter(part => !part.includes(`${param.name}`))
+            .filter(part => !part.includes(`model_id`))
+        } else {
+          // Create a new array with params without deleted param
+          filteredUrlParts = urlParts.filter(
+            part => !part.includes(`${param.name}`)
+          )
+        }
 
         // Join the filtered parts back into a single string
         const updatedUrl =

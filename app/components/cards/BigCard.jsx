@@ -27,7 +27,7 @@ const BigCard = ({ car }) => {
         )}
       </div>
       <article className="flex flex-1 flex-grow-[1.6] flex-col justify-between bg-white px-6 py-5 ">
-        <h3 className="font-semibold text-xl md:text-[1.6rem]">
+        <h3 className="font-semibold text-xl md:text-[1.7rem]">
           {car.brand.label} {car.model.label}
         </h3>
         <div className="flex justify-between items-center">

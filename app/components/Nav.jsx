@@ -27,7 +27,6 @@ const Nav = () => {
 
   const handleOpenMenu = () => {
     if (!isOpened) {
-      console.log('jeste')
       setIsOpened(true)
     }
   }

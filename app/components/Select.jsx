@@ -19,9 +19,29 @@ const Select = ({
   const [initialRender, setInitialRender] = useState(true)
   const [isLoadingBarIncreased, setIsLoadingBarIncreased] = useState(false)
   const [isLoadingBarDecreased, setIsLoadingBarDecreased] = useState(false)
+  const [mediaMatches, setMediaMatches] = useState(false)
+
+  // let media = window.matchMedia('(max-width: 640px)')
+  let media = ''
+
+  useEffect(() => {
+    getMediaMatches()
+    window.addEventListener('resize', getMediaMatches)
+  }, [])
+
+  const getMediaMatches = () => {
+    if (media.matches) {
+      setMediaMatches(true)
+    } else {
+      // setMediaMatches(false)
+      setMediaMatches(true)
+    }
+  }
 
   const selectRef = useRef(null)
   const containerRef = useRef(null)
+  const highlightedOptionRef = useRef(null)
+  const ulRef = useRef(null)
 
   const { increaseLoadingBar, decreaseLoadingBar } = useLoadingBarContext()
 
@@ -31,6 +51,46 @@ const Select = ({
       item => regex.test(item.label) || regex.test(item._id)
     )
   }
+
+  // Scroll to element if is not in view
+  useEffect(() => {
+    function isElementEntirelyVisible(element, container) {
+      const elementRect = element?.getBoundingClientRect()
+      const containerRect = container?.getBoundingClientRect()
+
+      return (
+        elementRect.top >= containerRect.top &&
+        elementRect.bottom <= containerRect.bottom
+      )
+    }
+
+    function scrollElementIntoView(element, container) {
+      const elementRect = element.getBoundingClientRect()
+      const containerRect = container.getBoundingClientRect()
+
+      if (elementRect.top < containerRect.top) {
+        // Element is above the visible area, scroll up to make it visible
+        container.scrollTop += elementRect.top - containerRect.top
+      } else if (elementRect.bottom > containerRect.bottom) {
+        // Element is below the visible area, scroll down to make it visible
+        container.scrollTop += elementRect.bottom - containerRect.bottom
+      }
+    }
+
+    if (options?.length >= 7) {
+      // console.log('ne vidi se ', highlightedOptionRef?.current, ulRef?.current)
+      if (ulRef?.current && highlightedOptionRef?.current) {
+        const isEntirelyVisible = isElementEntirelyVisible(
+          highlightedOptionRef?.current,
+          ulRef?.current
+        )
+
+        if (!isEntirelyVisible) {
+          scrollElementIntoView(highlightedOptionRef?.current, ulRef?.current)
+        }
+      }
+    }
+  }, [highlightedOption])
 
   useEffect(() => {
     const handler = e => {
@@ -115,7 +175,6 @@ const Select = ({
 
   useEffect(() => {
     if (defaultValue) {
-      // console.log('default value>>> ', defaultValue)
       setValue(defaultValue?.label)
       updateFunction(defaultValue)
     }
@@ -166,7 +225,7 @@ const Select = ({
     }
 
     if (!options) {
-      console.log('lvalue ', lastValue)
+      // console.log('lvalue ', lastValue)
     }
 
     if (lastValue && !options && !isLoadingBarIncreased) {
@@ -244,66 +303,108 @@ const Select = ({
     updateFunction(null)
   }
 
+  const handleChangeMobile = e => {
+    const value = e.target.value
+
+    if (value === placeholder) {
+      updateFunction(null)
+      return
+    }
+
+    const selectedOption = options?.find(option => option.label === value)
+
+    updateFunction(selectedOption)
+    console.log(options)
+  }
+
   return (
-    <div className="flex flex-col relative" ref={selectRef}>
-      {label && <label className="text-sm">{label}</label>}
-      <input
-        className={`select-${type} ${
-          options && 'select'
-        } bg-white cursor-context-menu}`}
-        type="text"
-        placeholder={placeholder}
-        onFocus={handleFocus}
-        disabled={disabled}
-        value={value}
-        ref={containerRef}
-        onChange={handleChange}
-        tabIndex={tabIndex}
-      />
-      {options && (
-        <ul
-          className={`option absolute overflow-y-scroll max-h-[40vh] z-50 w-full flex-col bg-white ${
-            isOpened ? 'flex' : 'hidden'
-          }`}
-        >
-          {options && !value && (
-            <li
-              className="py-2 px-2 hover:bg-gray-200 cursor-pointer border-b-[1px] border-gray-300"
-              onClick={handleClearInput}
-              key={label}
+    <>
+      {!mediaMatches ? (
+        <div className="flex flex-col relative" ref={selectRef}>
+          {label && <label className="text-sm">{label}</label>}
+          <input
+            className={`select-${type} ${
+              options && 'select'
+            } bg-white cursor-context-menu}`}
+            type="text"
+            placeholder={placeholder}
+            onFocus={handleFocus}
+            disabled={disabled}
+            value={value}
+            ref={containerRef}
+            onChange={handleChange}
+            tabIndex={tabIndex}
+          />
+          {options && (
+            <ul
+              className={`asdw option absolute overflow-y-scroll max-h-[286px] z-50 w-full flex-col bg-white ${
+                isOpened ? 'flex' : 'hidden'
+              }`}
+              ref={ulRef}
             >
-              Clear input
-            </li>
+              {options && !value && (
+                <li
+                  className="max-h-[38px] py-2 px-2 hover:bg-gray-200 cursor-pointer border-b-[1px] border-gray-300"
+                  onClick={handleClearInput}
+                  key={label}
+                >
+                  Deselect
+                </li>
+              )}
+              {options &&
+                !filteredOptions.length &&
+                !value &&
+                options.map((option, i) => (
+                  <li
+                    key={i}
+                    className={`max-h-[38px] py-2 px-2 hover:bg-gray-200 cursor-pointer ${
+                      i !== options.length - 1 &&
+                      'border-b-[1px] border-gray-300'
+                    } ${i === highlightedOption && 'bg-gray-200'}`}
+                    onClick={() => handleClick(option)}
+                    ref={i === highlightedOption ? highlightedOptionRef : null}
+                  >
+                    {option.label}
+                  </li>
+                ))}
+              {filteredOptions &&
+                filteredOptions.map((option, i) => (
+                  <li
+                    key={i}
+                    className={`max-h-[38px] py-2 px-2 hover:bg-gray-200 cursor-pointer ${
+                      i !== options?.length - 1 &&
+                      'border-b-[1px] border-gray-300'
+                    } ${i === highlightedOption && 'bg-gray-200'}`}
+                    ref={i === highlightedOption ? highlightedOptionRef : null}
+                    onClick={() => handleClick(option)}
+                  >
+                    {option.label}
+                  </li>
+                ))}
+            </ul>
           )}
-          {options &&
-            !filteredOptions.length &&
-            !value &&
-            options.map((option, i) => (
-              <li
-                key={i}
-                className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
-                  i !== options.length - 1 && 'border-b-[1px] border-gray-300'
-                } ${i === highlightedOption && 'bg-gray-200'}`}
-                onClick={() => handleClick(option)}
-              >
-                {option.label}
-              </li>
-            ))}
-          {filteredOptions &&
-            filteredOptions.map((option, i) => (
-              <li
-                key={i}
-                className={`py-2 px-2 hover:bg-gray-200 cursor-pointer ${
-                  i !== options?.length - 1 && 'border-b-[1px] border-gray-300'
-                } ${i === highlightedOption && 'bg-gray-200'}`}
-                onClick={() => handleClick(option)}
-              >
-                {option.label}
-              </li>
-            ))}
-        </ul>
+        </div>
+      ) : (
+        <select
+          onChange={e => handleChangeMobile(e)}
+          defaultValue=""
+          className=" select-full select"
+          disabled={disabled}
+          style={{ paddingLeft: '0.8rem' }}
+        >
+          <option value={placeholder}>{placeholder}</option>
+          {options?.map((option, i) => (
+            <option
+              key={i}
+              className={`py-2 px-[0.8rem] hover:bg-gray-200 cursor-pointer `}
+              value={option.label}
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
       )}
-    </div>
+    </>
   )
 }
 
