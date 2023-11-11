@@ -12,9 +12,11 @@ const Select = ({
   lastValue,
   tabIndex,
   className,
+  style,
 }) => {
   const [isOpened, setIsOpened] = useState(false)
   const [value, setValue] = useState('')
+  const [mobileValue, setMobileValue] = useState('')
   const [filteredOptions, setFilteredOptions] = useState([])
   const [highlightedOption, setHighlightedOption] = useState()
   const [initialRender, setInitialRender] = useState(true)
@@ -22,8 +24,8 @@ const Select = ({
   const [isLoadingBarDecreased, setIsLoadingBarDecreased] = useState(false)
   const [mediaMatches, setMediaMatches] = useState(false)
 
-  // let media = window.matchMedia('(max-width: 640px)')
-  let media = ''
+  let media = window.matchMedia('(max-width: 640px)')
+  // let media = ''
 
   useEffect(() => {
     getMediaMatches()
@@ -34,8 +36,8 @@ const Select = ({
     if (media.matches) {
       setMediaMatches(true)
     } else {
-      // setMediaMatches(false)
-      setMediaMatches(true)
+      setMediaMatches(false)
+      // setMediaMatches(true)
     }
   }
 
@@ -306,17 +308,28 @@ const Select = ({
 
   const handleChangeMobile = e => {
     const value = e.target.value
+    setMobileValue(value)
 
     if (value === placeholder) {
       updateFunction(null)
       return
     }
 
+    console.log(lastValue, placeholder)
+
     const selectedOption = options?.find(option => option.label === value)
 
     updateFunction(selectedOption)
-    console.log(options)
   }
+
+  // useEffect(() => {
+  //   if (mobileValue !== lastValue?.label) {
+  //     console.log(lastValue, mobileValue, placeholder)
+  //   }
+  // }, [mobileValue])
+  useEffect(() => {
+    console.log(lastValue, mobileValue, placeholder)
+  }, [lastValue])
 
   return (
     <>
@@ -392,8 +405,9 @@ const Select = ({
           disabled={disabled}
           style={{
             paddingLeft: '0.7rem',
-            fontSize: placeholder === 'Year from' && '0.7rem',
+            ...style,
           }}
+          value={lastValue?.label ? lastValue.label : placeholder}
         >
           <option value={placeholder}>{placeholder}</option>
           {options?.map((option, i) => (

@@ -86,6 +86,9 @@ const SearchForm = () => {
             updateFunction={updateYearFrom}
             lastValue={yearFrom}
             tabIndex={5}
+            style={{
+              fontSize: '0.7rem',
+            }}
           />
           <Select
             placeholder="To"

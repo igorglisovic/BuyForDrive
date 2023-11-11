@@ -35,8 +35,8 @@ const SearchedCars = ({
   const [pagesArray, setPagesArray] = useState([])
   const [currentPage, setCurrentPage] = useState(searchParams?.page)
 
-  // let media = window.matchMedia('(max-width: 520px)')
-  let media = ''
+  let media = window.matchMedia('(max-width: 520px)')
+  // let media = ''
   const router = useRouter()
 
   let { filtersArray } = useFiltersContext()
@@ -94,27 +94,10 @@ const SearchedCars = ({
     if (media.matches) {
       setMediaMatches(true)
     } else {
-      setMediaMatches(true)
-      // setMediaMatches(false)
+      // setMediaMatches(true)
+      setMediaMatches(false)
     }
   }
-
-  // filtersArray = [
-  //   { _id: '64d8c0efd7a49bfd5341e1e7', label: 'BMW' },
-  //   {
-  //     _id: '64d8c1abd7a49bfd5341e1ea',
-  //     brand_id: '64d8c0efd7a49bfd5341e1e7',
-  //     label: 'M4',
-  //   },
-  //   {
-  //     _id: '64d8c1abd7a49bfd5341e1ea',
-  //     label: 'Static wagon',
-  //   },
-  //   {
-  //     _id: '64d8c1abd7a49bfd5341e1ea',
-  //     label: 'Diesel',
-  //   },
-  // ]
 
   useEffect(() => {
     getMediaMatches()
