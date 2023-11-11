@@ -57,7 +57,7 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
     <>
       {!isHidden && (
         <div
-          className={`flex h-fit items-center gap-2 capitalize bg-white shadow-sm max-w-fit py-1 px-4 rounded-full hover:text-gray-600`}
+          className={`flex h-fit items-center whitespace-nowrap gap-2 capitalize md-plus:bg-white bg-stone-100 shadow-sm md-plus:max-w-fit py-1 px-4 rounded-full md-plus:hover:text-gray-600`}
         >
           <span className="text-sm">{children}</span>
           <button className="text-gray-800 text-sm" onClick={handleDelete}>

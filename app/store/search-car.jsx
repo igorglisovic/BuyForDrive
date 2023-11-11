@@ -17,6 +17,7 @@ const searchCarContext = createContext({
   defaultSortValue: '',
   page: '',
   limit: '',
+  isFilterMenuOpen: false,
   updateBrand: () => {},
   updateModel: () => {},
   updateYearFrom: () => {},
@@ -34,6 +35,7 @@ const searchCarContext = createContext({
   updateMileageTo: () => {},
   updatePowerFrom: () => {},
   updatePowerTo: () => {},
+  updateIsFilterMenuOpen: () => {},
 })
 
 export const useSearchContext = () => useContext(searchCarContext)
@@ -55,6 +57,7 @@ export const SearchContextProvider = ({ children }) => {
   const [defaultSortValue, setDefaultSortValue] = useState('')
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
 
   const updateBrand = brand => {
     setBrand(brand)
@@ -120,6 +123,10 @@ export const SearchContextProvider = ({ children }) => {
     setPowerTo(value)
   }
 
+  const updateIsFilterMenuOpen = value => {
+    setIsFilterMenuOpen(value)
+  }
+
   const resetStates = () => {
     setBrand(null)
     setModel(null)
@@ -147,6 +154,7 @@ export const SearchContextProvider = ({ children }) => {
     mileageTo,
     powerFrom,
     powerTo,
+    isFilterMenuOpen,
     updateBrand,
     updateModel,
     updateYearFrom,
@@ -164,6 +172,7 @@ export const SearchContextProvider = ({ children }) => {
     updateMileageTo,
     updatePowerFrom,
     updatePowerTo,
+    updateIsFilterMenuOpen,
   }
 
   return (

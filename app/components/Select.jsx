@@ -11,6 +11,7 @@ const Select = ({
   updateFunction,
   lastValue,
   tabIndex,
+  className,
 }) => {
   const [isOpened, setIsOpened] = useState(false)
   const [value, setValue] = useState('')
@@ -21,8 +22,8 @@ const Select = ({
   const [isLoadingBarDecreased, setIsLoadingBarDecreased] = useState(false)
   const [mediaMatches, setMediaMatches] = useState(false)
 
-  let media = window.matchMedia('(max-width: 640px)')
-  // let media = ''
+  // let media = window.matchMedia('(max-width: 640px)')
+  let media = ''
 
   useEffect(() => {
     getMediaMatches()
@@ -320,7 +321,7 @@ const Select = ({
   return (
     <>
       {!mediaMatches ? (
-        <div className="flex flex-col relative" ref={selectRef}>
+        <div className={`flex flex-col relative ${className}`} ref={selectRef}>
           {label && <label className="text-sm">{label}</label>}
           <input
             className={`select-${type} ${
@@ -387,16 +388,18 @@ const Select = ({
       ) : (
         <select
           onChange={e => handleChangeMobile(e)}
-          defaultValue=""
-          className=" select-full select"
+          className={`select-full select`}
           disabled={disabled}
-          style={{ paddingLeft: '0.8rem' }}
+          style={{
+            paddingLeft: '0.7rem',
+            fontSize: placeholder === 'Year from' && '0.7rem',
+          }}
         >
           <option value={placeholder}>{placeholder}</option>
           {options?.map((option, i) => (
             <option
               key={i}
-              className={`py-2 px-[0.8rem] hover:bg-gray-200 cursor-pointer `}
+              className={`py-2 px-[0.8rem] hover:bg-gray-200 cursor-pointer`}
               value={option.label}
             >
               {option.label}

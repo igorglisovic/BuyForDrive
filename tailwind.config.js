@@ -33,6 +33,7 @@ module.exports = {
         base: '950px',
         'base-plus': '1100px',
         'md-plus': '810px',
+        'md-form': '845px',
         xs: '520px',
         xxs: '400px',
       },

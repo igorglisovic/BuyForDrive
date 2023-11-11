@@ -11,7 +11,11 @@ import { useFiltersContext } from '@app/store/filters'
 import { useSearchContext } from '@app/store/search-car'
 import { useRouter } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  faAngleLeft,
+  faAngleRight,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons'
 
 const changePageInUrl = (url, newPage) => {
   const urlSearchParams = new URLSearchParams(url)
@@ -31,12 +35,13 @@ const SearchedCars = ({
   const [pagesArray, setPagesArray] = useState([])
   const [currentPage, setCurrentPage] = useState(searchParams?.page)
 
-  let media = window.matchMedia('(max-width: 520px)')
-  // let media = ''
+  // let media = window.matchMedia('(max-width: 520px)')
+  let media = ''
   const router = useRouter()
 
-  const { filtersArray } = useFiltersContext()
-  const { sorting, updateSorting } = useSearchContext()
+  let { filtersArray } = useFiltersContext()
+  const { sorting, isFilterMenuOpen, updateSorting, updateIsFilterMenuOpen } =
+    useSearchContext()
 
   const handleSortingChange = e => {
     const newSorting = e.target.value
@@ -49,6 +54,10 @@ const SearchedCars = ({
 
     router.push(newUrl)
   }
+
+  useEffect(() => {
+    updateIsFilterMenuOpen(false)
+  }, [paramsArray])
 
   useEffect(() => {
     setCurrentPage(searchParams?.page)
@@ -85,9 +94,27 @@ const SearchedCars = ({
     if (media.matches) {
       setMediaMatches(true)
     } else {
-      setMediaMatches(false)
+      setMediaMatches(true)
+      // setMediaMatches(false)
     }
   }
+
+  // filtersArray = [
+  //   { _id: '64d8c0efd7a49bfd5341e1e7', label: 'BMW' },
+  //   {
+  //     _id: '64d8c1abd7a49bfd5341e1ea',
+  //     brand_id: '64d8c0efd7a49bfd5341e1e7',
+  //     label: 'M4',
+  //   },
+  //   {
+  //     _id: '64d8c1abd7a49bfd5341e1ea',
+  //     label: 'Static wagon',
+  //   },
+  //   {
+  //     _id: '64d8c1abd7a49bfd5341e1ea',
+  //     label: 'Diesel',
+  //   },
+  // ]
 
   useEffect(() => {
     getMediaMatches()
@@ -113,17 +140,51 @@ const SearchedCars = ({
   }
 
   return (
-    <section className="pt-10 pb-16">
+    <section
+      className={`pt-10 pb-16 ${isFilterMenuOpen && 'overflow-hidden fixed'}`}
+    >
+      <div className="w-full md-plus:hidden md-plus:invisible block visible">
+        <Container>
+          <div className="flex gap-4 justify-between items-center py-3 px-3 bg-white rounded-xl">
+            <button
+              onClick={() => {
+                updateIsFilterMenuOpen(true)
+              }}
+              className="flex items-center gap-0.5"
+            >
+              <span>Filters</span>
+              <FontAwesomeIcon style={{ fontSize: '0.7rem' }} icon={faPlus} />
+            </button>
+            <div className="flex gap-2 items-center md-plus:hidden md-plus:invisible overflow-x-auto">
+              {filtersArray?.map((filter, i) => (
+                <SelectedFilter
+                  paramsArray={paramsArray}
+                  filter={filter}
+                  url={url}
+                  key={i}
+                >
+                  {filter.label}
+                </SelectedFilter>
+              ))}
+              {!filtersArray?.length && (
+                <span className="self-end text-xs text-gray-400">
+                  No filters yet.
+                </span>
+              )}
+            </div>
+          </div>
+        </Container>
+      </div>
       <Container>
-        <div className="flex xl:gap-10 gap-5">
+        <div className="flex flex-col md-plus:flex-row xl:gap-10 gap-5">
           <FilterCars
             searchParams={searchParams}
             url={url}
             paramsArray={paramsArray}
           />
           <div className="flex flex-1 flex-grow-[3] flex-col gap-6">
-            <div className="flex justify-between">
-              <div className="flex gap-2 flex-wrap">
+            <div className="flex justify-between mt-6">
+              <div className="md-plus:flex md-plus:visible hidden invisible gap-2 flex-wrap">
                 {filtersArray?.map((filter, i) => (
                   <SelectedFilter
                     paramsArray={paramsArray}

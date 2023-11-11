@@ -47,6 +47,7 @@ textarea:focus {
 }
 
 input:disabled,
+select:disabled,
 button:disabled,
 textarea:disabled,
 div:disabled {
@@ -68,6 +69,16 @@ input::placeholder {
 
 option {
   @apply cursor-pointer;
+}
+
+@media screen and (max-width: 810px) {
+  .open-close[aria-expanded='true'] {
+    @apply flex visible w-screen h-screen top-0 left-0 overflow-y-auto z-[99999999999999999999999999] rounded-none flex-col;
+  }
+
+  .open-close[aria-expanded='false'] {
+    @apply hidden invisible;
+  }
 }
 
 @keyframes slideDownUp {

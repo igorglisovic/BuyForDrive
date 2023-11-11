@@ -65,9 +65,9 @@ const SearchForm = () => {
     <form
       onKeyDown={handleKeyDown}
       onSubmit={handleSubmit}
-      className="sm:flex gap-y-4 gap-x-2 grid grid-cols-2 "
+      className="md-form:flex md-form:gap-4 gap-y-4 sm:gap-x-2 gap-x-2 grid grid-cols-2 "
     >
-      <div className="flex flex-col max-w-[320px] sm:gap-7 gap-4">
+      <div className="flex flex-col md-form:gap-7 gap-4 sm:flex-1">
         <div className="relative">
           <Select
             placeholder="All brands"
@@ -96,7 +96,7 @@ const SearchForm = () => {
             tabIndex={6}
           />
         </div>
-        <div className="hidden invisible sm:flex sm:gap-2">
+        <div className="hidden invisible sm:flex sm:visible sm:gap-2">
           <Select
             placeholder="Km from"
             options={mileages}
@@ -115,8 +115,7 @@ const SearchForm = () => {
           />
         </div>
       </div>
-
-      <div className="flex flex-col max-w-[320px] sm:sm:gap-7 gap-4 col-start-2 col-end-3">
+      <div className="flex flex-col md-form:gap-7 gap-4 col-start-2 col-end-3 sm:flex-1">
         <Select
           placeholder="All models"
           options={models}
@@ -134,7 +133,7 @@ const SearchForm = () => {
           lastValue={bodyType}
           tabIndex={7}
         />
-        <div className="hidden invisible sm:flex sm:gap-2">
+        <div className="hidden invisible sm:flex sm:visible sm:gap-2">
           <Select
             placeholder="Power from"
             options={powers}
@@ -153,8 +152,8 @@ const SearchForm = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-4 col-span-2">
-        <div className="sm:hidden sm:invisible flex gap-2">
+      <div className="flex flex-col gap-4 col-span-2 sm:hidden sm:invisible">
+        <div className="flex gap-2">
           <Select
             placeholder="Km from"
             options={mileages}
@@ -172,7 +171,7 @@ const SearchForm = () => {
             lastValue={mileageTo}
           />
         </div>
-        <div className="sm:hidden sm:invisible flex gap-2">
+        <div className="flex gap-2">
           <Select
             placeholder="Power from"
             options={powers}
@@ -191,8 +190,8 @@ const SearchForm = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col sm:max-w-[320px] col-start-1 col-end-3 colum sm:gap-7 gap-4">
-        <div className="flex gap-2">
+      <div className="flex md-form:flex-col sm:flex-row flex-col col-start-1 col-end-3 md-form:gap-7 sm:gap-2 gap-4 md-form:flex-1">
+        <div className="flex gap-2 sm:flex-1">
           <Select
             placeholder="Price from"
             options={prices}
@@ -217,16 +216,17 @@ const SearchForm = () => {
           updateFunction={updateFuelType}
           lastValue={fuelType}
           tabIndex={8}
+          className="sm:flex-1"
         />
         <Button
-          className="hidden invisible sm:visible sm:inline-block"
+          className="hidden invisible md-form:visible md-form:inline-block"
           tabIndex={13}
         >
           {countOffers} offers
         </Button>
       </div>
       <Button
-        className="sm:hidden sm:invisible col-span-2 justify-self-center"
+        className="md-form:hidden md-form:invisible col-span-2 justify-self-center"
         tabIndex={13}
       >
         {countOffers} offers

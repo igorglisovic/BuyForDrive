@@ -4,6 +4,7 @@ import Breadcrumb from '@app/components/Breadcrumb'
 import Container from '@app/components/Container'
 import SearchedCars from '@app/components/SearchedCars'
 import useFetch from '@app/hooks/useFetch'
+import { useSearchContext } from '@app/store/search-car'
 import { useEffect, useState } from 'react'
 
 const makeUrl = (initialUrl, searchParams = null) => {
@@ -60,9 +61,15 @@ const page = ({ searchParams }) => {
   const { data: searchedCars, loading } = useFetch(apiUrl, [apiUrl])
   const { data: countCars } = useFetch(urlForCount, [urlForCount])
 
+  const { isFilterMenuOpen } = useSearchContext()
+
   return (
     <>
-      <section className="bg-hero-pattern pb-2 shadow-lg">
+      <section
+        className={`bg-hero-pattern pb-2 shadow-lg ${
+          isFilterMenuOpen && 'overflow-hidden fixed z-[-1]'
+        }`}
+      >
         <Container>
           <div className="flex flex-col gap-16 justify-between">
             <Breadcrumb />

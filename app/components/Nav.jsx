@@ -15,6 +15,7 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { usePostCarContext } from '@app/store/post-car'
+import { useSearchContext } from '@app/store/search-car'
 
 const Nav = () => {
   const [isOpened, setIsOpened] = useState(false)
@@ -24,6 +25,7 @@ const Nav = () => {
 
   const { data: session, status } = useSession()
   const { headerInView, updateHeaderInView } = usePostCarContext()
+  const { isFilterMenuOpen } = useSearchContext()
 
   const handleOpenMenu = () => {
     if (!isOpened) {
@@ -72,7 +74,9 @@ const Nav = () => {
   return (
     <header
       ref={ref}
-      className="bg-white shadow-md absolute top-0 left-0 w-full"
+      className={`bg-white shadow-md absolute top-0 left-0 w-full ${
+        isFilterMenuOpen && 'z-[-1]'
+      }`}
     >
       <Container>
         <nav

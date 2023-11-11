@@ -5,10 +5,12 @@ import Button from './Button'
 import { useEffect } from 'react'
 import useCalcSearchedCars from '@app/hooks/useCalcSearchedCars'
 import { useFiltersContext } from '@app/store/filters'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 const filterArrayById = (array, id) => array?.find(item => item._id === id)
 
-const FilterCars = ({ paramsArray, searchParams, url }) => {
+const FilterCars = ({ paramsArray, url }) => {
   const {
     brand,
     model,
@@ -23,6 +25,7 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
     powerFrom,
     powerTo,
     sorting,
+    isFilterMenuOpen,
     updateBrand,
     updateModel,
     updateYearFrom,
@@ -36,6 +39,7 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
     updatePowerFrom,
     updatePowerTo,
     updateSorting,
+    updateIsFilterMenuOpen,
   } = useSearchContext()
 
   const { data: brands } = useFetch('/api/brands', [], true)
@@ -64,8 +68,6 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
     ...power,
     label: `${Math.trunc(+power.label * 0.745699872)}kW (${power.label} hp)`,
   }))
-
-  const { filtersArray } = useFiltersContext()
 
   const { countOffers, handleSubmit, handleKeyDown } = useCalcSearchedCars()
   const {
@@ -181,12 +183,25 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
   }, [paramsArray])
 
   return (
-    <aside className="hidden md-plus:block base-plus:min-w-[20%] self-baseline flex-1 base-plus:py-9 base-plus:px-9 px-6 py-6 bg-white rounded-[45px] shadow-md">
-      <h2 className="mb-4 text-xl font-semibold">Filter cars</h2>
+    <aside
+      aria-expanded={isFilterMenuOpen}
+      className="open-close fixed md-plus:static base-plus:min-w-[20%] self-baseline flex-1 base-plus:py-9 base-plus:px-9 px-6 py-6 bg-white rounded-[45px] shadow-md"
+    >
+      <div className="flex justify-between mb-4">
+        <h2 className="md-plus:text-xl text-[1.4rem] font-semibold">
+          Filter cars
+        </h2>
+        <button
+          onClick={() => updateIsFilterMenuOpen(false)}
+          className="flex mt-1 text-xl"
+        >
+          <FontAwesomeIcon icon={faClose} />
+        </button>
+      </div>
       <form
         onSubmit={handleSubmit}
         onKeyDown={handleKeyDown}
-        className="flex flex-col gap-3"
+        className="flex flex-col md-plus:gap-3 gap-5"
       >
         <Select
           placeholder="All brands"
@@ -207,7 +222,7 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
           label="Model"
           defaultValue={filterModel}
         />
-        <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
+        <div className="flex items-end md-plus:flex-col md-plus:items-baseline base-plus:flex-row base-plus:items-end gap-2">
           <Select
             placeholder="Price from"
             type="half"
@@ -224,7 +239,7 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
             lastValue={priceTo}
           />
         </div>
-        <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
+        <div className="flex items-end md-plus:flex-col md-plus:items-baseline base-plus:flex-row base-plus:items-end gap-2">
           <Select
             placeholder="Year from"
             options={regYears}
@@ -241,7 +256,7 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
             lastValue={yearTo}
           />
         </div>
-        <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
+        <div className="flex items-end md-plus:flex-col md-plus:items-baseline base-plus:flex-row  base-plus:items-end gap-2">
           <Select
             placeholder="Km from"
             type="half"
@@ -276,7 +291,7 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
           lastValue={fuelType}
           defaultValue={filterFuelType}
         />
-        <div className="flex flex-col items-baseline base-plus:flex-row  base-plus:items-end gap-2">
+        <div className="flex items-end md-plus:flex-col md-plus:items-baseline base-plus:flex-row  base-plus:items-end gap-2">
           <Select
             placeholder="Power from"
             type="half"
@@ -293,7 +308,12 @@ const FilterCars = ({ paramsArray, searchParams, url }) => {
             lastValue={powerTo}
           />
         </div>
-        <Button style={{ alignSelf: 'start' }}>{countOffers} offers</Button>
+        <Button
+          className="md-plus:self-auto !self-center"
+          style={{ alignSelf: 'start' }}
+        >
+          {countOffers} offers
+        </Button>
       </form>
     </aside>
   )
