@@ -23,14 +23,16 @@ const Select = ({
   const [isLoadingBarIncreased, setIsLoadingBarIncreased] = useState(false)
   const [isLoadingBarDecreased, setIsLoadingBarDecreased] = useState(false)
   const [mediaMatches, setMediaMatches] = useState(false)
+  const [media, setMedia] = useState(false)
 
-  let media = window.matchMedia('(max-width: 640px)')
-  // let media = ''
+  useEffect(() => {
+    setMedia(window.matchMedia('(max-width: 640px)'))
+  }, [])
 
   useEffect(() => {
     getMediaMatches()
     window.addEventListener('resize', getMediaMatches)
-  }, [])
+  }, [media])
 
   const getMediaMatches = () => {
     if (media.matches) {

@@ -6,6 +6,7 @@ import SearchedCars from '@app/components/SearchedCars'
 import useFetch from '@app/hooks/useFetch'
 import { useSearchContext } from '@app/store/search-car'
 import { useEffect, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
 
 const makeUrl = (initialUrl, searchParams = null) => {
   let paramsArray = []
@@ -36,7 +37,25 @@ const page = ({ searchParams }) => {
   const [apiUrl, setApiUrl] = useState('')
   const [paramsArray, setParamsArray] = useState([])
   const [urlForCount, setUrlForCount] = useState([])
+  const [subHeaderInView, setSubHeaderInView] = useState(true)
   // Based on current url, make api url and make an array of params
+
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+  })
+
+  useEffect(() => {
+    if (inView) {
+      setSubHeaderInView(true)
+    } else {
+      setSubHeaderInView(false)
+    }
+  }, [inView])
+
+  useEffect(() => {
+    console.log(subHeaderInView)
+  }, [subHeaderInView])
 
   useEffect(() => {
     const { url, paramsArray: paramsArrayValue } = makeUrl(
@@ -66,6 +85,7 @@ const page = ({ searchParams }) => {
   return (
     <>
       <section
+        ref={ref}
         className={`bg-hero-pattern pb-2 shadow-lg ${
           isFilterMenuOpen && 'overflow-hidden fixed z-[-1]'
         }`}
@@ -87,6 +107,7 @@ const page = ({ searchParams }) => {
         loading={loading}
         url={apiUrl}
         countCars={countCars}
+        subHeaderInView={subHeaderInView}
       />
     </>
   )

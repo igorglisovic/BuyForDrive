@@ -30,12 +30,16 @@ const SearchedCars = ({
   url,
   loading,
   countCars,
+  subHeaderInView,
 }) => {
   const [mediaMatches, setMediaMatches] = useState(false)
+  const [media, setMedia] = useState(false)
   const [pagesArray, setPagesArray] = useState([])
   const [currentPage, setCurrentPage] = useState(searchParams?.page)
 
-  let media = window.matchMedia('(max-width: 520px)')
+  useEffect(() => {
+    setMedia(window.matchMedia('(max-width: 520px)'))
+  }, [])
   // let media = ''
   const router = useRouter()
 
@@ -102,7 +106,7 @@ const SearchedCars = ({
   useEffect(() => {
     getMediaMatches()
     window.addEventListener('resize', getMediaMatches)
-  }, [])
+  }, [media])
 
   const handlePageChange = page => {
     const newPage = changePageInUrl(url.slice(18), page.number)
@@ -164,6 +168,7 @@ const SearchedCars = ({
             searchParams={searchParams}
             url={url}
             paramsArray={paramsArray}
+            subHeaderInView={subHeaderInView}
           />
           <div className="flex flex-1 flex-grow-[3] flex-col gap-6">
             <div className="flex justify-between mt-6">

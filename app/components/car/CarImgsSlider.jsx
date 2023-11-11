@@ -38,7 +38,7 @@ const CarSlider = ({ car }) => {
           {car?.images.map(image => (
             <div className="flex keen-slider__slide min-w-full">
               <Image
-                className="m-auto w-auto h-auto"
+                className=" w-auto h-auto"
                 src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${image.version}/${image.public_id}`}
                 width={500}
                 height={300}
