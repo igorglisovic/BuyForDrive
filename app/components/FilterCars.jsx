@@ -353,7 +353,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
         <div
           className={`${
             !subHeaderInView &&
-            '!fixed self-baseline top-10 base-plus:py-9 base-plus:px-9 px-6 py-6 bg-white rounded-[45px] shadow-md  base-plus:mr-9 mr-6'
+            '!fixed max-h-[90vh] overflow-y-auto self-baseline top-8 base-plus:py-9 base-plus:px-9 px-6 py-6 bg-white rounded-[45px] shadow-md  base-plus:mr-9 mr-6'
           } ${isFilterMenuOpen && 'overflow-y-auto px-1'}`}
           style={{ width: !subHeaderInView && asideWidth }}
         >

@@ -54,6 +54,14 @@ div:disabled {
   @apply bg-gray-100;
 }
 
+.loading span,
+h3 {
+  cursor: default;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
 .option {
   @apply top-[90%] border-[1px] rounded-[10px] text-[0.9rem] border-gray-300;
 }

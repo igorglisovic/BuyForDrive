@@ -16,6 +16,10 @@ import {
   faAngleRight,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons'
+import BigCardLoad from './cards/BigCardLoad'
+import BigCardMobileLoad from './cards/BigCardMobileLoad'
+
+const loadCars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const changePageInUrl = (url, newPage) => {
   const urlSearchParams = new URLSearchParams(url)
@@ -130,7 +134,7 @@ const SearchedCars = ({
 
   return (
     <section
-      className={`pt-10 pb-16 ${isFilterMenuOpen && 'overflow-hidden fixed'}`}
+      className={`pt-8 pb-16 ${isFilterMenuOpen && 'overflow-hidden fixed'}`}
     >
       <div className="w-full md-plus:hidden md-plus:invisible block visible">
         <Container>
@@ -251,6 +255,9 @@ const SearchedCars = ({
                   <BigCardMobile key={car._id} car={car} />
                 ))
               : searchedCars?.map(car => <BigCard key={car._id} car={car} />)}
+            {loading && loadCars.map(item => <BigCardLoad key={item._id} />)}
+            {loading &&
+              loadCars.map(item => <BigCardMobileLoad key={item._id} />)}
             {!searchedCars?.length && loading !== true && (
               <div className="flex flex-col gap-3 items-center">
                 <h3 className="text-lg font-medium">

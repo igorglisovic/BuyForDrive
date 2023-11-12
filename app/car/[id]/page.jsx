@@ -23,9 +23,17 @@ const CarPage = ({ params }) => {
   otherCars = otherCars?.filter(otherCar => otherCar._id !== car._id)
 
   return (
-    <div className="bg-hero-pattern">
+    <div className="bg-hero-pattern pb-10">
       <Container className="sm:max-w-7xl mx-auto sm:px-16">
-        <Breadcrumb />
+        <Breadcrumb
+          items={[
+            { label: 'Car' },
+            {
+              label: car?.brand.label,
+              link: `/cars/search?sort=default_sorting&page=1&limit=10&brand_id=${car?.brand._id}`,
+            },
+          ]}
+        />
         <div className="flex flex-col md:flex-row md:gap-8">
           <div className="flex flex-col max-w-full md:max-w-[70%] min-w-[70%] gap-8 mt-10 mb-10">
             <CarSlider car={car} />
