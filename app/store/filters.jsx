@@ -164,8 +164,6 @@ export const FiltersContextProvider = ({ children }) => {
       // Convert the Set back to an array and update filtersArray.
       setFiltersArray(Array.from(uniqueFilters))
     }
-
-    console.log('filterYearArray ', filtersArray)
   }, [filtersArray])
 
   const updateFilterBrand = filterBrand => {

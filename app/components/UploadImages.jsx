@@ -56,7 +56,6 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
   }, [])
 
   useEffect(() => {
-    console.log('slike> ', files)
     const isLimitReached = files.length >= 3 ? true : false
 
     if (isLimitReached) {

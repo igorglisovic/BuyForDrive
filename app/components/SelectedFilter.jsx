@@ -29,7 +29,7 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
         if (param.value.includes('_')) {
           param = { ...param, value: param.value.split('_')[0] }
         }
-        console.log(param)
+
         if (param.value === filter._id) {
           const urlParts = url.split('&')
 
@@ -64,14 +64,11 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
       paramsArray?.forEach((param, i) => {
         // Find param which is same as clicked filter
         if (param.name.includes(filter.type)) {
-          console.log('param ', param)
-
           if (indexFromPrevious && indexFromPrevious < i) {
             // Create a new array with params without deleted params
             filteredUrlParts = filteredUrlParts.filter(
               part => !part.includes(`${param.name}`)
             )
-            console.log('ima')
           } else {
             // Create a new array with params without deleted param
             filteredUrlParts = urlParts.filter(
@@ -80,8 +77,6 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
           }
 
           indexFromPrevious = i
-
-          console.log(filteredUrlParts)
 
           // Join the filtered parts back into a single string
         }

@@ -60,8 +60,6 @@ const SearchedCars = ({
       .slice(2)
       .join('&')}`
 
-    console.log(url.split('&').slice(2))
-
     router.push(newUrl)
   }
 

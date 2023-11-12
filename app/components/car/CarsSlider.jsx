@@ -27,7 +27,6 @@ const CarsSlider = ({ title, cars }) => {
     instanceRef.current?.update({
       ...sliderOptions,
     })
-    console.log('iref>> ', instanceRef.current?.track.details?.slides.length)
   }, [instanceRef, sliderOptions])
 
   return (

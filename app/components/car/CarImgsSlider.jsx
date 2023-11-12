@@ -23,8 +23,6 @@ const CarSlider = ({ car }) => {
     ]
   )
 
-  console.log(car)
-
   return (
     <section>
       <div className="flex justify-between items-end px-6">

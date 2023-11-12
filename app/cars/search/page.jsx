@@ -54,10 +54,6 @@ const page = ({ searchParams }) => {
   }, [inView])
 
   useEffect(() => {
-    console.log(subHeaderInView)
-  }, [subHeaderInView])
-
-  useEffect(() => {
     const { url, paramsArray: paramsArrayValue } = makeUrl(
       '/api/searched_cars?',
       searchParams
