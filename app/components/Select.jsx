@@ -263,6 +263,9 @@ const Select = ({
   }
 
   const handleChange = e => {
+    if (e.target.value.includes('\\')) {
+      return
+    }
     setValue(e.target.value)
     if (
       label === 'Mileage' ||
@@ -322,22 +325,20 @@ const Select = ({
     updateFunction(selectedOption)
   }
 
-  // useEffect(() => {
-  //   if (mobileValue !== lastValue?.label) {
-  //     console.log(lastValue, mobileValue, placeholder)
-  //   }
-  // }, [mobileValue])
-  useEffect(() => {}, [lastValue])
-
   return (
     <>
       {!mediaMatches ? (
-        <div className={`flex flex-col relative ${className}`} ref={selectRef}>
+        <div
+          className={`flex flex-col md-plus:w-full relative ${
+            className ? className : ''
+          }`}
+          ref={selectRef}
+        >
           {label && <label className="text-sm">{label}</label>}
           <input
-            className={`select-${type} ${
-              options && 'select'
-            } bg-white cursor-context-menu}`}
+            className={`select-${type} ${options && 'select'} bg-white ${
+              isOpened ? 'cursor-text' : 'cursor-context-menu'
+            }`}
             type="text"
             placeholder={placeholder}
             onFocus={handleFocus}

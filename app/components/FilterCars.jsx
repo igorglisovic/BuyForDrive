@@ -336,7 +336,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
   return (
     <aside
       aria-expanded={isFilterMenuOpen}
-      className={`open-close fixed md-plus:relative base-plus:min-w-[20%] self-baseline flex-1 flex-grow-[1.1] ${
+      className={`open-close md-plus:min-h-[730px] fixed md-plus:relative base-plus:min-w-[25%] self-baseline flex-1 flex-grow-[1.4] ${
         !subHeaderInView && 'bg-transparent !p-0'
       } ${isFilterMenuOpen && 'bg-white'}`}
       ref={asideRef}

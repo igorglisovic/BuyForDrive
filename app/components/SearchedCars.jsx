@@ -51,10 +51,12 @@ const SearchedCars = ({
     const newSorting = e.target.value
     updateSorting(newSorting)
 
-    const newUrl = `/cars/search?sort=${newSorting}&${url
+    const newUrl = `/cars/search?sort=${newSorting}&page=1&${url
       .split('&')
-      .slice(1)
+      .slice(2)
       .join('&')}`
+
+    console.log(url.split('&').slice(2))
 
     router.push(newUrl)
   }
@@ -132,7 +134,7 @@ const SearchedCars = ({
     >
       <div className="w-full md-plus:hidden md-plus:invisible block visible">
         <Container>
-          <div className="flex gap-4 justify-between items-center py-3 px-3 bg-white rounded-xl">
+          <div className="flex gap-4 justify-between items-center py-2 px-2 bg-white rounded-xl">
             <button
               onClick={() => {
                 updateIsFilterMenuOpen(true)
@@ -142,7 +144,7 @@ const SearchedCars = ({
               <span>Filters</span>
               <FontAwesomeIcon style={{ fontSize: '0.7rem' }} icon={faPlus} />
             </button>
-            <div className="flex gap-2 items-center md-plus:hidden md-plus:invisible overflow-x-auto">
+            <div className="flex gap-2 p-1 items-center md-plus:hidden md-plus:invisible overflow-x-auto">
               {filtersArray?.map((filter, i) => {
                 if (filter._id) {
                   return (
@@ -216,7 +218,7 @@ const SearchedCars = ({
               </div>
               <div>
                 <select
-                  className="select-half select focus:border-[1px] focus:border-black focus:outline-none"
+                  className="select-half select !text-sm md-plus:!text-xs xl:!text-sm !min-w-[260px] md-plus:!min-w-[225px] xl:!min-w-[260px] focus:border-[1px] focus:border-black focus:outline-none "
                   onChange={handleSortingChange}
                   value={sorting}
                 >

@@ -7,6 +7,7 @@ import { LoadingBarProvider } from './store/loading-bar'
 import { FiltersContextProvider } from './store/filters'
 import { PostCarContextProvider } from './store/post-car'
 import { SearchContextProvider } from './store/search-car'
+import Footer from './components/Footer'
 
 export const metadata = {
   title: 'Create Next App',
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
                 <Provider>
                   <Nav />
                   <main className="pt-16">{children}</main>
+                  <Footer />
                 </Provider>
               </FiltersContextProvider>
             </SearchContextProvider>
