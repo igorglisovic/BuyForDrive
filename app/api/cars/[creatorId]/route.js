@@ -6,8 +6,6 @@ export const GET = async (req, { params }) => {
   const creatorId =
     params.creatorId && new mongoose.Types.ObjectId(params.creatorId)
 
-  console.log('creatorId>> ', creatorId)
-
   try {
     await connectToDB()
 

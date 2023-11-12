@@ -143,16 +143,31 @@ const SearchedCars = ({
               <FontAwesomeIcon style={{ fontSize: '0.7rem' }} icon={faPlus} />
             </button>
             <div className="flex gap-2 items-center md-plus:hidden md-plus:invisible overflow-x-auto">
-              {filtersArray?.map((filter, i) => (
-                <SelectedFilter
-                  paramsArray={paramsArray}
-                  filter={filter}
-                  url={url}
-                  key={i}
-                >
-                  {filter.label}
-                </SelectedFilter>
-              ))}
+              {filtersArray?.map((filter, i) => {
+                if (filter._id) {
+                  return (
+                    <SelectedFilter
+                      paramsArray={paramsArray}
+                      filter={filter}
+                      url={url}
+                      key={i}
+                    >
+                      {filter.label}
+                    </SelectedFilter>
+                  )
+                } else {
+                  return (
+                    <SelectedFilter
+                      paramsArray={paramsArray}
+                      filter={filter}
+                      url={url}
+                      key={i}
+                    >
+                      {`${filter.text} ${filter.from.label}-${filter.to.label}`}
+                    </SelectedFilter>
+                  )
+                }
+              })}
               {!filtersArray?.length && (
                 <span className="self-end text-xs text-gray-400">
                   No filters yet.
@@ -173,16 +188,31 @@ const SearchedCars = ({
           <div className="flex flex-1 flex-grow-[3] flex-col gap-6">
             <div className="flex justify-between mt-6">
               <div className="md-plus:flex md-plus:visible hidden invisible gap-2 flex-wrap">
-                {filtersArray?.map((filter, i) => (
-                  <SelectedFilter
-                    paramsArray={paramsArray}
-                    filter={filter}
-                    url={url}
-                    key={i}
-                  >
-                    {filter.label}
-                  </SelectedFilter>
-                ))}
+                {filtersArray?.map((filter, i) => {
+                  if (filter._id) {
+                    return (
+                      <SelectedFilter
+                        paramsArray={paramsArray}
+                        filter={filter}
+                        url={url}
+                        key={i}
+                      >
+                        {filter.label}
+                      </SelectedFilter>
+                    )
+                  } else {
+                    return (
+                      <SelectedFilter
+                        paramsArray={paramsArray}
+                        filter={filter}
+                        url={url}
+                        key={i}
+                      >
+                        {`${filter.text} ${filter.from.label}-${filter.to.label}`}
+                      </SelectedFilter>
+                    )
+                  }
+                })}
               </div>
               <div>
                 <select

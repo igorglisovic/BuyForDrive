@@ -27,8 +27,6 @@ export const POST = async req => {
     images,
   } = await req.json()
 
-  console.log('drivetrain>>>  ', images)
-
   try {
     await connectToDB()
 

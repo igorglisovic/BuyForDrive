@@ -317,8 +317,6 @@ const Select = ({
       return
     }
 
-    console.log(lastValue, placeholder)
-
     const selectedOption = options?.find(option => option.label === value)
 
     updateFunction(selectedOption)
@@ -329,9 +327,7 @@ const Select = ({
   //     console.log(lastValue, mobileValue, placeholder)
   //   }
   // }, [mobileValue])
-  useEffect(() => {
-    console.log(lastValue, mobileValue, placeholder)
-  }, [lastValue])
+  useEffect(() => {}, [lastValue])
 
   return (
     <>

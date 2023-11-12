@@ -3,8 +3,6 @@ import { Car } from '@models/car'
 import mongoose from 'mongoose'
 
 export const GET = async (req, { params }) => {
-  // console.log('yes')
-  // console.log('>>>> ', params)
   const id = params.id && new mongoose.Types.ObjectId(params.id)
 
   try {

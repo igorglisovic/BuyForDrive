@@ -10,8 +10,42 @@ export const GET = async (req, { params }) => {
   const modelId =
     req.nextUrl.searchParams.get('model_id') &&
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('model_id'))
-  const yearFrom = req.nextUrl.searchParams.get('year_from')
-  const yearTo = req.nextUrl.searchParams.get('year_to')
+  const yearFrom =
+    req.nextUrl.searchParams.get('year_from') &&
+    req.nextUrl.searchParams.get('year_from')?.split('_')[1]
+  const yearTo =
+    req.nextUrl.searchParams.get('year_to') &&
+    req.nextUrl.searchParams.get('year_to')?.split('_')[1]
+  const mileageFrom =
+    req.nextUrl.searchParams.get('mileage_from') &&
+    req.nextUrl.searchParams
+      .get('mileage_from')
+      ?.split('_')[1]
+      .split(',')
+      .join('')
+  const mileageTo =
+    req.nextUrl.searchParams.get('mileage_to') &&
+    req.nextUrl.searchParams
+      .get('mileage_to')
+      ?.split('_')[1]
+      .split(',')
+      .join('')
+  const priceFrom =
+    req.nextUrl.searchParams.get('price_from') &&
+    req.nextUrl.searchParams
+      .get('price_from')
+      ?.split('_')[1]
+      .split(',')
+      .join('')
+  const priceTo =
+    req.nextUrl.searchParams.get('price_to') &&
+    req.nextUrl.searchParams.get('price_to')?.split('_')[1].split(',').join('')
+  const powerFrom =
+    req.nextUrl.searchParams.get('power_from') &&
+    req.nextUrl.searchParams.get('power_from')?.split('_')[1]
+  const powerTo =
+    req.nextUrl.searchParams.get('power_to') &&
+    req.nextUrl.searchParams.get('power_to')?.split('_')[1]
   const bodyTypeId =
     req.nextUrl.searchParams.get('body_type_id') &&
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('body_type_id'))
@@ -20,8 +54,6 @@ export const GET = async (req, { params }) => {
     new mongoose.Types.ObjectId(req.nextUrl.searchParams.get('fuel_type_id'))
   const page = req.nextUrl.searchParams.get('page')
   const limit = req.nextUrl.searchParams.get('limit')
-
-  // console.log(page, limit)
 
   try {
     await connectToDB()
@@ -246,9 +278,151 @@ export const GET = async (req, { params }) => {
         break
     }
 
+    if (mileageFrom && !mileageTo) {
+      pipeline.push({
+        $match: {
+          mileageNumeric: {
+            $gte: +mileageFrom,
+          },
+        },
+      })
+    }
+
+    if (!mileageFrom && mileageTo) {
+      pipeline.push({
+        $match: {
+          mileageNumeric: {
+            $lte: +mileageTo,
+          },
+        },
+      })
+    }
+
+    if (mileageFrom && mileageTo) {
+      if (+mileageFrom <= +mileageTo) {
+        pipeline.push({
+          $match: {
+            mileageNumeric: {
+              $gte: +mileageFrom,
+              $lte: +mileageTo,
+            },
+          },
+        })
+      }
+      if (+mileageFrom >= +mileageTo) {
+        pipeline.push({
+          $match: {
+            mileageNumeric: {
+              $gte: +mileageTo,
+              $lte: +mileageFrom,
+            },
+          },
+        })
+      }
+    }
+
+    if (priceFrom && !priceTo) {
+      pipeline.push({
+        $match: {
+          priceNumeric: {
+            $gte: +priceFrom,
+          },
+        },
+      })
+    }
+
+    if (!priceFrom && priceTo) {
+      pipeline.push({
+        $match: {
+          priceNumeric: {
+            $lte: +priceTo,
+          },
+        },
+      })
+    }
+
+    if (priceFrom && priceTo) {
+      if (+priceFrom <= +priceTo) {
+        pipeline.push({
+          $match: {
+            priceNumeric: {
+              $gte: +priceFrom,
+              $lte: +priceTo,
+            },
+          },
+        })
+      }
+      if (+priceFrom >= +priceTo) {
+        pipeline.push({
+          $match: {
+            priceNumeric: {
+              $gte: +priceTo,
+              $lte: +priceFrom,
+            },
+          },
+        })
+      }
+    }
+
+    pipeline.push({
+      $addFields: {
+        powerNumeric: {
+          $toDouble: {
+            $replaceAll: {
+              input: '$power.kw',
+              find: ',',
+              replacement: '',
+            },
+          },
+        },
+      },
+    })
+
+    if (powerFrom && !powerTo) {
+      pipeline.push({
+        $match: {
+          powerNumeric: {
+            $gte: +powerFrom,
+          },
+        },
+      })
+    }
+
+    if (!powerFrom && powerTo) {
+      pipeline.push({
+        $match: {
+          powerNumeric: {
+            $lte: +powerTo,
+          },
+        },
+      })
+    }
+
+    if (powerFrom && powerTo) {
+      if (+powerFrom <= +powerTo) {
+        pipeline.push({
+          $match: {
+            powerNumeric: {
+              $gte: +powerFrom,
+              $lte: +powerTo,
+            },
+          },
+        })
+      }
+      if (+powerFrom >= +powerTo) {
+        pipeline.push({
+          $match: {
+            powerNumeric: {
+              $gte: +powerTo,
+              $lte: +powerFrom,
+            },
+          },
+        })
+      }
+    }
+
     if (page && limit) {
       const skip = (+page - 1) * +limit
-      console.log(skip)
 
       pipeline.push({
         $skip: +skip,
@@ -258,8 +432,6 @@ export const GET = async (req, { params }) => {
     }
 
     const cars = await Car.aggregate(pipeline)
-
-    // console.log(cars)
 
     return new Response(JSON.stringify(cars), { status: 200 })
   } catch (error) {

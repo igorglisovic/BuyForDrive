@@ -64,6 +64,12 @@ const useCalcSearchedCars = () => {
     sorting,
     page,
     limit,
+    priceFrom,
+    priceTo,
+    mileageFrom,
+    mileageTo,
+    powerFrom,
+    powerTo,
   } = useSearchContext()
 
   useEffect(() => {
@@ -73,12 +79,72 @@ const useCalcSearchedCars = () => {
       { name: 'limit', value: limit },
       { name: 'brand_id', value: brand?._id },
       { name: 'model_id', value: model?._id },
-      { name: 'year_from', value: yearFrom?.label },
-      { name: 'year_to', value: yearTo?.label },
+      {
+        name: 'year_from',
+        value: yearFrom?._id && `${yearFrom?._id}_${yearFrom?.label}`,
+      },
+      {
+        name: 'year_to',
+        value: yearTo?._id && `${yearTo?._id}_${yearTo?.label}`,
+      },
       { name: 'body_type_id', value: bodyType?._id },
       { name: 'fuel_type_id', value: fuelType?._id },
+      {
+        name: 'price_from',
+        value:
+          priceFrom?._id &&
+          `${priceFrom?._id}_${priceFrom?.label.split(' ')[0]}`,
+      },
+      {
+        name: 'price_to',
+        value:
+          priceTo?._id && `${priceTo?._id}_${priceTo?.label.split(' ')[0]}`,
+      },
+      {
+        name: 'mileage_from',
+        value:
+          mileageFrom?._id &&
+          `${mileageFrom?._id}_${mileageFrom?.label.split(' ')[0]}`,
+      },
+      {
+        name: 'mileage_to',
+        value:
+          mileageTo?._id &&
+          `${mileageTo?._id}_${mileageTo?.label.split(' ')[0]}`,
+      },
+      {
+        name: 'power_from',
+        value:
+          powerFrom?._id &&
+          `${powerFrom?._id}_${powerFrom?.label
+            .split(' ')[0]
+            .replace('kW', '')}`,
+      },
+      {
+        name: 'power_to',
+        value:
+          powerTo?._id &&
+          `${powerTo?._id}_${powerTo?.label.split(' ')[0].replace('kW', '')}`,
+      },
     ])
-  }, [brand, model, yearFrom, yearTo, bodyType, fuelType, sorting, page, limit])
+    console.log(powerTo?.label.split(' ')[0])
+  }, [
+    brand,
+    model,
+    yearFrom,
+    yearTo,
+    bodyType,
+    fuelType,
+    sorting,
+    page,
+    limit,
+    priceFrom,
+    priceTo,
+    mileageFrom,
+    mileageTo,
+    powerFrom,
+    powerTo,
+  ])
 
   useEffect(() => {
     const routeUrlValue = makeUrl('/cars/search?', queriesArray)
@@ -89,8 +155,8 @@ const useCalcSearchedCars = () => {
   }, [queriesArray])
 
   useEffect(() => {
-    // console.log('queriesArray: ', routeUrl)
-  }, [routeUrl])
+    console.log('queriesArray: ', queriesArray)
+  }, [queriesArray])
 
   // Count number of searched cars
   useEffect(() => {

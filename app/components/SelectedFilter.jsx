@@ -14,43 +14,84 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
   const { filtersArray } = useFiltersContext()
 
   const handleDelete = () => {
-    let modelId
+    if (filter?._id) {
+      let modelId
 
-    // Get model Id if brand_id is deleted
-    filtersArray.forEach(item => {
-      if (item.brand_id === filter._id) {
-        modelId = item._id
-      }
-    })
-
-    paramsArray?.forEach(param => {
-      // Find param which is same as clicked filter
-      if (param.value === filter._id) {
-        const urlParts = url.split('&')
-
-        let filteredUrlParts
-
-        // If brand_id is deleted
-        if (modelId) {
-          // Create a new array with params without deleted param
-          filteredUrlParts = urlParts
-            .filter(part => !part.includes(`${param.name}`))
-            .filter(part => !part.includes(`model_id`))
-        } else {
-          // Create a new array with params without deleted param
-          filteredUrlParts = urlParts.filter(
-            part => !part.includes(`${param.name}`)
-          )
+      // Get model Id if brand_id is deleted
+      filtersArray.forEach(item => {
+        if (item.brand_id === filter._id) {
+          modelId = item._id
         }
+      })
 
-        // Join the filtered parts back into a single string
-        const updatedUrl =
-          '/cars/search?' + filteredUrlParts.join('&').split('?')[1]
+      paramsArray?.forEach(param => {
+        // Find param which is same as clicked filter
+        if (param.value.includes('_')) {
+          param = { ...param, value: param.value.split('_')[0] }
+        }
+        console.log(param)
+        if (param.value === filter._id) {
+          const urlParts = url.split('&')
 
-        setIsHidden(true)
-        router.push(updatedUrl)
-      }
-    })
+          let filteredUrlParts
+
+          // If brand_id is deleted
+          if (modelId) {
+            // Create a new array with params without deleted param
+            filteredUrlParts = urlParts
+              .filter(part => !part.includes(`${param.name}`))
+              .filter(part => !part.includes(`model_id`))
+          } else {
+            // Create a new array with params without deleted param
+            filteredUrlParts = urlParts.filter(
+              part => !part.includes(`${param.name}`)
+            )
+          }
+
+          // Join the filtered parts back into a single string
+          const updatedUrl =
+            '/cars/search?' + filteredUrlParts.join('&').split('?')[1]
+
+          setIsHidden(true)
+          router.push(updatedUrl)
+        }
+      })
+    } else {
+      let urlParts = url.split('&')
+      let filteredUrlParts
+      let indexFromPrevious
+
+      paramsArray?.forEach((param, i) => {
+        // Find param which is same as clicked filter
+        if (param.name.includes(filter.type)) {
+          console.log('param ', param)
+
+          if (indexFromPrevious && indexFromPrevious < i) {
+            // Create a new array with params without deleted params
+            filteredUrlParts = filteredUrlParts.filter(
+              part => !part.includes(`${param.name}`)
+            )
+            console.log('ima')
+          } else {
+            // Create a new array with params without deleted param
+            filteredUrlParts = urlParts.filter(
+              part => !part.includes(`${param.name}`)
+            )
+          }
+
+          indexFromPrevious = i
+
+          console.log(filteredUrlParts)
+
+          // Join the filtered parts back into a single string
+        }
+      })
+      const updatedUrl =
+        '/cars/search?' + filteredUrlParts.join('&').split('?')[1]
+
+      setIsHidden(true)
+      router.push(updatedUrl)
+    }
   }
 
   return (

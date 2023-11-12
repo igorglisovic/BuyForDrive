@@ -79,17 +79,34 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
     filterModel,
     filterBodyType,
     filterFuelType,
+    filterYearFrom,
+    filterYearTo,
+    filterMileageFrom,
+    filterMileageTo,
+    filterPriceFrom,
+    filterPriceTo,
+    filterPowerFrom,
+    filterPowerTo,
     updateFilterBrand,
     updateFilterModel,
     updateFilterBodyType,
     updateFilterFuelType,
+    updateFilterYearFrom,
+    updateFilterYearTo,
+    updateFilterMileageFrom,
+    updateFilterMileageTo,
+    updateFilterPriceFrom,
+    updateFilterPriceTo,
+    updateFilterPowerFrom,
+    updateFilterPowerTo,
     clearFiltersArray,
   } = useFiltersContext()
 
   useEffect(() => {
-    const urlHasBrand = paramsArray?.find(param => param.name === 'brand_id')
-      ? true
-      : false
+    const urlHasFilter = queryName =>
+      paramsArray?.find(param => param.name === queryName) ? true : false
+
+    const urlHasBrand = urlHasFilter('brand_id')
 
     if (!urlHasBrand) {
       updateFilterBrand(null)
@@ -98,35 +115,81 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
       updateModel(null)
     }
 
-    const urlHasModel = paramsArray?.find(param => param.name === 'model_id')
-      ? true
-      : false
+    const urlHasModel = urlHasFilter('model_id')
 
     if (!urlHasModel) {
       updateFilterModel(null)
       updateModel(null)
     }
 
-    const urlHasBodyType = paramsArray?.find(
-      param => param.name === 'body_type_id'
-    )
-      ? true
-      : false
+    const urlHasBodyType = urlHasFilter('body_type_id')
 
     if (!urlHasBodyType) {
       updateFilterBodyType(null)
       updateBodyType(null)
     }
 
-    const urlHasFuelType = paramsArray?.find(
-      param => param.name === 'fuel_type_id'
-    )
-      ? true
-      : false
+    const urlHasFuelType = urlHasFilter('fuel_type_id')
 
     if (!urlHasFuelType) {
       updateFilterFuelType(null)
       updateFuelType(null)
+    }
+
+    const urlYearFrom = urlHasFilter('year_from')
+
+    if (!urlYearFrom) {
+      updateFilterYearFrom(null)
+      updateYearFrom(null)
+    }
+
+    const urlYearTo = urlHasFilter('year_to')
+
+    if (!urlYearTo) {
+      updateFilterYearTo(null)
+      updateYearTo(null)
+    }
+
+    const urlMileageFrom = urlHasFilter('mileage_from')
+
+    if (!urlMileageFrom) {
+      updateFilterMileageFrom(null)
+      updateMileageFrom(null)
+    }
+
+    const urlMileageTo = urlHasFilter('mileage_to')
+
+    if (!urlMileageTo) {
+      updateFilterMileageTo(null)
+      updateMileageTo(null)
+    }
+
+    const urlPriceFrom = urlHasFilter('price_from')
+
+    if (!urlPriceFrom) {
+      updateFilterPriceFrom(null)
+      updatePriceFrom(null)
+    }
+
+    const urlPriceTo = urlHasFilter('price_to')
+
+    if (!urlPriceTo) {
+      updateFilterPriceTo(null)
+      updatePriceTo(null)
+    }
+
+    const urlPowerFrom = urlHasFilter('power_from')
+
+    if (!urlPowerFrom) {
+      updateFilterPowerFrom(null)
+      updatePowerFrom(null)
+    }
+
+    const urlPowerTo = urlHasFilter('power_to')
+
+    if (!urlPowerTo) {
+      updateFilterPowerTo(null)
+      updatePowerTo(null)
     }
   }, [paramsArray])
 
@@ -157,6 +220,78 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
             updateFilterFuelType(filterFuelType2)
           }
           break
+        case 'year_from':
+          const filterYearFrom2 = filterArrayById(
+            regYears,
+            param.value.split('_')[0]
+          )
+          if (filterYearFrom?._id !== filterYearFrom2?._id) {
+            updateFilterYearFrom(filterYearFrom2)
+          }
+          break
+        case 'year_to':
+          const filterYearTo2 = filterArrayById(
+            regYears,
+            param.value.split('_')[0]
+          )
+          if (filterYearTo?._id !== filterYearTo2?._id) {
+            updateFilterYearTo(filterYearTo2)
+          }
+          break
+        case 'mileage_from':
+          const filterMileageFrom2 = filterArrayById(
+            mileages,
+            param.value.split('_')[0]
+          )
+          if (filterMileageFrom?._id !== filterMileageFrom2?._id) {
+            updateFilterMileageFrom(filterMileageFrom2)
+          }
+          break
+        case 'mileage_to':
+          const filterMileageTo2 = filterArrayById(
+            mileages,
+            param.value.split('_')[0]
+          )
+          if (filterMileageTo?._id !== filterMileageTo2?._id) {
+            updateFilterMileageTo(filterMileageTo2)
+          }
+          break
+        case 'price_from':
+          const filterPriceFrom2 = filterArrayById(
+            prices,
+            param.value.split('_')[0]
+          )
+          if (filterPriceFrom?._id !== filterPriceFrom2?._id) {
+            updateFilterPriceFrom(filterPriceFrom2)
+          }
+          break
+        case 'price_to':
+          const filterPriceTo2 = filterArrayById(
+            prices,
+            param.value.split('_')[0]
+          )
+          if (filterPriceTo?._id !== filterPriceTo2?._id) {
+            updateFilterPriceTo(filterPriceTo2)
+          }
+          break
+        case 'power_from':
+          const filterPowerFrom2 = filterArrayById(
+            powers,
+            param.value.split('_')[0]
+          )
+          if (filterPowerFrom?._id !== filterPowerFrom2?._id) {
+            updateFilterPowerFrom(filterPowerFrom2)
+          }
+          break
+        case 'power_to':
+          const filterPowerTo2 = filterArrayById(
+            powers,
+            param.value.split('_')[0]
+          )
+          if (filterPowerTo?._id !== filterPowerTo2?._id) {
+            updateFilterPowerTo(filterPowerTo2)
+          }
+          break
       }
     })
   }, [
@@ -170,6 +305,14 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
     filterBodyType,
     filterFuelType,
     filterBrand,
+    filterYearFrom,
+    filterYearTo,
+    filterMileageFrom,
+    filterMileageTo,
+    filterPriceFrom,
+    filterPriceTo,
+    filterPowerFrom,
+    filterPowerTo,
   ])
 
   useEffect(() => {
@@ -257,6 +400,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
                 options={prices}
                 updateFunction={updatePriceFrom}
                 lastValue={priceFrom}
+                defaultValue={filterPriceFrom}
               />
               <Select
                 placeholder="To"
@@ -264,6 +408,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
                 options={prices}
                 updateFunction={updatePriceTo}
                 lastValue={priceTo}
+                defaultValue={filterPriceTo}
               />
             </div>
             <div className="flex items-end md-plus:flex-col md-plus:items-baseline base-plus:flex-row base-plus:items-end gap-2">
@@ -273,6 +418,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
                 type="half"
                 updateFunction={updateYearFrom}
                 lastValue={yearFrom}
+                defaultValue={filterYearFrom}
                 label="First registration"
               />
               <Select
@@ -280,6 +426,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
                 options={regYears}
                 type="half"
                 updateFunction={updateYearTo}
+                defaultValue={filterYearTo}
                 lastValue={yearTo}
               />
             </div>
@@ -291,6 +438,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
                 options={mileages}
                 updateFunction={updateMileageFrom}
                 lastValue={mileageFrom}
+                defaultValue={filterMileageFrom}
               />
               <Select
                 placeholder="To"
@@ -298,6 +446,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
                 options={mileages}
                 updateFunction={updateMileageTo}
                 lastValue={mileageTo}
+                defaultValue={filterMileageTo}
               />
             </div>
             <Select

@@ -5,11 +5,27 @@ const FiltersContext = createContext({
   filterModel: {},
   filterBodyType: {},
   filterFuelType: {},
+  filterYearFrom: {},
+  filterYearTo: {},
+  filterMileageFrom: {},
+  filterMileageTo: {},
+  filterPriceFrom: {},
+  filterPriceTo: {},
+  filterPowerFrom: {},
+  filterPowerTo: {},
   filtersArray: [],
   updateFilterBodyType: () => {},
   updateFilterBrand: () => {},
   updateFilterFuelType: () => {},
   updateFilterModel: () => {},
+  updateFilterYearFrom: () => {},
+  updateFilterYearTo: () => {},
+  updateFilterMileageFrom: () => {},
+  updateFilterMileageTo: () => {},
+  updateFilterPriceFrom: () => {},
+  updateFilterPriceTo: () => {},
+  updateFilterPowerFrom: () => {},
+  updateFilterPowerTo: () => {},
   clearFiltersArray: () => {},
   resetStates: () => {},
 })
@@ -22,52 +38,134 @@ export const FiltersContextProvider = ({ children }) => {
   const [filterModel, setFilterModel] = useState(null)
   const [filterBodyType, setFilterBodyType] = useState(null)
   const [filterFuelType, setFilterFuelType] = useState(null)
+  const [filterYearFrom, setFilterYearFrom] = useState(null)
+  const [filterYearTo, setFilterYearTo] = useState(null)
+  const [filterMileageFrom, setFilterMileageFrom] = useState(null)
+  const [filterMileageTo, setFilterMileageTo] = useState(null)
+  const [filterPriceFrom, setFilterPriceFrom] = useState(null)
+  const [filterPriceTo, setFilterPriceTo] = useState(null)
+  const [filterPowerFrom, setFilterPowerFrom] = useState(null)
+  const [filterPowerTo, setFilterPowerTo] = useState(null)
 
   useEffect(() => {
     // Create a Set to store unique filters.
-    const uniqueFilters = new Set([...filtersArray])
+    let uniqueFilters = new Set([...filtersArray])
 
-    if (filterBrand) {
-      uniqueFilters.add(filterBrand)
+    const addUniqueFilters = state => {
+      if (state) {
+        uniqueFilters.add(state)
+      }
     }
-    if (filterModel) {
-      uniqueFilters.add(filterModel)
+
+    const addFromToFilter = (filterFrom, filterTo, text, type) => {
+      if (filterFrom && filterTo) {
+        uniqueFilters = [
+          ...uniqueFilters,
+          {
+            from: filterFrom,
+            to: filterTo,
+            text,
+            type,
+          },
+        ]
+      }
+
+      if (filterFrom && !filterTo) {
+        uniqueFilters.add(filterFrom)
+      }
+      if (filterTo && !filterFrom) {
+        uniqueFilters.add(filterTo)
+      }
     }
-    if (filterBodyType) {
-      uniqueFilters.add(filterBodyType)
-    }
-    if (filterFuelType) {
-      uniqueFilters.add(filterFuelType)
-    }
+
+    addUniqueFilters(filterBrand)
+    addUniqueFilters(filterModel)
+    addUniqueFilters(filterBodyType)
+    addUniqueFilters(filterFuelType)
+
+    addFromToFilter(filterYearFrom, filterYearTo, 'Registration year', 'year')
+    addFromToFilter(filterMileageFrom, filterMileageTo, 'Mileage', 'mileage')
+    addFromToFilter(filterPriceFrom, filterPriceTo, 'Price', 'price')
+    addFromToFilter(filterPowerFrom, filterPowerTo, 'Power', 'power')
 
     // Convert the Set back to an array and update filtersArray.
     setFiltersArray(Array.from(uniqueFilters))
-  }, [filterBrand, filterModel, filterBodyType, filterFuelType])
+  }, [
+    filterBrand,
+    filterModel,
+    filterBodyType,
+    filterFuelType,
+    filterYearFrom,
+    filterYearTo,
+    filterMileageFrom,
+    filterMileageTo,
+    filterPriceFrom,
+    filterPriceTo,
+    filterPowerFrom,
+    filterPowerTo,
+  ])
 
   useEffect(() => {
+    // Create a Set to store unique filters.
+    let uniqueFilters = new Set([...filtersArray])
+
+    const addUniqueFilters = state => {
+      if (state) {
+        uniqueFilters.add(state)
+      }
+    }
+
+    const addFromToFilter = (filterFrom, filterTo, text, type) => {
+      if (filterFrom && filterTo) {
+        uniqueFilters = [
+          ...uniqueFilters,
+          {
+            from: filterFrom,
+            to: filterTo,
+            text,
+            type,
+          },
+        ]
+      }
+
+      if (filterFrom && !filterTo) {
+        uniqueFilters.add(filterFrom)
+      }
+      if (filterTo && !filterFrom) {
+        uniqueFilters.add(filterTo)
+      }
+    }
+
     if (
       !filtersArray.length &&
-      (filterBrand || filterModel || filterFuelType || filterBodyType)
+      (filterBrand ||
+        filterModel ||
+        filterFuelType ||
+        filterBodyType ||
+        filterYearFrom ||
+        filterYearTo ||
+        filterMileageFrom ||
+        filterMileageTo ||
+        filterPriceFrom ||
+        filterPriceTo ||
+        filterPowerFrom ||
+        filterPowerTo)
     ) {
-      // Create a Set to store unique filters.
-      const uniqueFilters = new Set([...filtersArray])
+      addUniqueFilters(filterBrand)
+      addUniqueFilters(filterModel)
+      addUniqueFilters(filterBodyType)
+      addUniqueFilters(filterFuelType)
 
-      if (filterBrand) {
-        uniqueFilters.add(filterBrand)
-      }
-      if (filterModel) {
-        uniqueFilters.add(filterModel)
-      }
-      if (filterBodyType) {
-        uniqueFilters.add(filterBodyType)
-      }
-      if (filterFuelType) {
-        uniqueFilters.add(filterFuelType)
-      }
+      addFromToFilter(filterYearFrom, filterYearTo, 'Registration year', 'year')
+      addFromToFilter(filterMileageFrom, filterMileageTo, 'Mileage', 'mileage')
+      addFromToFilter(filterPriceFrom, filterPriceTo, 'Price', 'price')
+      addFromToFilter(filterPowerFrom, filterPowerTo, 'Power', 'power')
 
       // Convert the Set back to an array and update filtersArray.
       setFiltersArray(Array.from(uniqueFilters))
     }
+
+    console.log('filterYearArray ', filtersArray)
   }, [filtersArray])
 
   const updateFilterBrand = filterBrand => {
@@ -86,6 +184,38 @@ export const FiltersContextProvider = ({ children }) => {
     setFilterFuelType(filterFuelType)
   }
 
+  const updateFilterYearFrom = filterYearFrom => {
+    setFilterYearFrom(filterYearFrom)
+  }
+
+  const updateFilterYearTo = filterYearTo => {
+    setFilterYearTo(filterYearTo)
+  }
+
+  const updateFilterMileageFrom = filterMileageFrom => {
+    setFilterMileageFrom(filterMileageFrom)
+  }
+
+  const updateFilterMileageTo = filterMileageTo => {
+    setFilterMileageTo(filterMileageTo)
+  }
+
+  const updateFilterPriceFrom = filterPriceFrom => {
+    setFilterPriceFrom(filterPriceFrom)
+  }
+
+  const updateFilterPriceTo = filterPriceTo => {
+    setFilterPriceTo(filterPriceTo)
+  }
+
+  const updateFilterPowerFrom = filterPowerFrom => {
+    setFilterPowerFrom(filterPowerFrom)
+  }
+
+  const updateFilterPowerTo = filterPowerTo => {
+    setFilterPowerTo(filterPowerTo)
+  }
+
   const clearFiltersArray = () => {
     setFiltersArray([])
   }
@@ -95,6 +225,8 @@ export const FiltersContextProvider = ({ children }) => {
     setFilterModel(null)
     setFilterBodyType(null)
     setFilterFuelType(null)
+    setFilterYearFrom(null)
+    setFilterYearTo(null)
   }
 
   const value = {
@@ -103,10 +235,26 @@ export const FiltersContextProvider = ({ children }) => {
     filterBodyType,
     filterFuelType,
     filtersArray,
+    filterYearFrom,
+    filterYearTo,
+    filterMileageFrom,
+    filterMileageTo,
+    filterPriceFrom,
+    filterPriceTo,
+    filterPowerFrom,
+    filterPowerTo,
     updateFilterBodyType,
     updateFilterBrand,
     updateFilterFuelType,
     updateFilterModel,
+    updateFilterYearFrom,
+    updateFilterYearTo,
+    updateFilterMileageFrom,
+    updateFilterMileageTo,
+    updateFilterPriceFrom,
+    updateFilterPriceTo,
+    updateFilterPowerFrom,
+    updateFilterPowerTo,
     clearFiltersArray,
     resetStates,
   }
