@@ -253,9 +253,9 @@ const SearchedCars = ({
                   <BigCardMobile key={car._id} car={car} />
                 ))
               : searchedCars?.map(car => <BigCard key={car._id} car={car} />)}
-            {loading && loadCars.map(item => <BigCardLoad key={item._id} />)}
+            {loading && loadCars.map((item, i) => <BigCardLoad key={i} />)}
             {loading &&
-              loadCars.map(item => <BigCardMobileLoad key={item._id} />)}
+              loadCars.map((item, i) => <BigCardMobileLoad key={i} />)}
             {!searchedCars?.length && loading !== true && (
               <div className="flex flex-col gap-3 items-center">
                 <h3 className="text-lg font-medium">

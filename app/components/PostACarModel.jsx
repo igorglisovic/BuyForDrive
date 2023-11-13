@@ -12,7 +12,7 @@ import { useLoadingBarContext } from '@app/store/loading-bar'
 const PostACarModel = ({ setGoToFinish }) => {
   const [isSelected, setIsSelected] = useState(false)
   const { modelDetails } = usePostCarContext()
-  const { increaseLoadingBar } = useLoadingBarContext()
+  const { increaseLoadingBar, loadingBar } = useLoadingBarContext()
 
   const { data: doors } = useFetch('/api/doors', [], true)
   const { data: bodyTypes } = useFetch('/api/body_type', [], true)
@@ -90,7 +90,7 @@ const PostACarModel = ({ setGoToFinish }) => {
           type="half"
           label="Displacement"
           updateFunction={modelDetails.updateDisplacement}
-          disabled={modelDetails.transmissionType ? false : true}
+          disabled={modelDetails.power ? false : true}
           lastValue={modelDetails.displacement}
         />
       </div>
@@ -169,8 +169,14 @@ const PostACarModel = ({ setGoToFinish }) => {
       />
       <button
         type="button"
-        disabled={modelDetails.airConditioning ? false : true}
-        className="bg-gray-300 mt-4 py-1 rounded-full"
+        disabled={
+          modelDetails.airConditioning &&
+          modelDetails.color &&
+          loadingBar === 85
+            ? false
+            : true
+        }
+        className="bg-gray-300 mt-4 py-1 rounded-full self-center px-5 font-semibold"
         onClick={handleGoToFinish}
       >
         Go further

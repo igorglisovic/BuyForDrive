@@ -42,6 +42,37 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
     updateIsFilterMenuOpen,
   } = useSearchContext()
 
+  const { countOffers, handleSubmit, handleKeyDown } = useCalcSearchedCars()
+
+  const {
+    filterBrand,
+    filterModel,
+    filterBodyType,
+    filterFuelType,
+    filterYearFrom,
+    filterYearTo,
+    filterMileageFrom,
+    filterMileageTo,
+    filterPriceFrom,
+    filterPriceTo,
+    filterPowerFrom,
+    filterPowerTo,
+    filtersArray,
+    updateFilterBrand,
+    updateFilterModel,
+    updateFilterBodyType,
+    updateFilterFuelType,
+    updateFilterYearFrom,
+    updateFilterYearTo,
+    updateFilterMileageFrom,
+    updateFilterMileageTo,
+    updateFilterPriceFrom,
+    updateFilterPriceTo,
+    updateFilterPowerFrom,
+    updateFilterPowerTo,
+    clearFiltersArray,
+  } = useFiltersContext()
+
   const { data: brands } = useFetch('/api/brands', [], true)
   const { data: models } = useFetch(`/api/models/${brand?._id}`, [brand], brand)
   const { data: regYears } = useFetch('/api/reg_years', [], true)
@@ -72,35 +103,6 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
     ...power,
     label: `${Math.trunc(+power.label * 0.745699872)}kW (${power.label} hp)`,
   }))
-
-  const { countOffers, handleSubmit, handleKeyDown } = useCalcSearchedCars()
-  const {
-    filterBrand,
-    filterModel,
-    filterBodyType,
-    filterFuelType,
-    filterYearFrom,
-    filterYearTo,
-    filterMileageFrom,
-    filterMileageTo,
-    filterPriceFrom,
-    filterPriceTo,
-    filterPowerFrom,
-    filterPowerTo,
-    updateFilterBrand,
-    updateFilterModel,
-    updateFilterBodyType,
-    updateFilterFuelType,
-    updateFilterYearFrom,
-    updateFilterYearTo,
-    updateFilterMileageFrom,
-    updateFilterMileageTo,
-    updateFilterPriceFrom,
-    updateFilterPriceTo,
-    updateFilterPowerFrom,
-    updateFilterPowerTo,
-    clearFiltersArray,
-  } = useFiltersContext()
 
   useEffect(() => {
     const urlHasFilter = queryName =>
@@ -204,7 +206,12 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
           break
         case 'model_id':
           const filterModel2 = filterArrayById(models, param.value)
-          if (filterModel?._id !== filterModel2?._id) {
+
+          const filtersArrayHasModel = filtersArray.some(
+            filter => filter._id === filterModel2?._id
+          )
+
+          if (filterModel?._id !== filterModel2?._id && !filtersArrayHasModel) {
             updateFilterModel(filterModel2)
           }
           break
@@ -297,22 +304,15 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
   }, [
     paramsArray,
     url,
+    filtersArray,
     brands,
     models,
     bodyTypes,
     fuelTypes,
-    filterModel,
-    filterBodyType,
-    filterFuelType,
-    filterBrand,
-    filterYearFrom,
-    filterYearTo,
-    filterMileageFrom,
-    filterMileageTo,
-    filterPriceFrom,
-    filterPriceTo,
-    filterPowerFrom,
-    filterPowerTo,
+    prices,
+    regYears,
+    mileages,
+    powers,
   ])
 
   useEffect(() => {

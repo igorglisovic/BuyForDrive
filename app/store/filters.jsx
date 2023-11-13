@@ -88,6 +88,8 @@ export const FiltersContextProvider = ({ children }) => {
     addFromToFilter(filterPriceFrom, filterPriceTo, 'Price', 'price')
     addFromToFilter(filterPowerFrom, filterPowerTo, 'Power', 'power')
 
+    console.log('farray ', filterModel)
+
     // Convert the Set back to an array and update filtersArray.
     setFiltersArray(Array.from(uniqueFilters))
   }, [

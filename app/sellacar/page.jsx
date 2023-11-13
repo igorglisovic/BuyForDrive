@@ -9,6 +9,8 @@ import PostACarModel from '@app/components/PostACarModel'
 import UploadImages from '@app/components/UploadImages'
 import { useLoadingBarContext } from '@app/store/loading-bar'
 import { usePostCarContext } from '@app/store/post-car'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -22,7 +24,7 @@ const SellACar = () => {
 
   const { basicInfo, modelDetails, pricingDetails, headerInView, resetStates } =
     usePostCarContext()
-  const { setLoadingBar, resetLoadingBar } = useLoadingBarContext()
+  const { setLoadingBar, resetLoadingBar, loadingBar } = useLoadingBarContext()
 
   const { data: session, status } = useSession()
   const router = useRouter()
@@ -58,6 +60,8 @@ const SellACar = () => {
       setGoToBasic(true)
     }
   }, [files])
+
+  console.log(loadingBar)
 
   useEffect(() => {
     resetLoadingBar()
@@ -170,8 +174,12 @@ const SellACar = () => {
                 {goFurther && <PostACarModel setGoToFinish={setGoToFinish} />}
                 {goToFinish && <PostACarFinish />}
                 {goFurther && goToFinish && goToBasic && (
-                  <button disabled={submitting} type="submit">
-                    submit
+                  <button
+                    disabled={submitting || loadingBar !== 100}
+                    type="submit"
+                    className="py-1 px-8 rounded-full self-center font-semibold bg-btn-2"
+                  >
+                    Post a car
                   </button>
                 )}
               </form>

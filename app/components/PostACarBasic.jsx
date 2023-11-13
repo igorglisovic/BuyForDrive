@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
 import { usePostCarContext } from '@app/store/post-car'
 import useFetch from '@app/hooks/useFetch'
 import Select from './Select'
+import { useLoadingBarContext } from '@app/store/loading-bar'
 
 const PostACarBasic = ({ setGoFurther }) => {
-  const [modelHasSelected, setModelHasSelected] = useState(false)
-
   const { basicInfo } = usePostCarContext()
+  const { loadingBar } = useLoadingBarContext()
 
   const { data: brands } = useFetch('/api/brands')
   const { data: models } = useFetch(
@@ -16,12 +15,6 @@ const PostACarBasic = ({ setGoFurther }) => {
   )
   const { data: regYears } = useFetch('/api/reg_years')
   const { data: regMonths } = useFetch('/api/reg_months')
-
-  useEffect(() => {
-    if (basicInfo.model) {
-      setModelHasSelected(true)
-    }
-  }, [basicInfo.model])
 
   const handleGoFurther = () => {
     setGoFurther(true)
@@ -53,7 +46,7 @@ const PostACarBasic = ({ setGoFurther }) => {
           options={regYears}
           type="half"
           label="First registration"
-          disabled={modelHasSelected && basicInfo.brand ? false : true}
+          disabled={basicInfo.brand && basicInfo.model ? false : true}
           updateFunction={basicInfo.updateRegYear}
           lastValue={basicInfo.regYear}
         />
@@ -62,7 +55,11 @@ const PostACarBasic = ({ setGoFurther }) => {
           options={regMonths}
           type="half"
           label=""
-          disabled={basicInfo.regYear && basicInfo.brand ? false : true}
+          disabled={
+            basicInfo.brand && basicInfo.model && basicInfo.regYear
+              ? false
+              : true
+          }
           updateFunction={basicInfo.updateRegMonth}
           lastValue={basicInfo.regMonth}
         />
@@ -71,14 +68,30 @@ const PostACarBasic = ({ setGoFurther }) => {
         placeholder="Mileage"
         type="half"
         label="Mileage"
-        disabled={basicInfo.regMonth && basicInfo.brand ? false : true}
+        disabled={
+          basicInfo.brand &&
+          basicInfo.model &&
+          basicInfo.regYear &&
+          basicInfo.regMonth
+            ? false
+            : true
+        }
         updateFunction={basicInfo.updateMileage}
         lastValue={basicInfo.mileage}
       />
       <button
         type="button"
-        disabled={basicInfo.mileage && basicInfo.brand ? false : true}
-        className="bg-gray-300 mt-4 py-1 rounded-full"
+        disabled={
+          basicInfo.brand &&
+          basicInfo.model &&
+          basicInfo.regYear &&
+          basicInfo.regMonth &&
+          basicInfo.mileage &&
+          loadingBar === 30
+            ? false
+            : true
+        }
+        className="bg-gray-300 mt-4 py-1 px-5 rounded-full self-center font-semibold"
         onClick={handleGoFurther}
       >
         Go further

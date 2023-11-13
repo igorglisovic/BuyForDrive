@@ -25,6 +25,11 @@ const Select = ({
   const [mediaMatches, setMediaMatches] = useState(false)
   const [media, setMedia] = useState(false)
 
+  const selectRef = useRef(null)
+  const containerRef = useRef(null)
+  const highlightedOptionRef = useRef(null)
+  const ulRef = useRef(null)
+
   useEffect(() => {
     setMedia(window.matchMedia('(max-width: 640px)'))
   }, [])
@@ -39,14 +44,8 @@ const Select = ({
       setMediaMatches(true)
     } else {
       setMediaMatches(false)
-      // setMediaMatches(true)
     }
   }
-
-  const selectRef = useRef(null)
-  const containerRef = useRef(null)
-  const highlightedOptionRef = useRef(null)
-  const ulRef = useRef(null)
 
   const { increaseLoadingBar, decreaseLoadingBar } = useLoadingBarContext()
 
@@ -206,7 +205,8 @@ const Select = ({
   // If select is disabled, restart value to ''
   useEffect(() => {
     if (disabled) {
-      setValue('')
+      // setValue('')
+      // updateFunction(null)
       setFilteredOptions([])
     }
   }, [disabled])
@@ -220,17 +220,17 @@ const Select = ({
     }
 
     // if input has a value and has an options
-    if (lastValue && options) {
+    if (lastValue && options && !isLoadingBarIncreased) {
       increaseLoadingBar(5)
+      setIsLoadingBarIncreased(true)
+      setIsLoadingBarDecreased(false)
     }
 
     // If input value is empty
-    if (!lastValue && !disabled) {
+    if (!lastValue && !disabled && !isLoadingBarDecreased) {
       decreaseLoadingBar(5)
-    }
-
-    if (!options) {
-      // console.log('lvalue ', lastValue)
+      setIsLoadingBarDecreased(true)
+      setIsLoadingBarIncreased(false)
     }
 
     if (lastValue && !options && !isLoadingBarIncreased) {
@@ -299,11 +299,11 @@ const Select = ({
     }
     // Filter options by value in the input
     if (options) {
-      const filteredOptions =
+      const filterOptions =
         value || (!value && !isOpened) ? filterSelectOptions(value) : []
-      setFilteredOptions(filteredOptions)
+      setFilteredOptions(filterOptions)
     }
-  }, [value])
+  }, [value, isOpened])
 
   const handleClearInput = () => {
     setValue('')
@@ -324,6 +324,13 @@ const Select = ({
 
     updateFunction(selectedOption)
   }
+
+  useEffect(() => {
+    if (placeholder === 'All brands' || placeholder === 'All models') {
+      // console.log(placeholder + ' ', options, value)
+      console.log('filteredOptions ', filteredOptions)
+    }
+  }, [filteredOptions])
 
   return (
     <>
@@ -364,7 +371,7 @@ const Select = ({
                   Deselect
                 </li>
               )}
-              {options &&
+              {options.length &&
                 !filteredOptions.length &&
                 !value &&
                 options.map((option, i) => (
@@ -380,20 +387,23 @@ const Select = ({
                     {option.label}
                   </li>
                 ))}
-              {filteredOptions &&
-                filteredOptions.map((option, i) => (
-                  <li
-                    key={i}
-                    className={`max-h-[38px] py-2 px-2 hover:bg-gray-200 cursor-pointer ${
-                      i !== options?.length - 1 &&
-                      'border-b-[1px] border-gray-300'
-                    } ${i === highlightedOption && 'bg-gray-200'}`}
-                    ref={i === highlightedOption ? highlightedOptionRef : null}
-                    onClick={() => handleClick(option)}
-                  >
-                    {option.label}
-                  </li>
-                ))}
+              {filteredOptions.length
+                ? filteredOptions.map((option, i) => (
+                    <li
+                      key={i}
+                      className={`max-h-[38px] py-2 px-2 hover:bg-gray-200 cursor-pointer ${
+                        i !== options?.length - 1 &&
+                        'border-b-[1px] border-gray-300'
+                      } ${i === highlightedOption && 'bg-gray-200'}`}
+                      ref={
+                        i === highlightedOption ? highlightedOptionRef : null
+                      }
+                      onClick={() => handleClick(option)}
+                    >
+                      {option.label}
+                    </li>
+                  ))
+                : ''}
             </ul>
           )}
         </div>

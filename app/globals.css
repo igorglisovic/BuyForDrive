@@ -51,11 +51,11 @@ select:disabled,
 button:disabled,
 textarea:disabled,
 div:disabled {
-  @apply bg-gray-100;
+  @apply bg-gray-100 bg-none;
 }
 
 .loading span,
-h3 {
+.loading h3 {
   cursor: default;
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */

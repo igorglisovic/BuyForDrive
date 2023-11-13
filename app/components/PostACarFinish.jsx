@@ -64,7 +64,7 @@ const PostACarFinish = () => {
           updateFunction={pricingDetails.updatePrice}
           lastValue={pricingDetails.price}
         />
-        <div>
+        <div className="w-[50%]">
           <input
             onChange={handleChange}
             id="fixed-price"
@@ -83,7 +83,9 @@ const PostACarFinish = () => {
           cols="30"
           rows="10"
           className="select-full"
-          disabled={pricingDetails.price ? false : true}
+          disabled={
+            pricingDetails.price && pricingDetails.owners ? false : true
+          }
           onChange={handleChangeDesc}
         ></textarea>
       </div>

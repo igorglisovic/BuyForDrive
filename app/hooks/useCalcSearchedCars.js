@@ -127,7 +127,6 @@ const useCalcSearchedCars = () => {
           `${powerTo?._id}_${powerTo?.label.split(' ')[0].replace('kW', '')}`,
       },
     ])
-    console.log(powerTo?.label.split(' ')[0])
   }, [
     brand,
     model,
@@ -155,7 +154,7 @@ const useCalcSearchedCars = () => {
   }, [queriesArray])
 
   useEffect(() => {
-    console.log('queriesArray: ', queriesArray)
+    // console.log('queriesArray: ', queriesArray)
   }, [queriesArray])
 
   // Count number of searched cars
@@ -180,7 +179,9 @@ const useCalcSearchedCars = () => {
   // Count number of all cars
   useEffect(() => {
     const countNumOfAllOffers = async () => {
-      const allCars = await fetchSearchedCars('/api/cars')
+      const allCars = await fetchSearchedCars(
+        '/api/searched_cars?sort=default_sorting'
+      )
       setCountOffers(allCars?.length)
     }
     if (!brand && !model && !yearFrom && !yearTo && !bodyType && !fuelType)

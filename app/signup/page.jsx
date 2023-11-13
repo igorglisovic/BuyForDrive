@@ -35,9 +35,9 @@ const SignUp = () => {
   }, [])
 
   return (
-    <div className="w-full h-full overflow-y-none">
+    <div className="py-12">
       <Container>
-        <div className="flex flex-col items-center mt-8 gap-4">
+        <div className="flex flex-col items-center gap-4">
           <form
             onSubmit={e => {
               e.preventDefault()
