@@ -40,6 +40,11 @@ module.exports = {
       gridTemplateColumns: {
         car: 'minmax(70%,1fr) 1fr',
       },
+      gridTemplateRows: {
+        slider: '400px 180px',
+        slider2: '370px 150px',
+        slider3: '280px 90px',
+      },
     },
   },
   plugins: [],

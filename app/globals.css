@@ -207,12 +207,49 @@ option {
 .arrow--left {
   left: 5px;
 }
-
-.arrow--right {
+:hover .arrow--right {
   left: auto;
   right: 5px;
 }
 
-.arrow--disabled {
-  fill: rgba(255, 255, 255, 0.5);
+.swiper-button-prev {
+  color: #262626 !important;
+  font-weight: 800;
+  transition: color 0.3s;
+}
+
+.swiper-button-next {
+  color: #262626 !important;
+  font-weight: 800;
+  transition: color 0.3s;
+  width: 10px;
+}
+
+.gallery .swiper-button-prev,
+.gallery .swiper-button-next,
+.overlay .swiper-button-next,
+.overlay .swiper-button-prev {
+  color: #fff !important;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: clamp(34px, 4vw, 45px) !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #7a7a7a !important;
+}
+
+.related .swiper-wrapper {
+  align-items: flex-end;
+}
+
+.swiper {
+  height: 100%;
+}
+
+.swiper-pagination {
+  margin-bottom: 14px;
 }

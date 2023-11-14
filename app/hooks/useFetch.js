@@ -23,9 +23,11 @@ const useFetch = (url, dependencies = [], shouldFetch = true) => {
 
     if (shouldFetch && typeof url === 'string' && url.trim() !== '') {
       fetchData(url)
+      console.log('izvrsilo se ', shouldFetch)
     }
 
     if (!shouldFetch) {
+      console.log('nije se izvrsilo ', shouldFetch)
       setData(null)
     }
   }, [...dependencies])

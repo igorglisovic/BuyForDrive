@@ -1,27 +1,12 @@
-import 'keen-slider/keen-slider.min.css'
-import { useKeenSlider } from 'keen-slider/react'
-import Car from '../../../public/assets/car.jpg'
-import Image from 'next/image'
 import { useState } from 'react'
-import Arrow from '../ui/Arrow'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Thumbs } from 'swiper'
+
+import 'swiper/swiper-bundle.min.css'
+import 'swiper/css'
 
 const CarSlider = ({ car }) => {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [loaded, setLoaded] = useState(false)
-
-  const [sliderRef, instanceRef] = useKeenSlider(
-    {
-      slideChanged(slider) {
-        setCurrentSlide(slider.track.details.rel)
-      },
-      created() {
-        setLoaded(true)
-      },
-    },
-    [
-      // add plugins here
-    ]
-  )
+  const [activeThumb, setActiveThumb] = useState()
 
   return (
     <section>
@@ -31,36 +16,74 @@ const CarSlider = ({ car }) => {
         </h1>
         <h3 className="text-2xl font-medium mb-2">€{car?.price}</h3>
       </div>
-      <div className="flex justify-center relative rounded-[30px] bg-white shadow-xl">
-        <div ref={sliderRef} className="keen-slider rounded-[30px]">
-          {car?.images.map(image => (
-            <div className="flex keen-slider__slide min-w-full">
-              <Image
-                className=" w-auto h-auto"
-                src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${image.version}/${image.public_id}`}
-                width={500}
-                height={300}
-                alt=""
-              />
-            </div>
-          ))}
+      <div className="grid lg:grid-rows-slider md:lg:grid-rows-slider2 grid-rows-slider3 gap-[10px] rounded-[30px] bg-white shadow-xl overflow-hidden">
+        <div
+          onClick={e => {
+            e.stopPropagation()
+          }}
+          className="min-w-full"
+        >
+          <Swiper
+            loop={true}
+            spaceBetween={10}
+            navigation={true}
+            modules={[Navigation, Thumbs]}
+            grabCursor={true}
+            thumbs={{ swiper: activeThumb }}
+            className="product-images-slider"
+            initialSlide={0}
+          >
+            {car?.images.map((image, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  style={{
+                    backgroundImage: `url(https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${image.version}/${image.public_id})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    width: '100%',
+                    height: '100%',
+                    cursor: 'pointer',
+                  }}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
-        {loaded && instanceRef.current && (
-          <>
-            <Arrow
-              left
-              onClick={e => e.stopPropagation() || instanceRef.current?.prev()}
-              isDisabled={currentSlide === 0}
-            />
-            <Arrow
-              onClick={e => e.stopPropagation() || instanceRef.current?.next()}
-              isDisabled={
-                currentSlide ===
-                instanceRef.current.track.details?.slides.length - 1
-              }
-            />
-          </>
-        )}
+        <div
+          onClick={e => {
+            e.stopPropagation()
+          }}
+          className="min-w-full"
+        >
+          <Swiper
+            onSwiper={setActiveThumb}
+            loop={true}
+            spaceBetween={10}
+            slidesPerView={3}
+            modules={[Navigation, Thumbs]}
+            className="product-images-slider-thumbs"
+            navigation
+          >
+            {car?.images.map((image, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  style={{
+                    backgroundImage: `url(https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${image.version}/${image.public_id})`,
+                    backgroundSize: 'cover',
+                    backgroundPositionY: 'center',
+                    backgroundPositionX: 'center',
+                    width: '100%',
+                    height: '100%',
+                    cursor: 'pointer',
+                  }}
+                  onClick={e => {
+                    e.stopPropagation()
+                  }}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
     </section>
   )

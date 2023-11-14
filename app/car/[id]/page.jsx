@@ -15,13 +15,16 @@ const CarPage = ({ params }) => {
   const { data } = useFetch(`/api/car/${params.id}`)
   const car = data && data[0]
 
-  let { data: otherCars } = useFetch(`/api/cars/${car?.creator._id}`, [
-    car?.creator._id,
-  ])
+  let { data: otherCars } = useFetch(
+    `/api/cars/${car?.creator._id}`,
+    [car?.creator._id],
+    car?.creator._id
+  )
 
   let { data: similarCars } = useFetch(
     `/api/searched_cars?sort=default_sorting&page=1&limit=10&body_type_id=${car?.body_type_id}`,
-    [car?.body_type_id]
+    [car?.body_type_id],
+    car?.body_type_id
   )
 
   otherCars = otherCars?.filter(otherCar => otherCar._id !== car._id)
@@ -49,13 +52,15 @@ const CarPage = ({ params }) => {
           </div>
           <aside className="w-full md:mt-10 md:block row-start-4 col-span-2 md-form:row-start-1 md-form:col-start-2">
             <div className="flex flex-col items-center gap-3 bg-white p-6 rounded-[30px] shadow-xl">
-              <Image
-                className="w-[80px] h-[80px] rounded-full"
-                width={80}
-                height={80}
-                alt="avatar"
-                src={car?.creator.image}
-              />
+              {car?.creator.image && (
+                <Image
+                  className="w-[80px] h-[80px] rounded-full"
+                  width={80}
+                  height={80}
+                  alt="avatar"
+                  src={car.creator.image}
+                />
+              )}
               <span className="text-lg">{car?.creator.username}</span>
               <button className="bg-btn-2 py-2 px-8 rounded-full font-semibold">
                 Check profile
