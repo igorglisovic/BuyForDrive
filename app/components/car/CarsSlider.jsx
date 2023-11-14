@@ -8,6 +8,8 @@ const CarsSlider = ({ title, cars }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [loaded, setLoaded] = useState(false)
 
+  console.log(cars)
+
   const sliderOptions = {
     slides: {
       perView: 4,

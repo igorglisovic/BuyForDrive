@@ -20,7 +20,13 @@ const CarPage = ({ params }) => {
     car?.creator._id,
   ])
 
+  let { data: similarCars } = useFetch(
+    `/api/searched_cars?sort=default_sorting&page=1&limit=10&body_type_id=${car?.body_type_id}`,
+    [car?.body_type_id]
+  )
+
   otherCars = otherCars?.filter(otherCar => otherCar._id !== car._id)
+  similarCars = similarCars?.filter(similarCar => similarCar._id !== car._id)
 
   return (
     <div className="bg-hero-pattern pb-10">
@@ -58,8 +64,11 @@ const CarPage = ({ params }) => {
             </div>
           </aside>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col mb-10">
           <CarsSlider cars={otherCars} title="Other cars from this seller" />
+        </div>
+        <div className="flex flex-col">
+          <CarsSlider cars={similarCars} title="Similar cars" />
         </div>
       </Container>
     </div>
