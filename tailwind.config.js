@@ -37,6 +37,9 @@ module.exports = {
         xs: '520px',
         xxs: '400px',
       },
+      gridTemplateColumns: {
+        car: 'minmax(70%,1fr) 1fr',
+      },
     },
   },
   plugins: [],

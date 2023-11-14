@@ -8,7 +8,6 @@ import CarDetails from '@app/components/car/CarDetails'
 import CarInformation from '@app/components/car/CarInformation'
 import CarSlider from '@app/components/car/CarImgsSlider'
 import useFetch from '@app/hooks/useFetch'
-import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import CarsSlider from '@app/components/car/CarsSlider'
 
@@ -40,15 +39,15 @@ const CarPage = ({ params }) => {
             },
           ]}
         />
-        <div className="flex flex-col md:flex-row md:gap-8">
-          <div className="flex flex-col max-w-full md:max-w-[70%] min-w-[70%] gap-8 mt-10 mb-10">
+        <div className="grid grid-cols-car gap-8">
+          <div className="flex flex-col gap-8 mt-10 col-span-2 md-plus:col-span-1">
             <CarSlider car={car} />
             <CarDetails car={car} />
             <CarInformation car={car} />
             <CarAdditionalInfo car={car} />
             <CarDescription car={car} />
           </div>
-          <aside className="w-full md:mt-10 md:block">
+          <aside className="w-full md:mt-10 md:block row-start-4 col-span-2 md-form:row-start-1 md-form:col-start-2">
             <div className="flex flex-col items-center gap-3 bg-white p-6 rounded-[30px] shadow-xl">
               <Image
                 className="w-[80px] h-[80px] rounded-full"
@@ -63,12 +62,12 @@ const CarPage = ({ params }) => {
               </button>
             </div>
           </aside>
-        </div>
-        <div className="flex flex-col mb-10">
-          <CarsSlider cars={otherCars} title="Other cars from this seller" />
-        </div>
-        <div className="flex flex-col">
-          <CarsSlider cars={similarCars} title="Similar cars" />
+          <div className="flex flex-col col-span-2">
+            <CarsSlider cars={otherCars} title="Other cars from this seller" />
+          </div>
+          <div className="flex flex-col col-span-2">
+            <CarsSlider cars={similarCars} title="Similar cars" />
+          </div>
         </div>
       </Container>
     </div>
