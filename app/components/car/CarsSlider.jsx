@@ -1,66 +1,51 @@
-import { useKeenSlider } from 'keen-slider/react'
-import 'keen-slider/keen-slider.min.css'
 import SmallCard from '../cards/SmallCard'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Thumbs } from 'swiper'
+
+import 'swiper/swiper-bundle.min.css'
+import 'swiper/css'
 import { useEffect, useState } from 'react'
-import Arrow from '../ui/Arrow'
 
 const CarsSlider = ({ title, cars }) => {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [loaded, setLoaded] = useState(false)
-
-  console.log(cars)
-
-  const sliderOptions = {
-    slides: {
-      perView: 4,
-      spacing: 15,
-    },
-    slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel)
-    },
-    created() {
-      setLoaded(true)
-    },
-  }
-
-  const [sliderRef, instanceRef] = useKeenSlider(sliderOptions)
+  const [mediaMatches, setMediaMatches] = useState(false)
+  const [media, setMedia] = useState(false)
 
   useEffect(() => {
-    instanceRef.current?.update({
-      ...sliderOptions,
-    })
-  }, [instanceRef, sliderOptions])
+    setMedia(window.matchMedia('(max-width: 520px)'))
+  }, [])
+
+  const getMediaMatches = () => {
+    if (media.matches) {
+      setMediaMatches(true)
+    } else {
+      // setMediaMatches(true)
+      setMediaMatches(false)
+    }
+  }
+  useEffect(() => {
+    getMediaMatches()
+    window.addEventListener('resize', getMediaMatches)
+  }, [media])
 
   return (
     <section className="w-full p-6 bg-white shadow-xl rounded-[30px]">
       <h2 className="mb-4 text-2xl font-semibold">{title}</h2>
       <div className="min-w-full">
-        <div ref={sliderRef} className="keen-slider">
-          {cars?.map((car, i) => (
-            <div key={i} className="keen-slider__slide ">
-              <SmallCard car={car} />
-            </div>
-          ))}
-          {loaded && instanceRef.current && (
-            <>
-              <Arrow
-                left
-                onClick={e =>
-                  e.stopPropagation() || instanceRef.current?.prev()
-                }
-                isDisabled={currentSlide === 0}
-              />
-              <Arrow
-                onClick={e =>
-                  e.stopPropagation() || instanceRef.current?.next()
-                }
-                isDisabled={
-                  currentSlide ===
-                  instanceRef.current?.track.details?.slides.length % 4
-                }
-              />
-            </>
-          )}
+        <div className="keen-slider">
+          <Swiper
+            loop={true}
+            spaceBetween={10}
+            slidesPerView={mediaMatches ? 2 : 4}
+            modules={[Navigation, Thumbs]}
+            className="product-images-slider-thumbs"
+            navigation
+          >
+            {cars?.map((car, index) => (
+              <SwiperSlide key={index}>
+                <SmallCard car={car} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>

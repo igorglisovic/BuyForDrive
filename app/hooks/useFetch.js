@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 const useFetch = (url, dependencies = [], shouldFetch = true) => {
-  // console.log(url)
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -21,13 +20,16 @@ const useFetch = (url, dependencies = [], shouldFetch = true) => {
       }
     }
 
-    if (shouldFetch && typeof url === 'string' && url.trim() !== '') {
+    if (
+      shouldFetch &&
+      typeof url === 'string' &&
+      url.trim() !== '' &&
+      !url.includes('undefined')
+    ) {
       fetchData(url)
-      console.log('izvrsilo se ', shouldFetch)
     }
 
     if (!shouldFetch) {
-      console.log('nije se izvrsilo ', shouldFetch)
       setData(null)
     }
   }, [...dependencies])

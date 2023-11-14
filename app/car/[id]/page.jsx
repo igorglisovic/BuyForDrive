@@ -15,6 +15,8 @@ const CarPage = ({ params }) => {
   const { data } = useFetch(`/api/car/${params.id}`)
   const car = data && data[0]
 
+  console.log('creator id ', car?.creator._id)
+
   let { data: otherCars } = useFetch(
     `/api/cars/${car?.creator._id}`,
     [car?.creator._id],
@@ -61,14 +63,21 @@ const CarPage = ({ params }) => {
                   src={car.creator.image}
                 />
               )}
-              <span className="text-lg">{car?.creator.username}</span>
+              <span className="text-lg capitalize">
+                {car?.creator.username}
+              </span>
               <button className="bg-btn-2 py-2 px-8 rounded-full font-semibold">
                 Check profile
               </button>
             </div>
           </aside>
           <div className="flex flex-col col-span-2">
-            <CarsSlider cars={otherCars} title="Other cars from this seller" />
+            {otherCars && (
+              <CarsSlider
+                cars={otherCars}
+                title="Other cars from this seller"
+              />
+            )}
           </div>
           <div className="flex flex-col col-span-2">
             <CarsSlider cars={similarCars} title="Similar cars" />
