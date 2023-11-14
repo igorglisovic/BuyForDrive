@@ -134,6 +134,12 @@ export const SearchContextProvider = ({ children }) => {
     setYearTo(null)
     setBodyType(null)
     setFuelType(null)
+    setPriceFrom(null)
+    setPriceTo(null)
+    setMileageFrom(null)
+    setMileageTo(null)
+    setPowerFrom(null)
+    setPowerTo(null)
     setSorting('default_sorting')
   }
 

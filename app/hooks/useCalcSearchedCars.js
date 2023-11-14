@@ -127,6 +127,8 @@ const useCalcSearchedCars = () => {
           `${powerTo?._id}_${powerTo?.label.split(' ')[0].replace('kW', '')}`,
       },
     ])
+
+    console.log('urlPriceFrom ', brand)
   }, [
     brand,
     model,
