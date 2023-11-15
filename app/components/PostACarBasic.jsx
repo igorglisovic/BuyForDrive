@@ -3,7 +3,7 @@ import useFetch from '@app/hooks/useFetch'
 import Select from './Select'
 import { useLoadingBarContext } from '@app/store/loading-bar'
 
-const PostACarBasic = ({ setGoFurther }) => {
+const PostACarBasic = ({ setGoFurther, car, type }) => {
   const { basicInfo } = usePostCarContext()
   const { loadingBar } = useLoadingBarContext()
 
@@ -20,6 +20,8 @@ const PostACarBasic = ({ setGoFurther }) => {
     setGoFurther(true)
   }
 
+  console.log('car?.brand ', car)
+
   return (
     <div className="flex flex-col gap-3 border-t-[1px] pt-4 border-gray-400">
       <h2 className="text-xl font-semibold ">Basic infomation</h2>
@@ -30,6 +32,7 @@ const PostACarBasic = ({ setGoFurther }) => {
         label="Brand"
         updateFunction={basicInfo.updateBrand}
         lastValue={basicInfo.brand}
+        defaultValue={car && car.brand}
       />
       <Select
         placeholder="All models"
@@ -39,6 +42,7 @@ const PostACarBasic = ({ setGoFurther }) => {
         disabled={basicInfo.brand ? false : true}
         updateFunction={basicInfo.updateModel}
         lastValue={basicInfo.model}
+        defaultValue={car && car.model}
       />
       <div className="flex items-end gap-4">
         <Select
@@ -49,6 +53,7 @@ const PostACarBasic = ({ setGoFurther }) => {
           disabled={basicInfo.brand && basicInfo.model ? false : true}
           updateFunction={basicInfo.updateRegYear}
           lastValue={basicInfo.regYear}
+          defaultValue={car && car.reg_year}
         />
         <Select
           placeholder="Month"
@@ -62,6 +67,7 @@ const PostACarBasic = ({ setGoFurther }) => {
           }
           updateFunction={basicInfo.updateRegMonth}
           lastValue={basicInfo.regMonth}
+          defaultValue={car && car.reg_month}
         />
       </div>
       <Select
@@ -78,24 +84,27 @@ const PostACarBasic = ({ setGoFurther }) => {
         }
         updateFunction={basicInfo.updateMileage}
         lastValue={basicInfo.mileage}
+        defaultValue={car && car.mileage}
       />
-      <button
-        type="button"
-        disabled={
-          basicInfo.brand &&
-          basicInfo.model &&
-          basicInfo.regYear &&
-          basicInfo.regMonth &&
-          basicInfo.mileage &&
-          loadingBar === 30
-            ? false
-            : true
-        }
-        className="bg-gray-300 mt-4 py-1 px-5 rounded-full self-center font-semibold"
-        onClick={handleGoFurther}
-      >
-        Go further
-      </button>
+      {type !== 'edit' && (
+        <button
+          type="button"
+          disabled={
+            basicInfo.brand &&
+            basicInfo.model &&
+            basicInfo.regYear &&
+            basicInfo.regMonth &&
+            basicInfo.mileage &&
+            loadingBar === 30
+              ? false
+              : true
+          }
+          className="bg-gray-300 mt-4 py-1 px-5 rounded-full self-center font-semibold"
+          onClick={handleGoFurther}
+        >
+          Go further
+        </button>
+      )}
     </div>
   )
 }

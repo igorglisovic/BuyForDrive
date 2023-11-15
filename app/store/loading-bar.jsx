@@ -4,6 +4,7 @@ const loadingBarContext = createContext({
   loadingBar: 0,
   increaseLoadingBar: () => {},
   decreaseLoadingBar: () => {},
+  updateLoadingBar: () => {},
   resetLoadingBar: () => {},
 })
 
@@ -18,6 +19,10 @@ export const LoadingBarProvider = ({ children }) => {
 
   const decreaseLoadingBar = value => {
     setLoadingBar(prev => prev - value)
+  }
+
+  const updateLoadingBar = value => {
+    setLoadingBar(value)
   }
 
   const resetLoadingBar = () => {
@@ -36,6 +41,7 @@ export const LoadingBarProvider = ({ children }) => {
         loadingBar,
         increaseLoadingBar,
         decreaseLoadingBar,
+        updateLoadingBar,
         resetLoadingBar,
       }}
     >

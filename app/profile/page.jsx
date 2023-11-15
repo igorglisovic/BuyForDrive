@@ -4,12 +4,14 @@ import Container from '@app/components/Container'
 import Profile from '@app/components/Profile'
 import useFetch from '@app/hooks/useFetch'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 const page = () => {
   const [filteredCars, setFilteredCars] = useState([])
 
   const { data: session } = useSession()
+  const router = useRouter()
 
   let { data: cars, loading } = useFetch(
     `/api/cars/${session?.user.id}`,

@@ -74,6 +74,18 @@ const CarSchema = new Schema({
       version: String,
     },
   ],
+  files: [
+    {
+      path: String,
+      preview: String,
+      // lastModified: Number,
+      // lastModifiedDate: Object,
+      // name: String,
+      // size: Number,
+      // type: String,
+      // webkitRelativePath: String,
+    },
+  ],
 })
 
 export const Car = models.Car || model('Car', CarSchema, 'cars')

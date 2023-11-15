@@ -6,7 +6,7 @@ import useFetch from '@app/hooks/useFetch'
 import { useEffect, useState } from 'react'
 import { useLoadingBarContext } from '@app/store/loading-bar'
 
-const PostACarFinish = () => {
+const PostACarFinish = ({ car }) => {
   const [isLoadingBarIncreased, setIsLoadingBarIncreased] = useState(false)
   const [isLoadingBarDecreased, setIsLoadingBarDecreased] = useState(false)
   const [initialRender, setInitialRender] = useState(true)
@@ -19,6 +19,13 @@ const PostACarFinish = () => {
   const handleChange = e => {
     pricingDetails.updateFixedPrice(e.target.checked)
   }
+
+  useEffect(() => {
+    if (car) {
+      pricingDetails.updateFixedPrice(car.fixed_price)
+      pricingDetails.updateDescription(car.description)
+    }
+  }, [car])
 
   const handleChangeDesc = e => {
     pricingDetails.updateDescription(e.target.value)
@@ -54,6 +61,7 @@ const PostACarFinish = () => {
         label="Number of owners"
         updateFunction={pricingDetails.updateOwners}
         lastValue={pricingDetails.owners}
+        defaultValue={car && car.owners}
       />
       <div className="flex items-center gap-5">
         <Select
@@ -63,6 +71,7 @@ const PostACarFinish = () => {
           disabled={pricingDetails.owners ? false : true}
           updateFunction={pricingDetails.updatePrice}
           lastValue={pricingDetails.price}
+          defaultValue={car && car.price}
         />
         <div className="w-[50%]">
           <input
@@ -87,6 +96,7 @@ const PostACarFinish = () => {
             pricingDetails.price && pricingDetails.owners ? false : true
           }
           onChange={handleChangeDesc}
+          value={pricingDetails.description}
         ></textarea>
       </div>
     </div>

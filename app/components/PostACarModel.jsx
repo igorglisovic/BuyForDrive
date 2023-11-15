@@ -2,14 +2,13 @@ import { usePostCarContext } from '@app/store/post-car'
 import Radio from './Radio'
 import useFetch from '@app/hooks/useFetch'
 import { useEffect, useState } from 'react'
-import { useSearchContext } from '@app/store/search-car'
 import Select from './Select'
 import Image from 'next/image'
 import steeringLeft from '../../public/assets/steering-left.jpg'
 import steeringRight from '../../public/assets/steering-right.jpg'
 import { useLoadingBarContext } from '@app/store/loading-bar'
 
-const PostACarModel = ({ setGoToFinish }) => {
+const PostACarModel = ({ setGoToFinish, type, car }) => {
   const [isSelected, setIsSelected] = useState(false)
   const { modelDetails } = usePostCarContext()
   const { increaseLoadingBar, loadingBar } = useLoadingBarContext()
@@ -33,6 +32,13 @@ const PostACarModel = ({ setGoToFinish }) => {
   }
 
   useEffect(() => {
+    if (car && car.steering_side) {
+      setIsSelected(true)
+      modelDetails.updateSteeringSide(car.steering_side)
+    }
+  }, [car])
+
+  useEffect(() => {
     if (isSelected) {
       increaseLoadingBar(5)
     }
@@ -51,6 +57,7 @@ const PostACarModel = ({ setGoToFinish }) => {
         options={doors}
         updateFunction={modelDetails.updateDoors}
         lastCheckedValue={modelDetails.doors}
+        defaultValue={car && car.doors}
       />
       <Radio
         name="body-type"
@@ -59,6 +66,7 @@ const PostACarModel = ({ setGoToFinish }) => {
         updateFunction={modelDetails.updateBodyType}
         disabled={modelDetails.doors ? false : true}
         lastCheckedValue={modelDetails.bodyType}
+        defaultValue={car && car.body_type}
       />
       <Radio
         name="fuel-type"
@@ -67,6 +75,7 @@ const PostACarModel = ({ setGoToFinish }) => {
         updateFunction={modelDetails.updateFuelType}
         disabled={modelDetails.bodyType ? false : true}
         lastCheckedValue={modelDetails.fuelType}
+        defaultValue={car && car.fuel_type}
       />
       <Radio
         name="transmission-type"
@@ -75,6 +84,7 @@ const PostACarModel = ({ setGoToFinish }) => {
         updateFunction={modelDetails.updateTransmissionType}
         disabled={modelDetails.fuelType ? false : true}
         lastCheckedValue={modelDetails.transmissionType}
+        defaultValue={car && car.transmission_type}
       />
       <div className="flex gap-5">
         <Select
@@ -84,6 +94,7 @@ const PostACarModel = ({ setGoToFinish }) => {
           updateFunction={modelDetails.updatePower}
           disabled={modelDetails.transmissionType ? false : true}
           lastValue={modelDetails.power}
+          defaultValue={car && car.power.hp}
         />
         <Select
           placeholder="Displacement (cc)"
@@ -92,6 +103,7 @@ const PostACarModel = ({ setGoToFinish }) => {
           updateFunction={modelDetails.updateDisplacement}
           disabled={modelDetails.power ? false : true}
           lastValue={modelDetails.displacement}
+          defaultValue={car && car.displacement}
         />
       </div>
       <Select
@@ -102,6 +114,7 @@ const PostACarModel = ({ setGoToFinish }) => {
         updateFunction={modelDetails.updateSeats}
         disabled={modelDetails.displacement ? false : true}
         lastValue={modelDetails.seats}
+        defaultValue={car && car.seats}
       />
       <div>
         <label>Steering wheel side</label>
@@ -149,6 +162,7 @@ const PostACarModel = ({ setGoToFinish }) => {
         updateFunction={modelDetails.updateDrivetrain}
         disabled={modelDetails.steeringSide ? false : true}
         lastCheckedValue={modelDetails.drivetrain}
+        defaultValue={car && car.drivetrain}
       />
       <Select
         placeholder="Exterior color"
@@ -158,6 +172,7 @@ const PostACarModel = ({ setGoToFinish }) => {
         updateFunction={modelDetails.updateColor}
         disabled={modelDetails.drivetrain ? false : true}
         lastValue={modelDetails.color}
+        defaultValue={car && car.color}
       />
       <Radio
         name="air-conditioning"
@@ -166,21 +181,24 @@ const PostACarModel = ({ setGoToFinish }) => {
         updateFunction={modelDetails.updateAirConditioning}
         disabled={modelDetails.color ? false : true}
         lastCheckedValue={modelDetails.airConditioning}
+        defaultValue={car && car.air_conditioning}
       />
-      <button
-        type="button"
-        disabled={
-          modelDetails.airConditioning &&
-          modelDetails.color &&
-          loadingBar === 85
-            ? false
-            : true
-        }
-        className="bg-gray-300 mt-4 py-1 rounded-full self-center px-5 font-semibold"
-        onClick={handleGoToFinish}
-      >
-        Go further
-      </button>
+      {type !== 'edit' && (
+        <button
+          type="button"
+          disabled={
+            modelDetails.airConditioning &&
+            modelDetails.color &&
+            loadingBar === 85
+              ? false
+              : true
+          }
+          className="bg-gray-300 mt-4 py-1 rounded-full self-center px-5 font-semibold"
+          onClick={handleGoToFinish}
+        >
+          Go further
+        </button>
+      )}
     </div>
   )
 }

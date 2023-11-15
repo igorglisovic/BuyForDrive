@@ -157,6 +157,75 @@ export const GET = async (req, { params }) => {
   }
 }
 
+export const PATCH = async (req, { params }) => {
+  const {
+    userId,
+    brandId,
+    modelId,
+    regYearId,
+    regMonthId,
+    mileage,
+    doorsId,
+    bodyTypeId,
+    fuelTypeId,
+    transmissionTypeId,
+    power,
+    displacement,
+    seatsId,
+    steeringSide,
+    drivetrainId,
+    colorId,
+    airConditioningId,
+    price,
+    fixedPrice,
+    ownersId,
+    description,
+    images,
+    files,
+  } = await req.json()
+
+  try {
+    await connectToDB()
+
+    const existingCar = await Car.findById(params.id)
+    const existingCarInitialVersion = Object.assign(existingCar)
+
+    if (!existingCar) return new Response('Car not found', { status: 404 })
+
+    existingCar.brand_id = brandId
+    existingCar.model_id = modelId
+    existingCar.reg_year_id = regYearId
+    existingCar.reg_month_id = regMonthId
+    existingCar.mileage = mileage
+    existingCar.doors_id = doorsId
+    existingCar.body_type_id = bodyTypeId
+    existingCar.fuel_type_id = fuelTypeId
+    existingCar.transmission_type_id = transmissionTypeId
+    existingCar.power = power
+    existingCar.displacement = displacement
+    existingCar.seats_id = seatsId
+    // existingCar.steeringSide = steeringSide
+    // existingCar.drivetrainId = drivetrainId
+    // existingCar.colorId = colorId
+    // existingCar.airConditioningId = airConditioningId
+    // existingCar.price = price
+    // existingCar.fixedPrice = fixedPrice
+    // existingCar.ownersId = ownersId
+    // existingCar.description = description
+    // existingCar.images = images
+    // existingCar.files = files
+
+    // if (existingCarInitialVersion !== existingCar) {
+    await existingCar.save()
+    // }
+    console.log(existingCar, existingCarInitialVersion)
+
+    return new Response(JSON.stringify(existingCar), { status: 200 })
+  } catch (error) {
+    return new Response('Failed to update car', { status: 500 })
+  }
+}
+
 export const DELETE = async (req, { params }) => {
   try {
     await connectToDB()

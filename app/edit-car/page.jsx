@@ -2,35 +2,39 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-
-import Form from '@components/Form'
-import Loading from '@components/Loading'
+import { useLoadingBarContext } from '@app/store/loading-bar'
+import UploadImages from '@app/components/UploadImages'
+import PostACarBasic from '@app/components/PostACarBasic'
+import PostACarModel from '@app/components/PostACarModel'
+import PostACarFinish from '@app/components/PostACarFinish'
+import LoadingBar from '@app/components/LoadingBar'
+import Container from '@app/components/Container'
+import { usePostCarContext } from '@app/store/post-car'
+import CarForm from '@app/components/CarForm'
+import useFetch from '@app/hooks/useFetch'
 
 const EditCar = () => {
   const [submitting, setSubmitting] = useState(false)
-  const [post, setPost] = useState({
-    prompt: '',
-    tag: '',
-  })
+  const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const searchParams = useSearchParams()
-  const promptId = searchParams.get('id')
+  const carId = searchParams.get('id')
+  const { setLoadingBar, resetLoadingBar, loadingBar } = useLoadingBarContext()
+
+  const { basicInfo, modelDetails, pricingDetails, headerInView, resetStates } =
+    usePostCarContext()
+
+  let { data: car } = useFetch(`api/car/${carId}`, [carId], carId)
 
   const router = useRouter()
 
   useEffect(() => {
-    const getPromptDetails = async () => {
-      const res = await fetch(`api/prompt/${promptId}`)
-      const data = await res.json()
-
-      setPost({
-        prompt: data.prompt,
-        tag: data.tag,
-      })
+    if (car) {
+      //   basicInfo.updateBrand(car.brand)
     }
 
-    if (promptId) getPromptDetails()
-  }, [promptId])
+    console.log(car)
+  }, [car])
 
   const updatePrompt = async e => {
     e.preventDefault()
@@ -60,7 +64,24 @@ const EditCar = () => {
     }
   }
 
-  return <div>test</div>
+  return (
+    <div>
+      <LoadingBar />
+      <section>
+        <Container>
+          <div className="flex justify-center">
+            <div
+              className={`py-8 px-10 bg-white mb-16 rounded-[30px] w-full md:w-[60%] shadow-lg ${
+                !headerInView ? 'mt-28' : 'mt-8'
+              }`}
+            >
+              <CarForm type="edit" car={car && car[0]} />
+            </div>
+          </div>
+        </Container>
+      </section>
+    </div>
+  )
 }
 
 export default EditCar

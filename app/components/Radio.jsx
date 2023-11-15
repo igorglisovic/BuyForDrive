@@ -9,6 +9,7 @@ const Radio = ({
   updateFunction,
   label,
   lastCheckedValue,
+  defaultValue,
 }) => {
   const [isSelected, setIsSelected] = useState(false)
 
@@ -17,7 +18,15 @@ const Radio = ({
   const handleChange = option => {
     setIsSelected(true)
     updateFunction(option)
+    console.log(option)
   }
+
+  useEffect(() => {
+    if (defaultValue) {
+      setIsSelected(true)
+      updateFunction(defaultValue)
+    }
+  }, [defaultValue])
 
   useEffect(() => {
     if (isSelected) {

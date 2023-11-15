@@ -67,6 +67,8 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
     }
   }, [files])
 
+  console.log(files)
+
   // Update loading bar
   useEffect(() => {
     if (initialRender) {

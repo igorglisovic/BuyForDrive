@@ -179,10 +179,17 @@ const Select = ({
 
   useEffect(() => {
     if (defaultValue) {
-      setValue(defaultValue?.label)
+      setValue(defaultValue?.label || defaultValue)
       updateFunction(defaultValue)
     }
+    console.log(defaultValue)
   }, [defaultValue])
+
+  useEffect(() => {
+    if (placeholder === 'Mileage') {
+      console.log('lastValue ', lastValue)
+    }
+  }, [lastValue])
 
   // Track if current input value exists in fetched options
   useEffect(() => {
