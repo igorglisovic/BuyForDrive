@@ -20,11 +20,11 @@ export const GET = async (req, { params }) => {
           from: 'brands',
           localField: 'brand_id',
           foreignField: '_id',
-          as: 'brand_id',
+          as: 'brand',
         },
       },
       {
-        $unwind: '$brand_id',
+        $unwind: '$brand',
       },
 
       {
@@ -32,22 +32,66 @@ export const GET = async (req, { params }) => {
           from: 'models',
           localField: 'model_id',
           foreignField: '_id',
-          as: 'model_id',
+          as: 'model',
         },
       },
       {
-        $unwind: '$model_id',
+        $unwind: '$model',
       },
       {
         $lookup: {
           from: 'reg_years',
           localField: 'reg_year_id',
           foreignField: '_id',
-          as: 'reg_year_id',
+          as: 'reg_year',
         },
       },
       {
-        $unwind: '$reg_year_id',
+        $unwind: '$reg_year',
+      },
+      {
+        $lookup: {
+          from: 'fuel_types',
+          localField: 'fuel_type_id',
+          foreignField: '_id',
+          as: 'fuel_type',
+        },
+      },
+      {
+        $unwind: '$fuel_type',
+      },
+      {
+        $lookup: {
+          from: 'body_type',
+          localField: 'body_type_id',
+          foreignField: '_id',
+          as: 'body_type',
+        },
+      },
+      {
+        $unwind: '$body_type',
+      },
+      {
+        $lookup: {
+          from: 'transmission_types',
+          localField: 'transmission_type_id',
+          foreignField: '_id',
+          as: 'transmission_type',
+        },
+      },
+      {
+        $unwind: '$transmission_type',
+      },
+      {
+        $lookup: {
+          from: 'doors',
+          localField: 'doors_id',
+          foreignField: '_id',
+          as: 'doors',
+        },
+      },
+      {
+        $unwind: '$doors',
       },
     ])
 

@@ -156,3 +156,17 @@ export const GET = async (req, { params }) => {
     return new Response('Failed to fetch car', { status: 500 })
   }
 }
+
+export const DELETE = async (req, { params }) => {
+  try {
+    await connectToDB()
+
+    await Car.findByIdAndRemove(params.id)
+
+    return new Response('Prompt deleted successfully', { status: 200 })
+  } catch (error) {
+    return new Response('Failed to delete prompt', {
+      status: 500,
+    })
+  }
+}

@@ -153,7 +153,7 @@ const Nav = () => {
                 <ul className="w-full flex-col text-left">
                   <li className={`animation mx-2`}>
                     <Link
-                      href="/"
+                      href="/profile"
                       className="w-full block py-1.5 px-2 hover:bg-gray-100 text-sm font-normal rounded-md text-gray-800 "
                     >
                       <FontAwesomeIcon icon={faUser} className="" />
