@@ -24,7 +24,7 @@ const page = () => {
   }
 
   const handleDelete = async car => {
-    const hasConfirmed = confirm('Are you sure you want to delete this prompt?')
+    const hasConfirmed = confirm('Are you sure you want to delete this car?')
 
     if (hasConfirmed) {
       try {

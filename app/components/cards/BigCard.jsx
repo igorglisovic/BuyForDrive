@@ -2,6 +2,7 @@ import Car from '@public/assets/car.jpg'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
+import Button from '../Button'
 
 const BigCard = ({ car, handleEdit, handleDelete }) => {
   const router = useRouter()
@@ -21,20 +22,20 @@ const BigCard = ({ car, handleEdit, handleDelete }) => {
     >
       {handleDelete && handleEdit && (
         <div className="absolute right-4 top-4 flex flex-col gap-2 z-30">
-          <button
+          <Button
             onClick={handleEdit}
             ref={buttonRef}
-            className="bg-blue-500 hover:bg-blue-300"
+            className="!bg-btn-edit !py-1 !pr-3 !pl-10 "
           >
             Edit
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleDelete}
             ref={buttonRef2}
-            className="bg-blue-500 hover:bg-blue-300"
+            className="!bg-btn-delete !pr-3 !py-1 !pl-11"
           >
             Delete
-          </button>
+          </Button>
         </div>
       )}
       <div className="flex-1 overflow-hidden shadow-md">

@@ -9,7 +9,7 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete, loading }) => {
   return (
     <section className="w-full">
       <h1 className="text-left">
-        <span className="">{name} Profile</span>
+        <span className="text-2xl font-medium">{name} Profile</span>
       </h1>
       <p className="text-left">{desc}</p>
       <div className="flex flex-col gap-6 mt-10 mx-40">
