@@ -34,7 +34,7 @@ const BigCard = ({ car, handleEdit, handleDelete }) => {
             ref={buttonRef2}
             className="!bg-btn-delete !pr-3 !py-1 !pl-11"
           >
-            Delete
+            Remove
           </Button>
         </div>
       )}

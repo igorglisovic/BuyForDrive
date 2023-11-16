@@ -1,18 +1,44 @@
 import Car from '@public/assets/car.jpg'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useRef } from 'react'
+import Button from '../Button'
 
-const BigCardMobile = ({ car }) => {
+const BigCardMobile = ({ car, handleEdit, handleDelete }) => {
   const router = useRouter()
-  const handleClick = () => {
-    router.push(`/car/${car._id}`)
+
+  const buttonRef = useRef(null)
+  const buttonRef2 = useRef(null)
+
+  const handleClick = e => {
+    if (buttonRef.current !== e.target && buttonRef2.current !== e.target) {
+      router.push(`/car/${car._id}`)
+    }
   }
 
   return (
     <div
       onClick={handleClick}
-      className="flex flex-col rounded-[33px] cursor-pointer overflow-hidden shadow-md bg-white"
+      className="relative file:flex flex-col rounded-[33px] cursor-pointer overflow-hidden shadow-md bg-white"
     >
+      {handleDelete && handleEdit && (
+        <div className="absolute right-4 bottom-20 flex flex-col gap-1 z-30">
+          <Button
+            onClick={handleEdit}
+            ref={buttonRef}
+            className="!bg-btn-edit !py-1 !pr-3 !pl-10 !text-sm "
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={handleDelete}
+            ref={buttonRef2}
+            className="!bg-btn-delete !pr-3 !py-1 !pl-11  !text-sm"
+          >
+            Remove
+          </Button>
+        </div>
+      )}
       <div className="flex">
         <div className="flex relative pb-[56.25%] overflow-hidden max-h-[170px] xxs:max-h-[210px] min-h-[85px] min-w-full shadow-md">
           {/* <Image className="object-cover" src={Car} alt="" /> */}

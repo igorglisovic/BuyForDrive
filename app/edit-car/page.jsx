@@ -1,8 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useLoadingBarContext } from '@app/store/loading-bar'
+import { useSearchParams } from 'next/navigation'
 import LoadingBar from '@app/components/LoadingBar'
 import Container from '@app/components/Container'
 import { usePostCarContext } from '@app/store/post-car'

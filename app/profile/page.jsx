@@ -5,13 +5,17 @@ import Profile from '@app/components/Profile'
 import useFetch from '@app/hooks/useFetch'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const page = () => {
   const [filteredCars, setFilteredCars] = useState([])
 
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
+
+  if (!session?.user && status === 'unauthenticated') {
+    router.replace('/signin')
+  }
 
   let { data: cars, loading } = useFetch(
     `/api/cars/${session?.user.id}`,

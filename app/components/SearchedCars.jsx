@@ -248,14 +248,13 @@ const SearchedCars = ({
                 </select>
               </div>
             </div>
-            {mediaMatches
+            {mediaMatches && !loading
               ? searchedCars?.map(car => (
                   <BigCardMobile key={car._id} car={car} />
                 ))
               : searchedCars?.map(car => <BigCard key={car._id} car={car} />)}
-            {loading && loadCars.map((item, i) => <BigCardLoad key={i} />)}
-            {loading &&
-              loadCars.map((item, i) => <BigCardMobileLoad key={i} />)}
+            {loading && loadCars.map((_, i) => <BigCardLoad key={i} />)}
+            {loading && loadCars.map((_, i) => <BigCardMobileLoad key={i} />)}
             {!searchedCars?.length && loading !== true && (
               <div className="flex flex-col gap-3 items-center">
                 <h3 className="text-lg font-medium">
