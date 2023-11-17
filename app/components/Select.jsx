@@ -301,7 +301,7 @@ const Select = ({
 
   useEffect(() => {
     // If input has no options
-    if (!options && value) {
+    if (options === undefined && value) {
       updateFunction(value)
     }
     // Filter options by value in the input
@@ -310,7 +310,7 @@ const Select = ({
         value || (!value && !isOpened) ? filterSelectOptions(value) : []
       setFilteredOptions(filterOptions)
     }
-  }, [value, isOpened])
+  }, [value, isOpened, options])
 
   const handleClearInput = () => {
     setValue('')

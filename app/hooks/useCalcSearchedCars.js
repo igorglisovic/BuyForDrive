@@ -153,10 +153,6 @@ const useCalcSearchedCars = () => {
     setRouteUrl(routeUrlValue)
   }, [queriesArray])
 
-  useEffect(() => {
-    // console.log('queriesArray: ', queriesArray)
-  }, [queriesArray])
-
   // Count number of searched cars
   useEffect(() => {
     const fetchSearchedCarsData = async () => {
