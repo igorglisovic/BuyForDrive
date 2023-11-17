@@ -26,7 +26,7 @@ const CarForm = ({ type, car }) => {
 
   useEffect(() => {
     if (car) {
-      setFiles(car.files)
+      setFiles(car.images)
     }
   }, [car])
 
@@ -180,7 +180,11 @@ const CarForm = ({ type, car }) => {
       )}
       {type === 'edit' && (
         <>
-          <UploadImages setFiles={setFiles} files={files} />
+          <UploadImages
+            setFiles={setFiles}
+            files={files}
+            carImages={car && car.images}
+          />
           <PostACarBasic car={car} setGoFurther={setGoFurther} type={type} />
           <PostACarModel car={car} setGoToFinish={setGoToFinish} type={type} />
           <PostACarFinish car={car} type={type} />

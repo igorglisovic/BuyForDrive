@@ -12,7 +12,7 @@ import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-const UploadImages = ({ setImagesArray, files, setFiles }) => {
+const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
   const [rejected, setRejected] = useState([])
   const [isInfoOpened, setIsInfoOpened] = useState(false)
   const [isLoadingBarIncreased, setIsLoadingBarIncreased] = useState(false)
@@ -65,6 +65,8 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
         setFiles(trimmedFiles)
       }
     }
+
+    console.log('files ', typeof files[1])
   }, [files])
 
   console.log(files)
@@ -195,12 +197,15 @@ const UploadImages = ({ setImagesArray, files, setFiles }) => {
           {files.map(file => (
             <li key={file.name} className="relative h-32 rounded-md shadow-lg">
               <Image
-                src={file.preview}
-                alt={file.name}
+                src={
+                  file.preview ||
+                  `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${file.version}/${file.public_id}`
+                }
+                alt={file.name || 'car image'}
                 width={100}
                 height={100}
                 onLoad={() => {
-                  URL.revokeObjectURL(file.preview)
+                  file.preview && URL.revokeObjectURL(file.preview)
                 }}
                 className="h-full w-full rounded-md object-contain"
               />
