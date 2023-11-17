@@ -63,7 +63,7 @@ const CarForm = ({ type, car }) => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
 
-      if (!file) return
+      if (!file || !file.preview) return
 
       console.log('file ', file)
 
