@@ -1,6 +1,5 @@
 'use client'
 
-import { getSignature, saveToDatabase } from '@app/_actions'
 import { useLoadingBarContext } from '@app/store/loading-bar'
 import {
   faClose,
@@ -66,10 +65,8 @@ const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
       }
     }
 
-    console.log('files ', typeof files[1])
+    console.log('files ', files)
   }, [files])
-
-  console.log(files)
 
   // Update loading bar
   useEffect(() => {
@@ -109,11 +106,22 @@ const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
   }, [files])
 
   const removeFile = name => {
-    setFiles(files => files.filter(file => file.name !== name))
+    setFiles(files =>
+      files.filter(file => {
+        if (file.name) {
+          return file.name !== name
+        }
+        if (file.public_id) {
+          return file.public_id !== name
+        }
+      })
+    )
   }
 
   const removeRejected = name => {
-    setRejected(files => files.filter(({ file }) => file.name !== name))
+    setRejected(files =>
+      files.filter(({ file }) => file.name !== name && file.public_id !== name)
+    )
   }
 
   const handleInfo = () => {
@@ -194,7 +202,7 @@ const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
           <span className="font-normal">{files.length}/3</span>
         </h3>
         <ul className="mt-6 grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3">
-          {files.map(file => (
+          {files.map((file, i) => (
             <li key={file.name} className="relative h-32 rounded-md shadow-lg">
               <Image
                 src={
@@ -212,12 +220,12 @@ const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
               <button
                 type="button"
                 className="absolute -right-3 -top-3 flex h-7 w-7 items-center justify-center rounded-full border border-gray-400 transition-colors "
-                onClick={() => removeFile(file.name)}
+                onClick={() => removeFile(file.name || file.public_id)}
               >
                 <FontAwesomeIcon icon={faClose} />
               </button>
               <p className="mt-2 text-[12px] font-medium text-stone-500">
-                {file.name}
+                {file.name || `car-image-${i + 1}.jpg`}
               </p>
             </li>
           ))}

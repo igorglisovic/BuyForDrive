@@ -212,13 +212,13 @@ export const PATCH = async (req, { params }) => {
     existingCar.fixed_price = fixedPrice
     existingCar.owners_id = ownersId
     existingCar.description = description
-    // existingCar.images = images
+    existingCar.images = images
     // existingCar.files = files
 
     // if (existingCarInitialVersion !== existingCar) {
     await existingCar.save()
     // }
-    console.log(existingCar, existingCarInitialVersion)
+    console.log('images ', images)
 
     return new Response(JSON.stringify(existingCar), { status: 200 })
   } catch (error) {

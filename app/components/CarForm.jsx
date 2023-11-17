@@ -63,43 +63,48 @@ const CarForm = ({ type, car }) => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
 
-      if (!file || !file.preview) return
+      // If somehow user havent uploaded image and submitted form
+      if (!file) return
 
       console.log('file ', file)
 
-      // get a signature using server action
-      const { timestamp, signature } = await getSignature()
+      if (file.preview) {
+        // get a signature using server action
+        const { timestamp, signature } = await getSignature()
 
-      // upload to cloudinary using the signature
-      const formData = new FormData()
+        // upload to cloudinary using the signature
+        const formData = new FormData()
 
-      formData.append('file', file)
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY)
-      formData.append('signature', signature)
-      formData.append('timestamp', timestamp)
+        formData.append('file', file)
+        formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY)
+        formData.append('signature', signature)
+        formData.append('timestamp', timestamp)
 
-      const endpoint = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL
-      const data = await fetch(endpoint, {
-        method: 'POST',
-        body: formData,
-      }).then(res => res.json())
+        const endpoint = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL
+        const data = await fetch(endpoint, {
+          method: 'POST',
+          body: formData,
+        }).then(res => res.json())
 
-      if (file.lastModifiedDate) {
-        imagesArray.push({
-          public_id: data.public_id,
-          version: data.version.toString(),
-        })
+        if (file.lastModifiedDate) {
+          imagesArray.push({
+            public_id: data.public_id,
+            version: data.version.toString(),
+          })
 
-        // write to database using server actions
-        await saveToDatabase({
-          version: data?.version,
-          signature: data?.signature,
-          public_id: data?.public_id,
-        })
+          // write to database using server actions
+          await saveToDatabase({
+            version: data?.version,
+            signature: data?.signature,
+            public_id: data?.public_id,
+          })
+        }
+      } else {
+        imagesArray.push(file)
       }
     }
 
-    console.log(typeof files[0].lastModifiedDate)
+    console.log('imagesArray ', imagesArray)
 
     try {
       // const res = await fetch('/api/cars/new', {
@@ -107,7 +112,7 @@ const CarForm = ({ type, car }) => {
         method: 'PATCH',
         // method: 'POST',
         body: JSON.stringify({
-          images: car?.images || imagesArray,
+          images: imagesArray,
           files: files,
           userId: session?.user.id,
           brandId: basicInfo.brand._id,
