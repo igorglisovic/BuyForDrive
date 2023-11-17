@@ -204,14 +204,14 @@ export const PATCH = async (req, { params }) => {
     existingCar.power = power
     existingCar.displacement = displacement
     existingCar.seats_id = seatsId
-    // existingCar.steeringSide = steeringSide
-    // existingCar.drivetrainId = drivetrainId
-    // existingCar.colorId = colorId
-    // existingCar.airConditioningId = airConditioningId
-    // existingCar.price = price
-    // existingCar.fixedPrice = fixedPrice
-    // existingCar.ownersId = ownersId
-    // existingCar.description = description
+    existingCar.steering_side = steeringSide
+    existingCar.drivetrain_id = drivetrainId
+    existingCar.color_id = colorId
+    existingCar.air_conditioning_id = airConditioningId
+    existingCar.price = price
+    existingCar.fixed_price = fixedPrice
+    existingCar.owners_id = ownersId
+    existingCar.description = description
     // existingCar.images = images
     // existingCar.files = files
 

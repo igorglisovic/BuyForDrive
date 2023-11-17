@@ -102,7 +102,7 @@ const CarForm = ({ type, car }) => {
     console.log(typeof files[0].lastModifiedDate)
 
     try {
-      //   const res = await fetch('/api/cars/new', {
+      // const res = await fetch('/api/cars/new', {
       const res = await fetch(`/api/car/${car?._id}`, {
         method: 'PATCH',
         // method: 'POST',

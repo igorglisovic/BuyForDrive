@@ -2,9 +2,10 @@ import { usePostCarContext } from '@app/store/post-car'
 import useFetch from '@app/hooks/useFetch'
 import Select from './Select'
 import { useLoadingBarContext } from '@app/store/loading-bar'
+import { useEffect } from 'react'
 
 const PostACarBasic = ({ setGoFurther, car, type }) => {
-  const { basicInfo } = usePostCarContext()
+  const { basicInfo, modelDetails } = usePostCarContext()
   const { loadingBar } = useLoadingBarContext()
 
   const { data: brands } = useFetch('/api/brands')
@@ -20,7 +21,14 @@ const PostACarBasic = ({ setGoFurther, car, type }) => {
     setGoFurther(true)
   }
 
-  console.log('car?.brand ', car)
+  useEffect(() => {
+    console.log(
+      'model: ',
+      basicInfo.model,
+      modelDetails.color,
+      modelDetails.seats
+    )
+  }, [basicInfo])
 
   return (
     <div className="flex flex-col gap-3 border-t-[1px] pt-4 border-gray-400">
