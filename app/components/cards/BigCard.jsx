@@ -15,6 +15,9 @@ const BigCard = ({ car, handleEdit, handleDelete }) => {
       router.push(`/car/${car._id}`)
     }
   }
+
+  console.log(handleEdit, handleDelete)
+
   return (
     <div
       onClick={handleClick}

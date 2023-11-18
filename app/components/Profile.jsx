@@ -19,7 +19,6 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete, loading }) => {
     if (media.matches) {
       setMediaMatches(true)
     } else {
-      // setMediaMatches(true)
       setMediaMatches(false)
     }
   }
@@ -27,6 +26,8 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete, loading }) => {
     getMediaMatches()
     window.addEventListener('resize', getMediaMatches)
   }, [media])
+
+  console.log(handleEdit)
 
   return (
     <section className="w-full">
@@ -49,8 +50,12 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete, loading }) => {
               <BigCard
                 key={car._id}
                 car={car}
-                handleEdit={() => handleEdit && handleEdit(car)}
-                handleDelete={() => handleDelete && handleDelete(car)}
+                handleEdit={
+                  handleEdit ? () => handleEdit && handleEdit(car) : false
+                }
+                handleDelete={
+                  handleDelete ? () => handleDelete && handleDelete(car) : false
+                }
               />
             ))}
         {loading && loadCarsArray.map((_, i) => <BigCardLoad key={i} />)}
