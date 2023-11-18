@@ -26,7 +26,17 @@ export const GET = async (req, { params }) => {
       {
         $unwind: '$brand',
       },
-
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'creator',
+          foreignField: '_id',
+          as: 'creator',
+        },
+      },
+      {
+        $unwind: '$creator',
+      },
       {
         $lookup: {
           from: 'models',

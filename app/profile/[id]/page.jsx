@@ -4,7 +4,6 @@ import Container from '@app/components/Container'
 import Profile from '@app/components/Profile'
 import useFetch from '@app/hooks/useFetch'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
 const page = ({ params }) => {
   const searchParams = useSearchParams()
@@ -16,6 +15,8 @@ const page = ({ params }) => {
     params?.id
   )
 
+  console.log(params?.id)
+
   return (
     <div className="py-10">
       <Container>
@@ -25,6 +26,7 @@ const page = ({ params }) => {
             desc={`Welcome to ${userName}'s personalized profile page.`}
             data={cars}
             loading={loading}
+            image={cars && cars[0].creator.image}
           />
         </div>
       </Container>

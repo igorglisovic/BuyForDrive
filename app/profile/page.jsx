@@ -56,6 +56,7 @@ const page = () => {
             handleEdit={handleEdit}
             handleDelete={handleDelete}
             loading={loading}
+            image={session?.user.image}
           />
         </div>
       </Container>

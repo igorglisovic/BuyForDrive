@@ -3,10 +3,19 @@ import BigCard from './cards/BigCard'
 import BigCardLoad from './cards/BigCardLoad'
 import BigCardMobile from './cards/BigCardMobile'
 import BigCardMobileLoad from './cards/BigCardMobileLoad'
+import Image from 'next/image'
 
 const loadCarsArray = [1, 2, 3, 4, 5, 6, 7]
 
-const Profile = ({ name, desc, data, handleEdit, handleDelete, loading }) => {
+const Profile = ({
+  name,
+  desc,
+  data,
+  handleEdit,
+  handleDelete,
+  loading,
+  image,
+}) => {
   console.log(data)
 
   const [mediaMatches, setMediaMatches] = useState(false)
@@ -27,12 +36,19 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete, loading }) => {
     window.addEventListener('resize', getMediaMatches)
   }, [media])
 
-  console.log(handleEdit)
-
   return (
     <section className="w-full">
+      <div>
+        <Image
+          className={`rounded-full mb-4`}
+          width={150}
+          height={150}
+          alt="avatar"
+          src={image ? image : ''}
+        />
+      </div>
       <h1 className="text-left">
-        <span className="text-4xl font-medium">{name} Profile</span>
+        <span className="text-4xl font-medium capitalize">{name} Profile</span>
       </h1>
       <p className="text-left text-xl">{desc}</p>
       <div className="flex flex-col gap-6 mt-10 base-plus:mx-40 base:mx-20 md-plus:mx-10">
