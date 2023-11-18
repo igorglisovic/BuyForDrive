@@ -10,10 +10,14 @@ import CarSlider from '@app/components/car/CarImgsSlider'
 import useFetch from '@app/hooks/useFetch'
 import Image from 'next/image'
 import CarsSlider from '@app/components/car/CarsSlider'
+import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 const CarPage = ({ params }) => {
   const { data } = useFetch(`/api/car/${params.id}`)
   const car = data && data[0]
+
+  const { data: session } = useSession()
 
   console.log('creator id ', car?.creator._id)
 
@@ -66,9 +70,19 @@ const CarPage = ({ params }) => {
               <span className="text-lg capitalize">
                 {car?.creator.username}
               </span>
-              <button className="bg-btn-2 py-2 px-8 rounded-full font-semibold">
-                Check profile
-              </button>
+              {session?.user.id === car?.creator._id && (
+                <>
+                  <Link
+                    className="underline hover:text-gray-500"
+                    href={`/edit-car?id=${car._id}`}
+                  >
+                    Edit Car
+                  </Link>
+                  <button className="bg-btn-2 py-2 px-8 rounded-full font-semibold">
+                    <Link href="/profile">Check profile</Link>
+                  </button>
+                </>
+              )}
             </div>
           </aside>
           <div className="flex flex-col col-span-2">

@@ -23,8 +23,8 @@ const page = () => {
     session?.user.id
   )
 
-  const handleEdit = post => {
-    router.push(`/edit-car?id=${post._id}`)
+  const handleEdit = car => {
+    router.push(`/edit-car?id=${car._id}`)
   }
 
   const handleDelete = async car => {
