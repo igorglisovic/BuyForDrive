@@ -38,21 +38,23 @@ const Profile = ({
 
   return (
     <section className="w-full">
-      <div>
-        <Image
-          className={`rounded-full mb-4`}
-          width={150}
-          height={150}
-          alt="avatar"
-          src={image ? image : ''}
-        />
-      </div>
-      <h1 className="text-left">
-        <span className="text-4xl font-medium capitalize">{name} Profile</span>
+      <Image
+        className={`rounded-full md:m-0 m-auto md:w-[150px] md:h-[150px] w-[120px] h-[120px]`}
+        width={150}
+        height={150}
+        alt="avatar"
+        src={image ? image : ''}
+      />
+      <h1 className="md:text-left text-center mt-4">
+        <span className="md:text-4xl text-3xl font-medium capitalize">
+          {name} Profile
+        </span>
       </h1>
-      <p className="text-left text-xl">{desc}</p>
+      <p className="md:text-left text-center md:text-xl text-md">{desc}</p>
       <div className="flex flex-col gap-6 mt-10 base-plus:mx-40 base:mx-20 md-plus:mx-10">
-        <h2 className="text-3xl font-semibold text-center">My Cars</h2>
+        <h2 className="md:text-3xl text-2xl font-semibold text-center">
+          My Cars
+        </h2>
         {mediaMatches && !loading
           ? data?.map(car => (
               <BigCardMobile
