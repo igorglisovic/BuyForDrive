@@ -107,39 +107,46 @@ const CarForm = ({ type, car }) => {
     console.log('imagesArray ', imagesArray)
 
     try {
-      const res = await fetch('/api/cars/new', {
-        // const res = await fetch(`/api/car/${car?._id}`, {
-        // method: 'PATCH',
-        method: 'POST',
-        body: JSON.stringify({
-          images: imagesArray,
-          userId: session?.user.id,
-          brandId: basicInfo.brand._id,
-          modelId: basicInfo.model._id,
-          regYearId: basicInfo.regYear._id,
-          regMonthId: basicInfo.regMonth._id,
-          mileage: basicInfo.mileage,
-          doorsId: modelDetails.doors._id,
-          bodyTypeId: modelDetails.bodyType._id,
-          fuelTypeId: modelDetails.fuelType._id,
-          transmissionTypeId: modelDetails.transmissionType._id,
-          power: modelDetails.power,
-          displacement: modelDetails.displacement,
-          seatsId: modelDetails.seats._id,
-          steeringSide: modelDetails.steeringSide,
-          drivetrainId: modelDetails.drivetrain._id,
-          colorId: modelDetails.color._id,
-          airConditioningId: modelDetails.airConditioning._id,
-          price: pricingDetails.price,
-          fixedPrice: pricingDetails.fixedPrice,
-          ownersId: pricingDetails.owners._id,
-          description: pricingDetails.description,
-        }),
-      })
+      const res = await fetch(
+        type === 'edit' ? `/api/car/${car?._id}` : '/api/cars/new',
+        {
+          method: type === 'edit' ? 'PATCH' : 'POST',
+          body: JSON.stringify({
+            images: imagesArray,
+            userId: session?.user.id,
+            brandId: basicInfo.brand._id,
+            modelId: basicInfo.model._id,
+            regYearId: basicInfo.regYear._id,
+            regMonthId: basicInfo.regMonth._id,
+            mileage: basicInfo.mileage,
+            doorsId: modelDetails.doors._id,
+            bodyTypeId: modelDetails.bodyType._id,
+            fuelTypeId: modelDetails.fuelType._id,
+            transmissionTypeId: modelDetails.transmissionType._id,
+            power: modelDetails.power,
+            displacement: modelDetails.displacement,
+            seatsId: modelDetails.seats._id,
+            steeringSide: modelDetails.steeringSide,
+            drivetrainId: modelDetails.drivetrain._id,
+            colorId: modelDetails.color._id,
+            airConditioningId: modelDetails.airConditioning._id,
+            price: pricingDetails.price,
+            fixedPrice: pricingDetails.fixedPrice,
+            ownersId: pricingDetails.owners._id,
+            description: pricingDetails.description,
+          }),
+        }
+      )
       if (res.ok) {
-        // router.push('/profile')
-        // resetStates()
-        console.log(files)
+        if (type === 'edit') {
+          router.push('/profile')
+        }
+
+        if (type === 'post') {
+          router.push('/')
+        }
+
+        resetStates()
       }
     } catch (error) {
       console.log(error)
@@ -175,7 +182,7 @@ const CarForm = ({ type, car }) => {
             <button
               //   disabled={submitting || loadingBar !== 100}
               type="submit"
-              className="py-1 px-8 rounded-full self-center font-semibold bg-btn-2"
+              className="py-1 px-8 hover:bg-gray-200 disabled:hover:bg-gray-100 rounded-full self-center font-semibold bg-btn-2"
             >
               Post a car
             </button>
@@ -195,7 +202,7 @@ const CarForm = ({ type, car }) => {
           <button
             disabled={submitting || loadingBar !== 100}
             type="submit"
-            className="py-1 px-8 rounded-full self-center font-semibold bg-btn-2"
+            className="py-1 px-8 hover:bg-gray-200 disabled:hover:bg-gray-100 rounded-full self-center font-semibold bg-btn-2"
           >
             Edit Car
           </button>

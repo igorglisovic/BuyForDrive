@@ -39,8 +39,9 @@ const PostACarModel = ({ setGoToFinish, type, car }) => {
   }, [car])
 
   useEffect(() => {
-    console.log('color ', modelDetails.color)
+    console.log('color ', modelDetails.doors)
   }, [modelDetails])
+
   useEffect(() => {
     if (isSelected) {
       increaseLoadingBar(5)

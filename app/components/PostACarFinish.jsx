@@ -96,7 +96,7 @@ const PostACarFinish = ({ car }) => {
             pricingDetails.price && pricingDetails.owners ? false : true
           }
           onChange={handleChangeDesc}
-          value={pricingDetails.description}
+          value={pricingDetails.description || ''}
         ></textarea>
       </div>
     </div>

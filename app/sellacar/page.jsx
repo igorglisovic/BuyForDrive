@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 const SellACar = () => {
-  const { headerInView } = usePostCarContext()
+  const { headerInView, resetStates } = usePostCarContext()
 
   const { data: session, status } = useSession()
   const router = useRouter()
@@ -20,6 +20,10 @@ const SellACar = () => {
       // router.replace('/signin')
     }
   }, [session])
+
+  useEffect(() => {
+    resetStates()
+  }, [])
 
   return (
     <div>

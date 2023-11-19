@@ -83,13 +83,13 @@ const CarPage = ({ params }) => {
                   >
                     Edit Car
                   </Link>
-                  <button className="bg-btn-2 hover:bg-gray-100 py-2 px-8 rounded-full font-semibold">
+                  <button className="bg-btn-2 hover:bg-gray-200 py-2 px-8 rounded-full font-semibold">
                     <Link href="/profile">Check profile</Link>
                   </button>
                 </>
               )}
               {session?.user.id !== car?.creator._id && (
-                <button className="bg-btn-2 hover:bg-gray-100 py-2 px-8 rounded-full font-semibold">
+                <button className="bg-btn-2 hover:bg-gray-200 py-2 px-8 rounded-full font-semibold">
                   <Link
                     href={`/profile/${car?.creator._id}?name=${car?.creator.username}`}
                   >

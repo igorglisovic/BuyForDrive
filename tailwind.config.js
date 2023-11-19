@@ -22,7 +22,7 @@ module.exports = {
         'gradient-light-gray':
           'linear-gradient(90.3deg, #D9D9D9 35.74%, rgba(255,255,255, 0.7) 133.61%)',
         'btn-2':
-          'linear-gradient(90.3deg, #D9D9D9 49.74%, rgba(255,255,255, 0.7) 103.61%)',
+          'linear-gradient(90.3deg, #D9D9D9 49.74%, rgba(255,255,255, 0.7) 123.61%)',
       },
       borderRadius: {
         'top-5xl': '45px 45px 0 0',
