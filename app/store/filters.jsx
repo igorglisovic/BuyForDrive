@@ -104,34 +104,34 @@ export const FiltersContextProvider = ({ children }) => {
   ])
 
   useEffect(() => {
-    // if (
-    //   !filtersArray.length &&
-    //   (filterBrand ||
-    //     filterModel ||
-    //     filterFuelType ||
-    //     filterBodyType ||
-    //     filterYearFrom ||
-    //     filterYearTo ||
-    //     filterMileageFrom ||
-    //     filterMileageTo ||
-    //     filterPriceFrom ||
-    //     filterPriceTo ||
-    //     filterPowerFrom ||
-    //     filterPowerTo)
-    // ) {
-    //   addUniqueFilters(filterBrand)
-    //   addUniqueFilters(filterModel)
-    //   addUniqueFilters(filterBodyType)
-    //   addUniqueFilters(filterFuelType)
+    if (
+      !filtersArray.length &&
+      (filterBrand ||
+        filterModel ||
+        filterFuelType ||
+        filterBodyType ||
+        filterYearFrom ||
+        filterYearTo ||
+        filterMileageFrom ||
+        filterMileageTo ||
+        filterPriceFrom ||
+        filterPriceTo ||
+        filterPowerFrom ||
+        filterPowerTo)
+    ) {
+      addUniqueFilters(filterBrand)
+      addUniqueFilters(filterModel)
+      addUniqueFilters(filterBodyType)
+      addUniqueFilters(filterFuelType)
 
-    //   addFromToFilter(filterYearFrom, filterYearTo, 'Registration year', 'year')
-    //   addFromToFilter(filterMileageFrom, filterMileageTo, 'Mileage', 'mileage')
-    //   addFromToFilter(filterPriceFrom, filterPriceTo, 'Price', 'price')
-    //   addFromToFilter(filterPowerFrom, filterPowerTo, 'Power', 'power')
+      addFromToFilter(filterYearFrom, filterYearTo, 'Registration year', 'year')
+      addFromToFilter(filterMileageFrom, filterMileageTo, 'Mileage', 'mileage')
+      addFromToFilter(filterPriceFrom, filterPriceTo, 'Price', 'price')
+      addFromToFilter(filterPowerFrom, filterPowerTo, 'Power', 'power')
 
-    //   // Convert the Set back to an array and update filtersArray.
-    //   setFiltersArray(Array.from(uniqueFilters))
-    // }
+      // Convert the Set back to an array and update filtersArray.
+      setFiltersArray(Array.from(uniqueFilters))
+    }
     console.log('farray ', filtersArray)
   }, [filtersArray])
 

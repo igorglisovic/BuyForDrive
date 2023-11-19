@@ -151,6 +151,7 @@ const useCalcSearchedCars = () => {
 
     setApiUrl(apiUrlValue)
     setRouteUrl(routeUrlValue)
+    console.log('first ', queriesArray)
   }, [queriesArray])
 
   // Count number of searched cars
@@ -162,14 +163,30 @@ const useCalcSearchedCars = () => {
           param => !param.startsWith('page=') && !param.startsWith('limit=')
         )
         .join('&')
-      // console.log('first ', urlWithoutPageAndLimit)
+      // console.log('first ', apiUrl)
 
       const data = await fetchSearchedCars(urlWithoutPageAndLimit)
 
       setCountOffers(data?.length)
+      console.log('izvrsilo se', yearFrom, yearTo, bodyType, fuelType, sorting)
     }
-    if (brand || model || yearFrom || yearTo || bodyType || fuelType || sorting)
+
+    if (
+      brand ||
+      model ||
+      yearFrom ||
+      yearTo ||
+      bodyType ||
+      fuelType ||
+      priceFrom ||
+      priceTo ||
+      mileageFrom ||
+      mileageTo ||
+      powerFrom ||
+      powerTo
+    ) {
       fetchSearchedCarsData()
+    }
   }, [apiUrl])
 
   // Count number of all cars
@@ -180,9 +197,35 @@ const useCalcSearchedCars = () => {
       )
       setCountOffers(allCars?.length)
     }
-    if (!brand && !model && !yearFrom && !yearTo && !bodyType && !fuelType)
+    if (
+      !brand &&
+      !model &&
+      !yearFrom &&
+      !yearTo &&
+      !bodyType &&
+      !fuelType &&
+      !priceFrom &&
+      !priceTo &&
+      !mileageFrom &&
+      !mileageTo &&
+      !powerFrom &&
+      !powerTo
+    )
       countNumOfAllOffers()
-  }, [brand, model, yearFrom, yearTo, bodyType, fuelType])
+  }, [
+    brand,
+    model,
+    yearFrom,
+    yearTo,
+    bodyType,
+    fuelType,
+    priceFrom,
+    priceTo,
+    mileageFrom,
+    mileageTo,
+    powerFrom,
+    powerTo,
+  ])
 
   // Handle form submition
   const handleSubmit = e => {

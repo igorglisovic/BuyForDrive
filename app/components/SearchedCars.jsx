@@ -102,7 +102,6 @@ const SearchedCars = ({
     if (media.matches) {
       setMediaMatches(true)
     } else {
-      // setMediaMatches(true)
       setMediaMatches(false)
     }
   }

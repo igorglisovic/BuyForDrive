@@ -53,7 +53,7 @@ export const POST = async req => {
       fixed_price: fixedPrice,
       owners_id: ownersId,
       description,
-      // createdAt: new Date(),
+      createdAt: new Date(),
     })
 
     await newCar.save()
