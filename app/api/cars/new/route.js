@@ -25,17 +25,13 @@ export const POST = async req => {
     ownersId,
     description,
     images,
-    files,
   } = await req.json()
-
-  console.log(files)
 
   try {
     await connectToDB()
 
     const newCar = new Car({
       images,
-      files,
       creator: userId,
       brand_id: brandId,
       model_id: modelId,
@@ -57,6 +53,7 @@ export const POST = async req => {
       fixed_price: fixedPrice,
       owners_id: ownersId,
       description,
+      // createdAt: new Date(),
     })
 
     await newCar.save()

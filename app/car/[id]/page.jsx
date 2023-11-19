@@ -12,6 +12,7 @@ import Image from 'next/image'
 import CarsSlider from '@app/components/car/CarsSlider'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import moment from 'moment/moment'
 
 const CarPage = ({ params }) => {
   const { data } = useFetch(`/api/car/${params.id}`)
@@ -19,7 +20,8 @@ const CarPage = ({ params }) => {
 
   const { data: session } = useSession()
 
-  console.log('creator id ', car?.creator._id)
+  const date = car?.createdAt ? moment(car?.createdAt) : ''
+  const relativeTime = car?.createdAt && date.fromNow()
 
   let { data: otherCars } = useFetch(
     `/api/cars/${car?.creator._id}`,
@@ -39,15 +41,18 @@ const CarPage = ({ params }) => {
   return (
     <div className="bg-hero-pattern pb-10">
       <Container className="sm:max-w-7xl mx-auto sm:px-16">
-        <Breadcrumb
-          items={[
-            { label: 'Car' },
-            {
-              label: car?.brand.label,
-              link: `/cars/search?sort=default_sorting&page=1&limit=10&brand_id=${car?.brand._id}`,
-            },
-          ]}
-        />
+        <div className="flex justify-between">
+          <Breadcrumb
+            items={[
+              { label: 'Car' },
+              {
+                label: car?.brand.label,
+                link: `/cars/search?sort=default_sorting&page=1&limit=10&brand_id=${car?.brand._id}`,
+              },
+            ]}
+          />
+          <span className="text-sm mt-2">Posted: {relativeTime}</span>
+        </div>
         <div className="grid grid-cols-car gap-8">
           <div className="flex flex-col gap-8 mt-10 col-span-2 md-plus:col-span-1">
             <CarSlider car={car} />

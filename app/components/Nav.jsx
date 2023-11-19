@@ -140,7 +140,7 @@ const Nav = () => {
                   isOpened ? 'flex' : 'hidden'
                 }`}
               >
-                <span className="absolute font-normal text-gray-500 top-[16px] left-[56px] text-sm username cursor-text">
+                <span className="absolute font-normal text-gray-600 top-[16px] left-[56px] text-sm username cursor-text">
                   {session?.user.name}
                 </span>
                 <FontAwesomeIcon

@@ -16,6 +16,7 @@
     "bcrypt": "^5.1.0",
     "cloudinary": "^1.41.0",
     "keen-slider": "^6.8.6",
+    "moment": "^2.29.4",
     "mongodb": "^5.7.0",
     "mongoose": "^7.4.2",
     "next": "13.4.13",

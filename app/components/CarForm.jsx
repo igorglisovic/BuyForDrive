@@ -107,13 +107,12 @@ const CarForm = ({ type, car }) => {
     console.log('imagesArray ', imagesArray)
 
     try {
-      // const res = await fetch('/api/cars/new', {
-      const res = await fetch(`/api/car/${car?._id}`, {
-        method: 'PATCH',
-        // method: 'POST',
+      const res = await fetch('/api/cars/new', {
+        // const res = await fetch(`/api/car/${car?._id}`, {
+        // method: 'PATCH',
+        method: 'POST',
         body: JSON.stringify({
           images: imagesArray,
-          files: files,
           userId: session?.user.id,
           brandId: basicInfo.brand._id,
           modelId: basicInfo.model._id,
@@ -138,8 +137,8 @@ const CarForm = ({ type, car }) => {
         }),
       })
       if (res.ok) {
-        router.push('/profile')
-        resetStates()
+        // router.push('/profile')
+        // resetStates()
         console.log(files)
       }
     } catch (error) {
