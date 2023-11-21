@@ -16,7 +16,7 @@ const CarSlider = ({ car }) => {
         </h1>
         <h3 className="text-2xl font-medium mb-2">€{car?.price}</h3>
       </div>
-      <div className="grid lg:grid-rows-slider md:lg:grid-rows-slider2 grid-rows-slider3 gap-[10px] rounded-[30px] bg-white shadow-xl overflow-hidden">
+      <div className="grid lg:grid-rows-slider md:lg:grid-rows-slider2 grid-rows-slider3 gap-[10px] rounded-[30px] bg-gray-50 shadow-xl overflow-hidden">
         <div
           onClick={e => {
             e.stopPropagation()

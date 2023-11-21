@@ -80,11 +80,11 @@ const Nav = () => {
     >
       <Container>
         <nav
-          className={`flex items-center justify-between font-medium ${
+          className={`flex xs:items-center xs:justify-between justify-end font-medium ${
             session?.user ? 'py-3' : 'py-5'
           }`}
         >
-          <ul className="flex justify-center gap-3">
+          <ul className="xs:flex xs:visible hidden invisible justify-center gap-3">
             <li className="flex items-center">
               <Link href="/">
                 <FontAwesomeIcon icon={faHouse} width="20px" />

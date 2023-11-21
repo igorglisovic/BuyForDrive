@@ -43,7 +43,7 @@ const CarPage = ({ params }) => {
   return (
     <div className="bg-hero-pattern pb-10">
       <Container className="sm:max-w-7xl mx-auto sm:px-16">
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between xs:mx-0 mx-3">
           <Breadcrumb
             items={[
               { label: 'Car' },

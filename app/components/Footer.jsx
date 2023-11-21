@@ -74,7 +74,7 @@ const Footer = () => {
               {mostWantedModelsArray?.map((item, i) => (
                 <li key={i} className={`${i}`}>
                   <Link
-                    className="bg-gray-200 w-full  sm:text-base text-[0.9rem] font-medium block text-center py-1.5 rounded-[10px]"
+                    className="bg-gray-200 w-full hover:bg-gray-300 sm:text-base text-[0.9rem] font-medium block text-center py-1.5 rounded-[10px]"
                     href={item.link}
                   >
                     {item.label}
