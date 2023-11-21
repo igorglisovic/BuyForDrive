@@ -7,6 +7,7 @@ import useCalcSearchedCars from '@app/hooks/useCalcSearchedCars'
 import { useFiltersContext } from '@app/store/filters'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
+import CountUp from 'react-countup'
 
 const filterArrayById = (array, id) => array?.find(item => item._id === id)
 
@@ -486,7 +487,14 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
               />
             </div>
             <Button className="md-plus:!self-start md-plus:mt-2 !self-center">
-              {countOffers} offers
+              {countOffers && (
+                <CountUp
+                  end={countOffers}
+                  start={countOffers - 10 >= 0 ? countOffers - 10 >= 0 : 0}
+                  duration={0.8}
+                />
+              )}{' '}
+              offers
             </Button>
           </form>
         </div>

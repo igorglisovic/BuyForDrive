@@ -3,6 +3,7 @@ import Button from './Button'
 import { useSearchContext } from '@app/store/search-car'
 import useFetch from '@app/hooks/useFetch'
 import useCalcSearchedCars from '@app/hooks/useCalcSearchedCars'
+import CountUp from 'react-countup'
 
 const SearchForm = () => {
   const {
@@ -31,6 +32,8 @@ const SearchForm = () => {
     updatePowerFrom,
     updatePowerTo,
   } = useSearchContext()
+
+  console.log('test')
 
   const { data: brands } = useFetch('/api/brands', [], true)
   const { data: models } = useFetch(`/api/models/${brand?._id}`, [brand], brand)
@@ -231,14 +234,28 @@ const SearchForm = () => {
           className="hidden invisible md-form:visible md-form:inline-block"
           tabIndex={13}
         >
-          {countOffers} offers
+          {countOffers && (
+            <CountUp
+              end={countOffers}
+              start={countOffers - 10 >= 0 ? countOffers - 10 >= 0 : 0}
+              duration={0.8}
+            />
+          )}{' '}
+          offers
         </Button>
       </div>
       <Button
         className="md-form:hidden md-form:invisible col-span-2 justify-self-center"
         tabIndex={13}
       >
-        {countOffers} offers
+        {countOffers && (
+          <CountUp
+            end={countOffers}
+            start={countOffers - 10 >= 0 ? countOffers - 10 >= 0 : 0}
+            duration={0.8}
+          />
+        )}{' '}
+        offers
       </Button>
     </form>
   )
