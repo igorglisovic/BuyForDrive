@@ -9,6 +9,7 @@ import { useSearchContext } from './store/search-car'
 import { usePostCarContext } from './store/post-car'
 import { useFiltersContext } from './store/filters'
 import { useEffect } from 'react'
+import PopularBrands from './components/PopularBrands'
 
 // FontAwesome Icons
 config.autoAddCss = false
@@ -28,6 +29,7 @@ const Home = () => {
     <>
       <Search />
       <RandomCars />
+      <PopularBrands />
     </>
   )
 }
