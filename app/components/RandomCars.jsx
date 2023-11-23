@@ -24,7 +24,7 @@ const RandomCars = () => {
   return (
     <section className="py-10">
       <Container>
-        <h2 className="text-2xl font-bold mb-3.5">Random cars</h2>
+        <h2 className="text-2xl font-bold mb-3.5 capitalize">Random cars</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-3 gap-3 md:gap-3.5">
           {cars?.map(car => (
             <SmallCard key={car._id} car={car} />

@@ -9,37 +9,57 @@ import { Autoplay } from 'swiper'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import lambo from '../../public/assets/lamborghini.png'
-import bmw from '../../public/assets/bmw.webp'
+import lambo from '../../public/assets/lamborghini.webp'
+import bmw from '../../public/assets/bmw2.webp'
 import porsche from '../../public/assets/porsche.webp'
-import bentley from '../../public/assets/bentley.jpg'
-import ferrari from '../../public/assets/ferrari.png'
-import SmallCard from './cards/SmallCard'
+import bentley from '../../public/assets/bentley.webp'
+import ferrari from '../../public/assets/ferrari2.webp'
+import mercedes from '../../public/assets/mercedes.webp'
+import audi from '../../public/assets/audi.webp'
+import alfa from '../../public/assets/alfa.webp'
+import volkswagen from '../../public/assets/volkswagen.webp'
+import peugeot from '../../public/assets/peugeot.webp'
 
 const BRANDS = [
   {
-    link: '',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e3',
     img: lambo,
   },
   {
-    link: '',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e7',
     img: bmw,
   },
   {
-    link: '',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e5',
     img: porsche,
   },
   {
-    link: '',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a08e1001e9ff03de189d',
     img: bentley,
   },
   {
-    link: '',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e4',
     img: ferrari,
   },
   {
-    link: '',
-    img: ferrari,
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e8',
+    img: audi,
+  },
+  {
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a1ee1001e9ff03de18b0',
+    img: mercedes,
+  },
+  {
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a0ae1001e9ff03de18a2',
+    img: alfa,
+  },
+  {
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1de',
+    img: volkswagen,
+  },
+  {
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e0',
+    img: peugeot,
   },
 ]
 
@@ -47,24 +67,26 @@ const PopularBrands = () => {
   return (
     <section className="py-10 mb-5 bg-white">
       <Container>
+        <h2 className="text-2xl font-bold mb-6 capitalize">Popular brands</h2>
         <div className="min-w-full">
           <div className="keen-slider">
             <Swiper
-              //   loop={true}
-              spaceBetween={10}
+              loop={true}
+              spaceBetween={40}
               slidesPerView={5}
               modules={[Navigation, Thumbs, Autoplay]}
               className="product-images-slider-thumbs"
-              //   navigation
               autoplay={{
                 delay: 1000,
                 pauseOnMouseEnter: true,
                 disableOnInteraction: false,
               }}
             >
-              {BRANDS?.map((car, index) => (
+              {BRANDS?.map((brand, index) => (
                 <SwiperSlide key={index}>
-                  <Image src={car.img} />
+                  <Link href={brand.link} className="hover:saturate-200">
+                    <Image src={brand.img} alt="" />
+                  </Link>
                 </SwiperSlide>
               ))}
             </Swiper>
