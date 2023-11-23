@@ -165,10 +165,14 @@ const CarForm = ({ type, car }) => {
       {type === 'post' && (
         <>
           {type === 'post' && (
-            <h1 className="text-2xl font-bold text-center">Post a car</h1>
+            <h1 className="text-2xl font-bold text-center uppercase">
+              Post a car
+            </h1>
           )}
           {type === 'edit' && (
-            <h1 className="text-2xl font-bold text-center">Edit car</h1>
+            <h1 className="text-2xl font-bold text-center uppercase">
+              Edit your car
+            </h1>
           )}
           <UploadImages setFiles={setFiles} files={files} />
           {goToBasic && (

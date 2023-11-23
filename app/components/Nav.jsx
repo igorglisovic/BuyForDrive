@@ -154,6 +154,9 @@ const Nav = () => {
                   <li className={`animation mx-2`}>
                     <Link
                       href="/profile"
+                      onClick={() => {
+                        setIsOpened(false)
+                      }}
                       className="w-full block py-1.5 px-2 hover:bg-gray-100 text-sm font-normal rounded-md text-gray-800 "
                     >
                       <FontAwesomeIcon icon={faUser} className="" />
@@ -165,6 +168,9 @@ const Nav = () => {
                   >
                     <Link
                       href="/sellacar"
+                      onClick={() => {
+                        setIsOpened(false)
+                      }}
                       className="w-full block py-1.5 px-2 mb-2 hover:bg-gray-100 text-sm font-normal rounded-md text-gray-800 "
                     >
                       <FontAwesomeIcon icon={faCar} className="" />
@@ -173,7 +179,10 @@ const Nav = () => {
                   </li>
                   <li className={`animation mx-2`}>
                     <button
-                      onClick={signOut}
+                      onClick={() => {
+                        setIsOpened(false)
+                        signOut()
+                      }}
                       className="w-full block py-1.5 px-2 mt-2 hover:bg-gray-100 text-sm font-normal rounded-md text-center text-gray-800"
                     >
                       Sign out
