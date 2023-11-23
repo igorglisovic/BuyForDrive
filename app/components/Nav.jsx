@@ -106,9 +106,13 @@ const Nav = () => {
               <Link href="/sellacar">Sell a car</Link>
             </li>
           </ul>
-          <Link className="flex visible xs:hidden xs:invisible" href="/">
-            <FontAwesomeIcon icon={faHouse} width="20px" />
-          </Link>
+          <ul className="flex visible xs:hidden xs:invisible items-center justify-center gap-3">
+            <li>
+              <Link className="flex visible" href="/">
+                <FontAwesomeIcon icon={faHouse} width="20px" />
+              </Link>
+            </li>
+          </ul>
           {status === 'loading' ? (
             <p>...loading</p>
           ) : !session?.user && status === 'unauthenticated' ? (
