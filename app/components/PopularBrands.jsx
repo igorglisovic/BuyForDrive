@@ -95,7 +95,7 @@ const PopularBrands = () => {
           <div className="keen-slider">
             <Swiper
               loop={true}
-              spaceBetween={40}
+              spaceBetween={mediaMatches ? 40 : 90}
               slidesPerView={mediaMatches ? 3 : 5}
               modules={[Navigation, Thumbs, Autoplay]}
               className="product-images-slider-thumbs"
