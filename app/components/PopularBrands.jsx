@@ -1,3 +1,5 @@
+'use client'
+
 import Container from './Container'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs } from 'swiper'
@@ -19,6 +21,7 @@ import audi from '../../public/assets/audi.webp'
 import alfa from '../../public/assets/alfa.webp'
 import volkswagen from '../../public/assets/volkswagen.webp'
 import peugeot from '../../public/assets/peugeot.webp'
+import { useEffect, useState } from 'react'
 
 const BRANDS = [
   {
@@ -64,6 +67,26 @@ const BRANDS = [
 ]
 
 const PopularBrands = () => {
+  const [mediaMatches, setMediaMatches] = useState(false)
+  const [media, setMedia] = useState(false)
+
+  useEffect(() => {
+    setMedia(window.matchMedia('(max-width: 520px)'))
+  }, [])
+
+  const getMediaMatches = () => {
+    if (media.matches) {
+      setMediaMatches(true)
+    } else {
+      setMediaMatches(false)
+    }
+  }
+
+  useEffect(() => {
+    getMediaMatches()
+    window.addEventListener('resize', getMediaMatches)
+  }, [media])
+
   return (
     <section className="py-10 mb-5 bg-white">
       <Container>
@@ -73,11 +96,11 @@ const PopularBrands = () => {
             <Swiper
               loop={true}
               spaceBetween={40}
-              slidesPerView={5}
+              slidesPerView={mediaMatches ? 3 : 5}
               modules={[Navigation, Thumbs, Autoplay]}
               className="product-images-slider-thumbs"
               autoplay={{
-                delay: 1000,
+                delay: 1500,
                 pauseOnMouseEnter: true,
                 disableOnInteraction: false,
               }}
@@ -85,7 +108,7 @@ const PopularBrands = () => {
               {BRANDS?.map((brand, index) => (
                 <SwiperSlide key={index}>
                   <Link href={brand.link} className="hover:saturate-200">
-                    <Image src={brand.img} alt="" />
+                    <Image width={198} src={brand.img} alt="" />
                   </Link>
                 </SwiperSlide>
               ))}

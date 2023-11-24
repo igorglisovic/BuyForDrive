@@ -44,7 +44,6 @@ const SearchedCars = ({
   useEffect(() => {
     setMedia(window.matchMedia('(max-width: 520px)'))
   }, [])
-  // let media = ''
   const router = useRouter()
 
   let { filtersArray } = useFiltersContext()
