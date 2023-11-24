@@ -123,7 +123,6 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
     if (!urlHasModel) {
       updateFilterModel(null)
       updateModel(null)
-      // console.log('urlPriceFrom ', urlHasModel)
     }
 
     const urlHasBodyType = urlHasFilter('body_type_id')

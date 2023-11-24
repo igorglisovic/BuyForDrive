@@ -87,7 +87,6 @@ export const FiltersContextProvider = ({ children }) => {
 
     // Convert the Set back to an array and update filtersArray.
     setFiltersArray(Array.from(uniqueFilters))
-    console.log('farray ', filterModel)
   }, [
     filterBrand,
     filterModel,
@@ -132,7 +131,6 @@ export const FiltersContextProvider = ({ children }) => {
       // Convert the Set back to an array and update filtersArray.
       setFiltersArray(Array.from(uniqueFilters))
     }
-    console.log('farray ', filtersArray)
   }, [filtersArray])
 
   const updateFilterBrand = filterBrand => {

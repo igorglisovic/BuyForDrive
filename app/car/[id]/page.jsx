@@ -23,8 +23,6 @@ const CarPage = ({ params }) => {
   const date = car?.createdAt ? moment(car?.createdAt) : ''
   const relativeTime = car?.createdAt && date.fromNow()
 
-  console.log(car)
-
   let { data: otherCars } = useFetch(
     `/api/cars/${car?.creator._id}`,
     [car?.creator._id],

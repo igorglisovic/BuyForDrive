@@ -43,8 +43,6 @@ const CarForm = ({ type, car }) => {
     }
   }, [files])
 
-  console.log(loadingBar)
-
   useEffect(() => {
     resetLoadingBar()
   }, [])
@@ -65,8 +63,6 @@ const CarForm = ({ type, car }) => {
 
       // If somehow user havent uploaded image and submitted form
       if (!file) return
-
-      console.log('file ', file)
 
       if (file.preview) {
         // get a signature using server action
@@ -103,8 +99,6 @@ const CarForm = ({ type, car }) => {
         imagesArray.push(file)
       }
     }
-
-    console.log('imagesArray ', imagesArray)
 
     try {
       const res = await fetch(

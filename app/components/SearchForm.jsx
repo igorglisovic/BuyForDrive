@@ -33,8 +33,6 @@ const SearchForm = () => {
     updatePowerTo,
   } = useSearchContext()
 
-  console.log('test')
-
   const { data: brands } = useFetch('/api/brands', [], true)
   const { data: models } = useFetch(`/api/models/${brand?._id}`, [brand], brand)
   const { data: regYears } = useFetch('/api/reg_years', [], true)

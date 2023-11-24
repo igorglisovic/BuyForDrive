@@ -16,8 +16,6 @@ const Profile = ({
   loading,
   image,
 }) => {
-  console.log(data)
-
   const [mediaMatches, setMediaMatches] = useState(false)
   const [media, setMedia] = useState(false)
 

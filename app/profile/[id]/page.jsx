@@ -15,8 +15,6 @@ const page = ({ params }) => {
     params?.id
   )
 
-  console.log(params?.id)
-
   return (
     <div className="py-10">
       <Container>

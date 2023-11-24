@@ -64,8 +64,6 @@ const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
         setFiles(trimmedFiles)
       }
     }
-
-    console.log('files ', files)
   }, [files])
 
   // Update loading bar

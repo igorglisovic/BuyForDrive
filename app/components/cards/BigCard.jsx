@@ -16,8 +16,6 @@ const BigCard = ({ car, handleEdit, handleDelete }) => {
     }
   }
 
-  console.log(handleEdit, handleDelete)
-
   return (
     <div
       onClick={handleClick}

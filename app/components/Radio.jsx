@@ -18,7 +18,6 @@ const Radio = ({
   const handleChange = option => {
     setIsSelected(true)
     updateFunction(option)
-    console.log(option)
   }
 
   useEffect(() => {

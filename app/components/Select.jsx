@@ -82,7 +82,6 @@ const Select = ({
     }
 
     if (options?.length >= 7) {
-      // console.log('ne vidi se ', highlightedOptionRef?.current, ulRef?.current)
       if (ulRef?.current && highlightedOptionRef?.current) {
         const isEntirelyVisible = isElementEntirelyVisible(
           highlightedOptionRef?.current,
@@ -182,14 +181,7 @@ const Select = ({
       setValue(defaultValue?.label || defaultValue)
       updateFunction(defaultValue)
     }
-    console.log(defaultValue)
   }, [defaultValue])
-
-  useEffect(() => {
-    if (placeholder === 'Mileage') {
-      console.log('lastValue ', lastValue)
-    }
-  }, [lastValue])
 
   // Track if current input value exists in fetched options
   useEffect(() => {
@@ -331,13 +323,6 @@ const Select = ({
 
     updateFunction(selectedOption)
   }
-
-  useEffect(() => {
-    if (placeholder === 'All brands' || placeholder === 'All models') {
-      // console.log(placeholder + ' ', options, value)
-      console.log('filteredOptions ', filteredOptions)
-    }
-  }, [filteredOptions])
 
   return (
     <>
