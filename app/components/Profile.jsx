@@ -54,8 +54,8 @@ const Profile = ({
         </p>
       </div>
       <div className="flex flex-col gap-6 mt-10 base-plus:mx-40 base:mx-20 md-plus:mx-10">
-        <h2 className="md:text-3xl text-2xl font-semibold text-center">
-          My Cars
+        <h2 className="md:text-3xl text-2xl font-semibold text-center capitalize">
+          {handleEdit && handleDelete ? 'My Cars' : `${name} Cars`}
         </h2>
         {mediaMatches && !loading
           ? data?.map(car => (
