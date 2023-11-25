@@ -19,6 +19,7 @@ import { useSearchContext } from '@app/store/search-car'
 
 const Nav = () => {
   const [isOpened, setIsOpened] = useState(false)
+  const [isFastSearchOpened, setIsFastSearchOpened] = useState(false)
 
   const menuRef = useRef()
   const profileImgRef = useRef()
@@ -71,6 +72,14 @@ const Nav = () => {
     }
   }, [inView])
 
+  const handleMouseEnter = () => {
+    setIsFastSearchOpened(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsFastSearchOpened(false)
+  }
+
   return (
     <header
       ref={ref}
@@ -90,11 +99,35 @@ const Nav = () => {
                 <FontAwesomeIcon icon={faHouse} width="20px" />
               </Link>
             </li>
-            <li className="flex items-center gap-1.5 cursor-pointer">
+            <li
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className="relative flex items-center gap-1.5 cursor-pointer"
+            >
               Fast search
               <span className="flex items-center w-3 rotate-180 mt-1">
                 <Triangle />
               </span>
+              {isFastSearchOpened && (
+                <div className="absolute top-6 left-0 py-3 px-2 rounded-xl bg-white shadow-md z-50">
+                  <ul className="flex flex-col gap-1 capitalize whitespace-nowrap text-sm font-normal">
+                    <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
+                      <Link href="/">Newest ads</Link>
+                    </li>
+                    <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
+                      <Link href="/cars/search?sort=default_sorting&page=1&limit=10&mileage_from=6561e557b5da05ccfa539bc3_0&mileage_to=6561e557b5da05ccfa539bc3_0">
+                        New cars
+                      </Link>
+                    </li>
+                    <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
+                      <Link href="/">Newest ads</Link>
+                    </li>
+                    <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
+                      <Link href="/">Newest ads</Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </li>
             <li className="flex items-center gap-1.5 cursor-pointer">
               Vehicle types
