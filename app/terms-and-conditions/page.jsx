@@ -9,7 +9,7 @@ const page = () => {
     <>
       <Container>
         <Breadcrumb />
-        <section className="py-8 px-10 my-12 bg-white rounded-[30px] shadow-md">
+        <section className="py-8 sm:px-10 px-6 my-12 bg-white rounded-[30px] shadow-md">
           <h1 className="text-2xl font-bold mb-4">
             General Terms & Conditions
           </h1>

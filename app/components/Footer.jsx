@@ -72,8 +72,8 @@ const Footer = () => {
       }`}
     >
       <Container>
-        <div className="flex justify-between gap-52 flex-col lg:flex-row relative">
-          <div className="flex-1 xl:grow-[1.2] grow-[1.4]">
+        <div className="flex justify-between xl:gap-52 base-plus:gap-32 lg:gap-10 gap-6 flex-col lg:flex-row relative">
+          <div className="flex-1">
             <h2 className="text-3xl font-bold mb-5 md:text-left text-center">
               Most wanted models
             </h2>
@@ -90,8 +90,8 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          <div className="flex flex-col justify-between right-side">
-            <div className="flex justify-end gap-12">
+          <div className="flex flex-col justify-between gap-4 right-side">
+            <div className="flex lg:justify-end justify-center sm:gap-12 gap-6">
               <div>
                 <h3 className="font-semibold text-lg">Dealer</h3>
                 <ul className="text-base">

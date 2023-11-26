@@ -254,6 +254,7 @@ option {
   margin-bottom: 14px;
 }
 
-footer .right-side a {
-  @apply hover:text-gray-500;
+footer .right-side a,
+.nav > ul > li > a {
+  @apply hover:text-gray-600;
 }
