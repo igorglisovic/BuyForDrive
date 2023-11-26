@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Container from './Container'
 import { useSearchContext } from '@app/store/search-car'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const mostWantedModelsArray = [
   {
@@ -65,7 +66,7 @@ const Footer = () => {
       }`}
     >
       <Container>
-        <div className="flex flex-col lg:flex-row relative">
+        <div className="flex justify-between gap-52 flex-col lg:flex-row relative">
           <div className="flex-1 xl:grow-[1.2] grow-[1.4]">
             <h2 className="text-3xl font-bold mb-5 md:text-left text-center">
               Most wanted models
@@ -83,7 +84,47 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          <div className="flex-1"></div>
+          <div className="flex flex-col gap-6">
+            <div className="flex justify-end gap-12">
+              <div>
+                <h3 className="font-semibold text-lg">Dealer</h3>
+                <ul className="text-base">
+                  <li>
+                    <Link href="/signin">Login</Link>
+                  </li>
+                  <li>
+                    <Link href="/signup">Register</Link>
+                  </li>
+                  <li>
+                    <Link href="/signup">Terms and Conditions</Link>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg">Legal</h3>
+                <ul className="text-base">
+                  <li>
+                    <Link href="/signin">Privacy policy</Link>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={'instagram-square'} />
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="flex justify-center text-center">
+              <div>
+                <h3 className="font-semibold text-lg">Developed by</h3>
+                <ul className="text-base">
+                  <li>
+                    <Link target="blank" href="https://www.igorglisovic.com">
+                      Igor Glišović
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </Container>
     </footer>

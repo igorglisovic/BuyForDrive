@@ -129,12 +129,12 @@ const Nav = () => {
                 </div>
               )}
             </li>
-            <li className="flex items-center gap-1.5 cursor-pointer">
+            {/* <li className="flex items-center gap-1.5 cursor-pointer">
               Vehicle types
               <span className="flex items-center w-3 rotate-180 mt-1">
                 <Triangle />
               </span>
-            </li>
+            </li> */}
             <li className="cursor-pointer">
               <Link href="/sellacar">Sell a car</Link>
             </li>
