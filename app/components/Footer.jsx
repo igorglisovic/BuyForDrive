@@ -10,6 +10,7 @@ import {
   faInstagram,
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons'
+import { useSession } from 'next-auth/react'
 
 const mostWantedModelsArray = [
   {
@@ -65,6 +66,8 @@ const mostWantedModelsArray = [
 const Footer = () => {
   const { isFilterMenuOpen } = useSearchContext()
 
+  const { data: session } = useSession()
+
   return (
     <footer
       className={`bg-white py-14 shadow-2xl relative ${
@@ -95,12 +98,20 @@ const Footer = () => {
               <div>
                 <h3 className="font-semibold text-lg">Dealer</h3>
                 <ul className="text-base">
-                  <li>
-                    <Link href="/signin">Login</Link>
-                  </li>
-                  <li>
-                    <Link href="/signup">Register</Link>
-                  </li>
+                  {session?.user ? (
+                    <li>
+                      <Link href="/profile">View profile</Link>
+                    </li>
+                  ) : (
+                    <>
+                      <li>
+                        <Link href="/signin">Login</Link>
+                      </li>
+                      <li>
+                        <Link href="/signup">Register</Link>
+                      </li>
+                    </>
+                  )}
                   <li>
                     <Link href="/terms-and-conditions">
                       Terms and Conditions

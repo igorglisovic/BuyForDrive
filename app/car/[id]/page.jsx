@@ -84,7 +84,7 @@ const CarPage = ({ params }) => {
                     Edit Car
                   </Link>
                   <button className="bg-btn-2 hover:bg-gray-200 py-2 px-8 rounded-full font-semibold">
-                    <Link href="/profile">Check profile</Link>
+                    <Link href="/profile">Check dealer</Link>
                   </button>
                 </>
               )}
