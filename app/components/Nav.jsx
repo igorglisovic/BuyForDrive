@@ -120,10 +120,10 @@ const Nav = () => {
                       </Link>
                     </li>
                     <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
-                      <Link href="/">Newest ads</Link>
+                      <Link href="/">Newest New ads</Link>
                     </li>
                     <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
-                      <Link href="/">Newest ads</Link>
+                      <Link href="/">Newest Newest Newest ads</Link>
                     </li>
                   </ul>
                 </div>

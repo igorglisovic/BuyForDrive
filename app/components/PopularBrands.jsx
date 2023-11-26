@@ -88,7 +88,7 @@ const PopularBrands = () => {
   }, [media])
 
   return (
-    <section className="py-10 mb-5 bg-white">
+    <section className="py-8 mb-5 bg-white">
       <Container>
         <h2 className="text-2xl font-bold mb-6 capitalize">Popular brands</h2>
         <div className="min-w-full">

@@ -24,7 +24,6 @@ const CarSlider = ({ car }) => {
           className="min-w-full"
         >
           <Swiper
-            loop={true}
             spaceBetween={10}
             navigation={true}
             modules={[Navigation, Thumbs]}

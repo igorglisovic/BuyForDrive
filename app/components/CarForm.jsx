@@ -178,7 +178,7 @@ const CarForm = ({ type, car }) => {
           {goToFinish && <PostACarFinish type={type} />}
           {goFurther && goToFinish && goToBasic && (
             <button
-              //   disabled={submitting || loadingBar !== 100}
+              disabled={submitting || loadingBar !== 100}
               type="submit"
               className="py-1 px-8 hover:bg-gray-200 disabled:hover:bg-gray-100 rounded-full self-center font-semibold bg-btn-2"
             >
