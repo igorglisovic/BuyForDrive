@@ -4,6 +4,12 @@ import Link from 'next/link'
 import Container from './Container'
 import { useSearchContext } from '@app/store/search-car'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import {
+  faGithub,
+  faInstagram,
+  faLinkedin,
+} from '@fortawesome/free-brands-svg-icons'
 
 const mostWantedModelsArray = [
   {
@@ -84,7 +90,7 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col justify-between right-side">
             <div className="flex justify-end gap-12">
               <div>
                 <h3 className="font-semibold text-lg">Dealer</h3>
@@ -96,7 +102,9 @@ const Footer = () => {
                     <Link href="/signup">Register</Link>
                   </li>
                   <li>
-                    <Link href="/signup">Terms and Conditions</Link>
+                    <Link href="/terms-and-conditions">
+                      Terms and Conditions
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -104,10 +112,7 @@ const Footer = () => {
                 <h3 className="font-semibold text-lg">Legal</h3>
                 <ul className="text-base">
                   <li>
-                    <Link href="/signin">Privacy policy</Link>
-                  </li>
-                  <li>
-                    <FontAwesomeIcon icon={'instagram-square'} />
+                    <Link href="/privacy-policy">Privacy policy</Link>
                   </li>
                 </ul>
               </div>
@@ -117,8 +122,24 @@ const Footer = () => {
                 <h3 className="font-semibold text-lg">Developed by</h3>
                 <ul className="text-base">
                   <li>
-                    <Link target="blank" href="https://www.igorglisovic.com">
+                    <Link href="https://www.igorglisovic.com" target="blank">
                       Igor Glišović
+                    </Link>
+                  </li>
+                  <li className="flex justify-center gap-3 mt-1">
+                    <Link
+                      href="https://www.linkedin.com/in/igor-glisovic/"
+                      target="blank"
+                      className="text-2xl"
+                    >
+                      <FontAwesomeIcon icon={faLinkedin} />
+                    </Link>
+                    <Link
+                      href="https://github.com/igorglisovic"
+                      target="blank"
+                      className="text-2xl"
+                    >
+                      <FontAwesomeIcon icon={faGithub} />
                     </Link>
                   </li>
                 </ul>

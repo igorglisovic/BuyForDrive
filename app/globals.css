@@ -253,3 +253,7 @@ option {
 .swiper-pagination {
   margin-bottom: 14px;
 }
+
+footer .right-side a {
+  @apply hover:text-gray-500;
+}
