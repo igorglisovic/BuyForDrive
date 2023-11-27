@@ -4,13 +4,10 @@ import Link from 'next/link'
 import Container from './Container'
 import { useSearchContext } from '@app/store/search-car'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-import {
-  faGithub,
-  faInstagram,
-  faLinkedin,
-} from '@fortawesome/free-brands-svg-icons'
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { useSession } from 'next-auth/react'
+import { useInView } from 'react-intersection-observer'
+import { useEffect, useRef } from 'react'
 
 const mostWantedModelsArray = [
   {
@@ -39,7 +36,7 @@ const mostWantedModelsArray = [
   },
   {
     label: 'Ferrari LaFerrari',
-    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e4',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e4&model_id=64f9ae561001e9ff03de1916',
   },
   {
     label: 'Porsche 911',
@@ -64,12 +61,26 @@ const mostWantedModelsArray = [
 ]
 
 const Footer = () => {
-  const { isFilterMenuOpen } = useSearchContext()
+  const { isFilterMenuOpen, updateFooterView } = useSearchContext()
 
   const { data: session } = useSession()
 
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+  })
+
+  useEffect(() => {
+    if (inView) {
+      updateFooterView({ isInView: true, entry })
+    } else {
+      updateFooterView({ isInView: false, entry })
+    }
+  }, [inView])
+
   return (
     <footer
+      ref={ref}
       className={`bg-white py-14 shadow-2xl relative ${
         isFilterMenuOpen ? 'z-[-1]' : ''
       }`}

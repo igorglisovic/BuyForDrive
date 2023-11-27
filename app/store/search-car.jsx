@@ -18,6 +18,7 @@ const searchCarContext = createContext({
   page: '',
   limit: '',
   isFilterMenuOpen: false,
+  footerView: { isInView: false, entry: {} },
   updateBrand: () => {},
   updateModel: () => {},
   updateYearFrom: () => {},
@@ -36,6 +37,7 @@ const searchCarContext = createContext({
   updatePowerFrom: () => {},
   updatePowerTo: () => {},
   updateIsFilterMenuOpen: () => {},
+  updateFooterView: () => {},
 })
 
 export const useSearchContext = () => useContext(searchCarContext)
@@ -58,6 +60,7 @@ export const SearchContextProvider = ({ children }) => {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
+  const [footerView, setFooterView] = useState(false)
 
   const updateBrand = brand => {
     setBrand(brand)
@@ -127,6 +130,10 @@ export const SearchContextProvider = ({ children }) => {
     setIsFilterMenuOpen(value)
   }
 
+  const updateFooterView = value => {
+    setFooterView(value)
+  }
+
   const resetStates = () => {
     setBrand(null)
     setModel(null)
@@ -161,6 +168,7 @@ export const SearchContextProvider = ({ children }) => {
     powerFrom,
     powerTo,
     isFilterMenuOpen,
+    footerView,
     updateBrand,
     updateModel,
     updateYearFrom,
@@ -179,6 +187,7 @@ export const SearchContextProvider = ({ children }) => {
     updatePowerFrom,
     updatePowerTo,
     updateIsFilterMenuOpen,
+    updateFooterView,
   }
 
   return (

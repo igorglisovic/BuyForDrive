@@ -12,6 +12,8 @@ import CountUp from 'react-countup'
 const filterArrayById = (array, id) => array?.find(item => item._id === id)
 
 const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
+  const [sidebarTop, setSidebarTop] = useState(32)
+
   const {
     brand,
     model,
@@ -27,6 +29,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
     powerTo,
     sorting,
     isFilterMenuOpen,
+    footerView,
     updateBrand,
     updateModel,
     updateYearFrom,
@@ -86,6 +89,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
   const [asideWidth, setAsideWidth] = useState('')
 
   const asideRef = useRef(null)
+  const sidebarFixedRef = useRef(null)
 
   // Convert price to numeric and add €
   const prices = pricesData?.map(price => ({
@@ -317,6 +321,36 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
   ])
 
   useEffect(() => {
+    let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop
+
+    if (footerView.isInView) {
+      const trackScroll = () => {
+        const topOffset = footerView.entry.target.getBoundingClientRect().y
+        const sidebarTop2 = sidebarFixedRef.current.getBoundingClientRect().top
+        const sidebarBottom = Math.trunc(
+          sidebarFixedRef.current.getBoundingClientRect().bottom + 50
+        )
+
+        if (sidebarBottom > topOffset) {
+          setSidebarTop(prev => prev - (sidebarBottom - topOffset))
+        } else if (topOffset > lastScrollTop && sidebarTop2 <= 32) {
+          setSidebarTop(prev => prev + (topOffset - sidebarBottom))
+        }
+
+        lastScrollTop = topOffset <= 0 ? 0 : topOffset
+      }
+
+      window.addEventListener('scroll', trackScroll)
+
+      return () => window.removeEventListener('scroll', trackScroll)
+    }
+
+    if (!footerView.isInView) {
+      setSidebarTop(32)
+    }
+  }, [footerView])
+
+  useEffect(() => {
     paramsArray?.forEach(param => {
       if (param.name === 'sort') {
         if (sorting !== param.name) {
@@ -354,9 +388,13 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
         <div
           className={`${
             !subHeaderInView &&
-            '!fixed max-h-[90vh] overflow-y-auto self-baseline top-8 base-plus:py-9 base-plus:px-9 px-6 py-6 bg-white rounded-[45px] shadow-md  base-plus:mr-9 mr-6'
+            `!fixed max-h-[90vh] overflow-y-auto self-baseline base-plus:py-9 base-plus:px-9 px-6 py-6 bg-white rounded-[45px] shadow-md  base-plus:mr-9 mr-6`
           } ${isFilterMenuOpen && 'overflow-y-auto px-1'}`}
-          style={{ width: !subHeaderInView && asideWidth }}
+          style={{
+            width: !subHeaderInView && asideWidth,
+            top: `${sidebarTop}px`,
+          }}
+          ref={sidebarFixedRef}
         >
           <div className="flex justify-between md-plus:mb-4 mb-5">
             <h2 className="md-plus:text-xl text-[1.4rem] font-semibold">
