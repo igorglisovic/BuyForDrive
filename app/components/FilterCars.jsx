@@ -328,7 +328,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
         const topOffset = footerView.entry.target.getBoundingClientRect().y
         const sidebarTop2 = sidebarFixedRef.current.getBoundingClientRect().top
         const sidebarBottom = Math.trunc(
-          sidebarFixedRef.current.getBoundingClientRect().bottom + 50
+          sidebarFixedRef.current.getBoundingClientRect().bottom + 60
         )
 
         if (sidebarBottom > topOffset) {
