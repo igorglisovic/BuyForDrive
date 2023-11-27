@@ -167,7 +167,6 @@ const useCalcSearchedCars = () => {
       const data = await fetchSearchedCars(urlWithoutPageAndLimit)
 
       setCountOffers(data?.length)
-      console.log('izvrsilo se', yearFrom, yearTo, bodyType, fuelType, sorting)
     }
 
     if (

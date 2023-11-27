@@ -1,3 +1,4 @@
+import { stringify } from 'postcss'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 const FiltersContext = createContext({
@@ -48,7 +49,9 @@ export const FiltersContextProvider = ({ children }) => {
   const [filterPowerTo, setFilterPowerTo] = useState(null)
 
   // Create a Set to store unique filters.
-  let uniqueFilters = new Set([...filtersArray])
+  let uniqueFilters = new Set(
+    filtersArray.length ? [JSON.stringify(...filtersArray)] : []
+  )
 
   const addUniqueFilters = state => {
     if (state) {
@@ -58,12 +61,14 @@ export const FiltersContextProvider = ({ children }) => {
 
   const addFromToFilter = (filterFrom, filterTo, text, type) => {
     if (filterFrom && filterTo) {
-      uniqueFilters.add({
-        from: filterFrom,
-        to: filterTo,
-        text,
-        type,
-      })
+      uniqueFilters.add(
+        JSON.stringify({
+          from: filterFrom,
+          to: filterTo,
+          text,
+          type,
+        })
+      )
     }
 
     if (filterFrom && !filterTo) {
@@ -85,8 +90,17 @@ export const FiltersContextProvider = ({ children }) => {
     addFromToFilter(filterPriceFrom, filterPriceTo, 'Price', 'price')
     addFromToFilter(filterPowerFrom, filterPowerTo, 'Power', 'power')
 
+    console.log('farray ', uniqueFilters)
+
+    // Convert from JSON back to set
+    const formattedSet = [...uniqueFilters].map(item => {
+      if (typeof item === 'string') return JSON.parse(item)
+      else if (typeof item === 'object') return item
+    })
+
+    console.log('farray update ', filterYearTo, filterYearFrom)
     // Convert the Set back to an array and update filtersArray.
-    setFiltersArray(Array.from(uniqueFilters))
+    setFiltersArray(Array.from(formattedSet))
   }, [
     filterBrand,
     filterModel,
@@ -102,6 +116,7 @@ export const FiltersContextProvider = ({ children }) => {
     filterPowerTo,
   ])
 
+  // When changing between sorting without this will not work
   useEffect(() => {
     if (
       !filtersArray.length &&
@@ -128,8 +143,14 @@ export const FiltersContextProvider = ({ children }) => {
       addFromToFilter(filterPriceFrom, filterPriceTo, 'Price', 'price')
       addFromToFilter(filterPowerFrom, filterPowerTo, 'Power', 'power')
 
+      // Convert from JSON back to set
+      const formattedSet = [...uniqueFilters].map(item => {
+        if (typeof item === 'string') return JSON.parse(item)
+        else if (typeof item === 'object') return item
+      })
+
       // Convert the Set back to an array and update filtersArray.
-      setFiltersArray(Array.from(uniqueFilters))
+      // setFiltersArray(Array.from(formattedSet))
     }
   }, [filtersArray])
 
