@@ -4,6 +4,8 @@ import BigCardLoad from './cards/BigCardLoad'
 import BigCardMobile from './cards/BigCardMobile'
 import BigCardMobileLoad from './cards/BigCardMobileLoad'
 import Image from 'next/image'
+import SmallCard from './cards/SmallCard'
+import SmallCardLoad from './cards/SmallCardLoad'
 
 const loadCarsArray = [1, 2, 3, 4, 5, 6, 7]
 
@@ -53,33 +55,22 @@ const Profile = ({
           {desc}
         </p>
       </div>
-      <div className="flex flex-col gap-6 mt-10 base-plus:mx-40 base:mx-20 md-plus:mx-10">
-        <h2 className="md:text-3xl text-2xl font-semibold text-center capitalize">
+      <div className="flex flex-col gap-6 mt-10 ">
+        <h2 className="md:text-3xl text-2xl font-semibold text-left capitalize">
           {handleEdit && handleDelete ? 'My Cars' : `${name} Cars`}
         </h2>
-        {mediaMatches && !loading
-          ? data?.map(car => (
-              <BigCardMobile
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-3 gap-3 md:gap-3.5">
+          {!loading &&
+            data?.map(car => (
+              <SmallCard
                 key={car._id}
                 car={car}
                 handleEdit={() => handleEdit && handleEdit(car)}
                 handleDelete={() => handleDelete && handleDelete(car)}
               />
-            ))
-          : data?.map(car => (
-              <BigCard
-                key={car._id}
-                car={car}
-                handleEdit={
-                  handleEdit ? () => handleEdit && handleEdit(car) : false
-                }
-                handleDelete={
-                  handleDelete ? () => handleDelete && handleDelete(car) : false
-                }
-              />
             ))}
-        {loading && loadCarsArray.map((_, i) => <BigCardLoad key={i} />)}
-        {loading && loadCarsArray.map((_, i) => <BigCardMobileLoad key={i} />)}
+          {loading && loadCarsArray.map((_, i) => <SmallCardLoad key={i} />)}
+        </div>
       </div>
     </section>
   )
