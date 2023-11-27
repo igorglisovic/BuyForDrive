@@ -13,10 +13,13 @@ import CarsSlider from '@app/components/car/CarsSlider'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import moment from 'moment/moment'
+import { useRouter } from 'next/navigation'
 
 const CarPage = ({ params }) => {
   const { data } = useFetch(`/api/car/${params.id}`)
   const car = data && data[0]
+
+  const router = useRouter()
 
   const { data: session } = useSession()
 
@@ -37,6 +40,25 @@ const CarPage = ({ params }) => {
 
   otherCars = otherCars?.filter(otherCar => otherCar._id !== car._id)
   similarCars = similarCars?.filter(similarCar => similarCar._id !== car._id)
+
+  const handleDelete = async () => {
+    const hasConfirmed = confirm('Are you sure you want to delete this car?')
+
+    if (hasConfirmed) {
+      console.log(car)
+      try {
+        const res = await fetch(`/api/car/${car._id.toString()}`, {
+          method: 'DELETE',
+        })
+
+        if (res.ok) {
+          router.push('/profile')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
   return (
     <div className="bg-hero-pattern pb-10">
@@ -77,12 +99,20 @@ const CarPage = ({ params }) => {
               </span>
               {session?.user.id === car?.creator._id && (
                 <>
-                  <Link
-                    className="underline hover:text-gray-500"
-                    href={`/edit-car?id=${car?._id}`}
-                  >
-                    Edit Car
-                  </Link>
+                  <div className="flex flex-col gap-0 items-center">
+                    <Link
+                      className="underline hover:text-gray-500"
+                      href={`/edit-car?id=${car?._id}`}
+                    >
+                      Edit Car
+                    </Link>
+                    <button
+                      className="underline text-red-500 hover:text-red-400"
+                      onClick={handleDelete}
+                    >
+                      Remove Car
+                    </button>
+                  </div>
                   <button className="bg-btn-2 hover:bg-gray-200 py-2 px-8 rounded-full font-semibold">
                     <Link href="/profile">Check dealer</Link>
                   </button>
