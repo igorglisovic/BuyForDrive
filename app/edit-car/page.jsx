@@ -13,7 +13,7 @@ const EditCar = () => {
 
   const { headerInView } = usePostCarContext()
 
-  let { data: car } = useFetch(`api/car/${carId}`, [carId], carId)
+  let { data: car, loading } = useFetch(`api/car/${carId}`, [carId], carId)
 
   return (
     <div>
@@ -26,7 +26,7 @@ const EditCar = () => {
                 !headerInView ? 'mt-28' : 'mt-8'
               }`}
             >
-              <CarForm type="edit" car={car && car[0]} />
+              <CarForm type="edit" car={car && car[0]} loading={loading} />
             </div>
           </div>
         </Container>

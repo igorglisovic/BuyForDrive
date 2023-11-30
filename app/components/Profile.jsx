@@ -6,6 +6,7 @@ import BigCardMobileLoad from './cards/BigCardMobileLoad'
 import Image from 'next/image'
 import SmallCard from './cards/SmallCard'
 import SmallCardLoad from './cards/SmallCardLoad'
+import LoadingSpinner from './ui/LoadingSpinner'
 
 const loadCarsArray = [1, 2, 3, 4, 5, 6, 7]
 

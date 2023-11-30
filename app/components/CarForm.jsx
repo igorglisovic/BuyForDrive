@@ -8,8 +8,9 @@ import { usePostCarContext } from '@app/store/post-car'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import LoadingSpinner from './ui/LoadingSpinner'
 
-const CarForm = ({ type, car }) => {
+const CarForm = ({ type, car, loading }) => {
   const [goToBasic, setGoToBasic] = useState(false)
   const [goFurther, setGoFurther] = useState(false)
   const [goToFinish, setGoToFinish] = useState(false)
@@ -187,7 +188,12 @@ const CarForm = ({ type, car }) => {
           )}
         </>
       )}
-      {type === 'edit' && (
+      {loading && (
+        <div className="flex justify-center h-80">
+          <LoadingSpinner />
+        </div>
+      )}
+      {type === 'edit' && !loading && (
         <>
           <UploadImages
             setFiles={setFiles}

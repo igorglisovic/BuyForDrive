@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { usePostCarContext } from '@app/store/post-car'
 import { useSearchContext } from '@app/store/search-car'
+import LoadingSpinner from './ui/LoadingSpinner'
 
 const Nav = () => {
   const [isOpened, setIsOpened] = useState(false)
@@ -147,7 +148,7 @@ const Nav = () => {
             </li>
           </ul>
           {status === 'loading' ? (
-            <p>...loading</p>
+            <LoadingSpinner nav={true} />
           ) : !session?.user && status === 'unauthenticated' ? (
             <ul className="flex justify-center gap-3">
               <li>
