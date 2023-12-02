@@ -2,10 +2,21 @@ import { connectToDB } from '@utils/database'
 import { Owner } from '@models/onwer'
 
 export const GET = async req => {
+  const pipeline = []
   try {
     await connectToDB()
 
-    const owners = await Owner.find({}).sort({ label: 1 })
+    pipeline.push({
+      $addFields: {
+        numericLabel: { $toInt: '$label' }, // Convert label field to integer
+      },
+    })
+
+    pipeline.push({
+      $sort: { numericLabel: 1 }, // Sort by the numericLabel field
+    })
+
+    const owners = await Owner.aggregate(pipeline)
 
     return new Response(JSON.stringify(owners), { status: 200 })
   } catch (error) {
