@@ -144,7 +144,7 @@ const CarPage = ({ params }) => {
             </div>
           </div>
         ) : (
-          <div className="h-[700px] mt-10">
+          <div className="h-[700px] mt-10 flex justify-center">
             <LoadingSpinner />
           </div>
         )}
