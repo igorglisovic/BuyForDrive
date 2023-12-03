@@ -10,6 +10,7 @@ import { usePostCarContext } from './store/post-car'
 import { useFiltersContext } from './store/filters'
 import { useEffect } from 'react'
 import PopularBrands from './components/PopularBrands'
+import FAQ from './components/FAQ'
 
 // FontAwesome Icons
 config.autoAddCss = false
@@ -30,6 +31,7 @@ const Home = () => {
       <Search />
       <RandomCars />
       <PopularBrands />
+      <FAQ />
     </>
   )
 }
