@@ -55,7 +55,7 @@ export const FiltersContextProvider = ({ children }) => {
 
   const addUniqueFilters = state => {
     if (state) {
-      uniqueFilters.add(state)
+      uniqueFilters.add(JSON.stringify(state))
     }
   }
 
@@ -72,10 +72,10 @@ export const FiltersContextProvider = ({ children }) => {
     }
 
     if (filterFrom && !filterTo) {
-      uniqueFilters.add(filterFrom)
+      uniqueFilters.add(JSON.stringify(filterFrom))
     }
     if (filterTo && !filterFrom) {
-      uniqueFilters.add(filterTo)
+      uniqueFilters.add(JSON.stringify(filterTo))
     }
   }
 
@@ -93,14 +93,16 @@ export const FiltersContextProvider = ({ children }) => {
     console.log('farray ', uniqueFilters)
 
     // Convert from JSON back to set
-    const formattedSet = [...uniqueFilters].map(item => {
+    let formattedSet = [...uniqueFilters].map(item => {
       if (typeof item === 'string') return JSON.parse(item)
       else if (typeof item === 'object') return item
     })
 
-    console.log('farray update ', filterYearTo, filterYearFrom)
+    console.log('farray update ', formattedSet)
     // Convert the Set back to an array and update filtersArray.
     setFiltersArray(Array.from(formattedSet))
+
+    console.log('filterYearFrom ', filterMileageFrom)
   }, [
     filterBrand,
     filterModel,
@@ -150,7 +152,7 @@ export const FiltersContextProvider = ({ children }) => {
       })
 
       // Convert the Set back to an array and update filtersArray.
-      // setFiltersArray(Array.from(formattedSet))
+      setFiltersArray(Array.from(formattedSet))
     }
   }, [filtersArray])
 
@@ -213,6 +215,12 @@ export const FiltersContextProvider = ({ children }) => {
     setFilterFuelType(null)
     setFilterYearFrom(null)
     setFilterYearTo(null)
+    setFilterMileageFrom(null)
+    setFilterMileageTo(null)
+    setFilterPriceFrom(null)
+    setFilterPriceTo(null)
+    setFilterPowerFrom(null)
+    setFilterPowerTo(null)
   }
 
   const value = {

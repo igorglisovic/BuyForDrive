@@ -189,7 +189,7 @@ const CarForm = ({ type, car, loading }) => {
         </>
       )}
       {loading && (
-        <div className="flex justify-center h-80">
+        <div className="flex justify-center h-screen">
           <LoadingSpinner />
         </div>
       )}
