@@ -90,14 +90,14 @@ const Nav = () => {
     >
       <Container>
         <nav
-          className={`nav flex items-center justify-between font-medium ${
+          className={`nav flex items-center justify-between max-h-[64px] font-medium sm:py-3 ${
             session?.user ? 'py-3' : 'py-5'
           }`}
         >
           <ul className="xs:flex xs:visible hidden invisible justify-center gap-3">
             <li className="flex items-center">
               <Link href="/">
-                <FontAwesomeIcon icon={faHouse} width="20px" />
+                <FontAwesomeIcon icon={faHouse} width={18} />
               </Link>
             </li>
             <li
