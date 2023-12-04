@@ -231,6 +231,9 @@ const SearchedCars = ({
                   <option className="text-sm" value="price_desc">
                     Price (High to Low)
                   </option>
+                  <option className="text-sm" value="latest_offers">
+                    Latest offers first
+                  </option>
                   <option className="text-sm" value="reg_desc">
                     First Registration (Newest First)
                   </option>

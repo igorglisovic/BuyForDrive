@@ -15,6 +15,7 @@ import Link from 'next/link'
 import moment from 'moment/moment'
 import { useRouter } from 'next/navigation'
 import LoadingSpinner from '@app/components/ui/LoadingSpinner'
+import Button from '@app/components/Button'
 
 const CarPage = ({ params }) => {
   const { data, loading } = useFetch(`/api/car/${params.id}`)

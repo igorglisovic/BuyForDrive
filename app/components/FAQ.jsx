@@ -194,6 +194,7 @@ const FAQ = () => {
               </button>
               {card.content.map((article, index) => (
                 <motion.div
+                  key={index}
                   variants={cardVariants}
                   initial={cards[i].active ? 'open' : 'closed'}
                   animate={cards[i].active ? 'open' : 'closed'}

@@ -201,7 +201,7 @@ const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
         </h3>
         <ul className="mt-6 grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3">
           {files.map((file, i) => (
-            <li key={file.name} className="relative h-32 rounded-md shadow-lg">
+            <li key={i} className="relative h-32 rounded-md shadow-lg">
               <Image
                 src={
                   file.preview ||

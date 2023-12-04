@@ -276,6 +276,13 @@ export const GET = async (req, { params }) => {
           },
         })
         break
+      case 'latest_offers':
+        pipeline.push({
+          $sort: {
+            created_at: 1,
+          },
+        })
+        break
     }
 
     if (mileageFrom && !mileageTo) {

@@ -112,19 +112,37 @@ const Nav = () => {
               {isFastSearchOpened && (
                 <div className="absolute top-6 left-0 py-3 px-2 rounded-xl bg-white shadow-md z-50">
                   <ul className="flex flex-col gap-1 capitalize whitespace-nowrap text-sm font-normal">
-                    <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
-                      <Link href="/">Newest ads</Link>
-                    </li>
-                    <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
-                      <Link href="/cars/search?sort=default_sorting&page=1&limit=10&mileage_from=6561e557b5da05ccfa539bc3_0&mileage_to=6561e557b5da05ccfa539bc3_0">
+                    <li className="hover:bg-gray-100 rounded-md">
+                      <Link
+                        className="block p-2"
+                        href="/cars/search?sort=default_sorting&page=1&limit=10&mileage_from=6561e557b5da05ccfa539bc3_0&mileage_to=6561e557b5da05ccfa539bc3_0"
+                      >
                         New cars
                       </Link>
                     </li>
-                    <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
-                      <Link href="/">Newest New ads</Link>
+                    <li className="hover:bg-gray-100 rounded-md">
+                      <Link
+                        className="block p-2"
+                        href="/cars/search?sort=latest_offers&page=1&limit=10"
+                      >
+                        Newest offers
+                      </Link>
                     </li>
-                    <li className="py-2 px-2 hover:bg-gray-100 rounded-md">
-                      <Link href="/">Newest Newest Newest ads</Link>
+                    <li className="hover:bg-gray-100 rounded-md">
+                      <Link
+                        className="block p-2"
+                        href="/cars/search?sort=default_sorting&page=1&limit=10&price_to=654efe97bbdce944b04ad63e_5,000"
+                      >
+                        Used cars under €5000
+                      </Link>
+                    </li>
+                    <li className="hover:bg-gray-100 rounded-md">
+                      <Link
+                        className="block p-2"
+                        href="/cars/search?sort=default_sorting&page=1&limit=10&mileage_to=654f0537bbdce944b04ad661_200,000"
+                      >
+                        Used cars under 200,000km
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -137,7 +155,7 @@ const Nav = () => {
               </span>
             </li> */}
             <li className="cursor-pointer">
-              <Link href="/sellacar">Sell a car</Link>
+              <Link href="/sellacar">Sell your car</Link>
             </li>
           </ul>
           <ul className="flex visible xs:hidden xs:invisible items-center justify-center gap-3">
