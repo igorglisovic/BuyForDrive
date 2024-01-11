@@ -10,14 +10,56 @@ import Link from 'next/link'
 
 const SignIn = () => {
   const [providers, setProviders] = useState()
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+  })
+  const [loading, setLoading] = useState(false)
 
   const { data: session } = useSession()
   const router = useRouter()
 
-  const handleSignIn = provider => {
+  const handleGoogleSignIn = provider => {
     signIn(provider.id, {
       callbackUrl: `/`,
     })
+  }
+
+  const handleSignIn = async () => {
+    // try {
+    //   setLoading(true)
+    //   const res = await fetch('/api/signin', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(user),
+    //   })
+
+    //   if (res.ok) {
+    //     router.push('/')
+    //     console.log('Login success')
+    //   }
+    // } catch (error) {
+    //   // console.log('Login failed', error.message)
+    // } finally {
+    //   setLoading(false)
+    // }
+    const loginData = {
+      email: user.email,
+      password: user.password,
+      callbackUrl: '/',
+      redirect: false,
+    }
+
+    const login = await signIn('credentials', loginData)
+
+    if (login.ok) {
+      console.log('radi')
+      // router.push(login.url)
+    } else {
+      // toast.error('Login failed.')
+    }
   }
 
   useEffect(() => {
@@ -50,17 +92,26 @@ const SignIn = () => {
               <p>Find your car.</p>
             </div>
             <div className="flex flex-col">
-              <input className="input-full" type="text" placeholder="Email" />
+              <input
+                className="input-full"
+                type="text"
+                placeholder="Email"
+                onChange={e => setUser({ ...user, email: e.target.value })}
+              />
               <input
                 className="input-full mt-5"
                 type="text"
                 placeholder="Password"
+                onChange={e => setUser({ ...user, password: e.target.value })}
               />
               <button className="self-start mt-1.5 text-sm">
                 Forgot password?
               </button>
             </div>
-            <button className="bg-[#8D8D8D] text-white py-2 rounded-full text-sm font-medium">
+            <button
+              onClick={handleSignIn}
+              className="bg-[#8D8D8D] text-white py-2 rounded-full text-sm font-medium"
+            >
               Sign in
             </button>
             <div className="flex gap-2.5 items-center">
@@ -74,7 +125,7 @@ const SignIn = () => {
                   key={provider.name}
                   className="flex justify-center gap-2 items-center border-[#ddd] border-[1px] text-[#525252] py-2 rounded-full text-sm font-medium"
                   onClick={() => {
-                    handleSignIn(provider)
+                    handleGoogleSignIn(provider)
                   }}
                 >
                   <Image

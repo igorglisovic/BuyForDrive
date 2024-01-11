@@ -6,7 +6,11 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ['lh3.googleusercontent.com', 'res.cloudinary.com'],
+    domains: [
+      'lh3.googleusercontent.com',
+      'res.cloudinary.com',
+      'static.vecteezy.com',
+    ],
   },
   webpack(config) {
     config.experiments = {

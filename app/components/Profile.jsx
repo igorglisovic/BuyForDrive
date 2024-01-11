@@ -7,6 +7,7 @@ import Image from 'next/image'
 import SmallCard from './cards/SmallCard'
 import SmallCardLoad from './cards/SmallCardLoad'
 import LoadingSpinner from './ui/LoadingSpinner'
+import Link from 'next/link'
 
 const loadCarsArray = [1, 2, 3, 4, 5, 6, 7]
 
@@ -60,6 +61,23 @@ const Profile = ({
         <h2 className="md:text-3xl text-2xl font-semibold text-left capitalize">
           {handleEdit && handleDelete ? 'My Cars' : `${name} Cars`}
         </h2>
+        {!loading && !data.length && name === 'My' ? (
+          <>
+            <p>You don't have any cars yet.</p>
+            <Link href="/sellacar">
+              <button className="self-end py-1.5 px-8 rounded-3xl bg-gray-300 font-semibold ">
+                Sell a car
+              </button>
+            </Link>
+          </>
+        ) : (
+          ''
+        )}
+        {!loading && !data.length && name !== 'My' ? (
+          <p>{name} doens't has any cars yet.</p>
+        ) : (
+          ''
+        )}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-3 gap-3 md:gap-3.5">
           {!loading &&
             data?.map(car => (

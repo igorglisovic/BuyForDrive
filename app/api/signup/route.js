@@ -25,7 +25,7 @@ export const POST = async req => {
       username,
       email,
       image:
-        'https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png',
+        'https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg',
       password: hashedPassword,
     })
 

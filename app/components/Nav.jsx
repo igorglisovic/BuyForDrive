@@ -26,6 +26,7 @@ const Nav = () => {
   const profileImgRef = useRef()
 
   const { data: session, status } = useSession()
+  console.log(session?.user)
   const { headerInView, updateHeaderInView } = usePostCarContext()
   const { isFilterMenuOpen } = useSearchContext()
 

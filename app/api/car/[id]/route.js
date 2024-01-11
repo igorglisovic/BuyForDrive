@@ -218,7 +218,6 @@ export const PATCH = async (req, { params }) => {
     // if (existingCarInitialVersion !== existingCar) {
     await existingCar.save()
     // }
-    console.log('images ', images)
 
     return new Response(JSON.stringify(existingCar), { status: 200 })
   } catch (error) {
