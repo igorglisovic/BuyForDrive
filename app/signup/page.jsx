@@ -4,11 +4,10 @@ import Container from '@app/components/Container'
 import Image from 'next/image'
 import GoogleImage from '@public/assets/google.png'
 import { useRouter } from 'next/navigation'
-import { signIn, getProviders, useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
 const SignUp = () => {
-  const [providers, setProviders] = useState()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState({
     email: '',
@@ -19,26 +18,11 @@ const SignUp = () => {
   const { data: session } = useSession()
   const router = useRouter()
 
-  const handleSignIn = provider => {
-    signIn(provider.id, {
-      callbackUrl: `/`,
-    })
-  }
-
   useEffect(() => {
     if (session?.user) {
       router.replace('/')
     }
   }, [session])
-
-  useEffect(() => {
-    const getAuthProviders = async () => {
-      const res = await getProviders()
-
-      setProviders(res)
-    }
-    getAuthProviders()
-  }, [])
 
   const handleSignup = async () => {
     try {
@@ -90,14 +74,15 @@ const SignUp = () => {
               />
               <input
                 className="input-full"
-                type="text"
+                type="password"
                 placeholder="Password"
                 onChange={e => setUser({ ...user, password: e.target.value })}
               />
               <input
                 className="input-full"
-                type="text"
+                type="password"
                 placeholder="Confirm password"
+                onChange={e => setUser({ ...user, password: e.target.value })}
               />
             </div>
             <button
@@ -111,23 +96,17 @@ const SignUp = () => {
               <span className="text-sm">or</span>
               <div className="h-[1px] w-full bg-[#ddd]"></div>
             </div>
-            {providers &&
-              Object.values(providers).map(provider => (
-                <button
-                  key={provider.name}
-                  className="flex justify-center gap-2 items-center border-[#ddd] border-[1px] text-[#525252] py-2 rounded-full text-sm font-medium"
-                  onClick={() => {
-                    handleSignIn(provider)
-                  }}
-                >
-                  <Image
-                    className="max-w-[1rem]"
-                    src={GoogleImage}
-                    alt="google"
-                  />
-                  Sign in with {provider.name}
-                </button>
-              ))}
+            <button
+              className="flex justify-center gap-2 items-center border-[#ddd] border-[1px] text-[#525252] py-2 rounded-full text-sm font-medium"
+              onClick={() => {
+                signIn('google', {
+                  callbackUrl: `/`,
+                })
+              }}
+            >
+              <Image className="max-w-[1rem]" src={GoogleImage} alt="google" />
+              Sign in with Google
+            </button>
           </form>
         </div>
       </Container>

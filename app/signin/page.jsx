@@ -4,12 +4,11 @@ import Container from '@app/components/Container'
 import Image from 'next/image'
 import GoogleImage from '@public/assets/google.png'
 import { useRouter } from 'next/navigation'
-import { signIn, getProviders, useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 const SignIn = () => {
-  const [providers, setProviders] = useState()
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -18,12 +17,6 @@ const SignIn = () => {
 
   const { data: session } = useSession()
   const router = useRouter()
-
-  const handleGoogleSignIn = provider => {
-    signIn(provider.id, {
-      callbackUrl: `/`,
-    })
-  }
 
   const handleSignIn = async () => {
     // try {
@@ -68,15 +61,6 @@ const SignIn = () => {
     }
   }, [session])
 
-  useEffect(() => {
-    const getAuthProviders = async () => {
-      const res = await getProviders()
-
-      setProviders(res)
-    }
-    getAuthProviders()
-  }, [])
-
   return (
     <div className="py-10">
       <Container>
@@ -119,23 +103,17 @@ const SignIn = () => {
               <span className="text-sm">or</span>
               <div className="h-[1px] w-full bg-[#ddd]"></div>
             </div>
-            {providers &&
-              Object.values(providers).map(provider => (
-                <button
-                  key={provider.name}
-                  className="flex justify-center gap-2 items-center border-[#ddd] border-[1px] text-[#525252] py-2 rounded-full text-sm font-medium"
-                  onClick={() => {
-                    handleGoogleSignIn(provider)
-                  }}
-                >
-                  <Image
-                    className="max-w-[1rem]"
-                    src={GoogleImage}
-                    alt="google"
-                  />
-                  Sign in with {provider.name}
-                </button>
-              ))}
+            <button
+              className="flex justify-center gap-2 items-center border-[#ddd] border-[1px] text-[#525252] py-2 rounded-full text-sm font-medium"
+              onClick={() => {
+                signIn('google', {
+                  callbackUrl: `/`,
+                })
+              }}
+            >
+              <Image className="max-w-[1rem]" src={GoogleImage} alt="google" />
+              Sign in with Google
+            </button>
           </form>
           <p className="text-gray-500">
             New to SellCars?{' '}
