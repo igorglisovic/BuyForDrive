@@ -9,6 +9,12 @@ import { useEffect, useState } from 'react'
 
 const SignUp = () => {
   const [providers, setProviders] = useState()
+  const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+    username: '',
+  })
 
   const { data: session } = useSession()
   const router = useRouter()
@@ -34,6 +40,27 @@ const SignUp = () => {
     getAuthProviders()
   }, [])
 
+  const handleSignup = async () => {
+    try {
+      setLoading(true)
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      })
+
+      if (res.ok) {
+        router.push('/signin')
+      }
+    } catch (error) {
+      console.log('Signup failed', error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="py-12">
       <Container>
@@ -53,12 +80,19 @@ const SignUp = () => {
                 className="input-full"
                 type="text"
                 placeholder="Username"
+                onChange={e => setUser({ ...user, username: e.target.value })}
               />
-              <input className="input-full" type="text" placeholder="Email" />
+              <input
+                className="input-full"
+                type="text"
+                placeholder="Email"
+                onChange={e => setUser({ ...user, email: e.target.value })}
+              />
               <input
                 className="input-full"
                 type="text"
                 placeholder="Password"
+                onChange={e => setUser({ ...user, password: e.target.value })}
               />
               <input
                 className="input-full"
@@ -66,7 +100,10 @@ const SignUp = () => {
                 placeholder="Confirm password"
               />
             </div>
-            <button className="bg-[#8D8D8D] text-white py-2 rounded-full text-sm font-medium">
+            <button
+              onClick={handleSignup}
+              className="bg-[#8D8D8D] text-white py-2 rounded-full text-sm font-medium"
+            >
               Sign up
             </button>
             <div className="flex gap-2.5 items-center">

@@ -40,8 +40,8 @@ const PostACarFinish = ({ car }) => {
 
     if (pricingDetails.description && !isLoadingBarIncreased) {
       increaseLoadingBar(5)
-      setIsLoadingBarIncreased(true)
       setIsLoadingBarDecreased(false)
+      setIsLoadingBarIncreased(true)
     }
 
     if (!pricingDetails.description && !isLoadingBarDecreased) {

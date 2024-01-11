@@ -17,6 +17,9 @@ const UserSchema = new Schema({
   image: {
     type: String,
   },
+  password: {
+    type: String,
+  },
 })
 
 export const User = models.User || model('User', UserSchema)

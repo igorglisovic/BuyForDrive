@@ -90,7 +90,7 @@ const Nav = () => {
     >
       <Container>
         <nav
-          className={`nav flex items-center justify-between max-h-[64px] font-medium sm:py-3 ${
+          className={`nav flex items-center justify-between h-[64px] font-medium sm:py-3 ${
             session?.user ? 'py-3' : 'py-5'
           }`}
         >
