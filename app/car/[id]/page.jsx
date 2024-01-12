@@ -132,7 +132,7 @@ const CarPage = ({ params }) => {
               </div>
             </aside>
             <div className="flex flex-col col-span-2">
-              {otherCars.length ? (
+              {otherCars?.length ? (
                 <CarsSlider
                   cars={otherCars}
                   title="Other cars from this seller"
@@ -141,7 +141,7 @@ const CarPage = ({ params }) => {
                 ' '
               )}
             </div>
-            {similarCars.length ? (
+            {similarCars?.length ? (
               <div className="flex flex-col col-span-2">
                 <CarsSlider cars={similarCars} title="Similar cars" />
               </div>

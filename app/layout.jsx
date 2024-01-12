@@ -8,6 +8,7 @@ import { FiltersContextProvider } from './store/filters'
 import { PostCarContextProvider } from './store/post-car'
 import { SearchContextProvider } from './store/search-car'
 import Footer from './components/Footer'
+import CookieConsent from './components/CookieConsent'
 
 export const metadata = {
   title: 'Create Next App',
@@ -17,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning={true}>
         <PostCarContextProvider>
           <LoadingBarProvider>
             <SearchContextProvider>
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
                     {children}
                   </main>
                   <Footer />
+                  <CookieConsent />
                 </Provider>
               </FiltersContextProvider>
             </SearchContextProvider>

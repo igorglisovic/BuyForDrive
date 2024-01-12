@@ -188,7 +188,7 @@ const SearchedCars = ({
             subHeaderInView={subHeaderInView}
           />
           <div className="flex flex-1 flex-grow-[3] flex-col gap-6">
-            <div className="flex justify-between mt-6">
+            <div className="flex justify-between mt-3">
               <div className="md-plus:flex md-plus:visible hidden invisible gap-2 flex-wrap">
                 {filtersArray?.map((filter, i) => {
                   if (filter._id) {

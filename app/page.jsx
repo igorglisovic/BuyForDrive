@@ -11,11 +11,15 @@ import { useFiltersContext } from './store/filters'
 import { useEffect } from 'react'
 import PopularBrands from './components/PopularBrands'
 import FAQ from './components/FAQ'
+import CookieConsent from './components/CookieConsent'
+import { useCookies } from 'react-cookie'
 
 // FontAwesome Icons
 config.autoAddCss = false
 
 const Home = () => {
+  // const [cookies] = useCookies(['cookieConsent'])
+
   const { resetStates: resetSearchStates } = useSearchContext()
   const { resetStates: resetPostCarStates } = usePostCarContext()
   const { resetStates: resetFiltersStates } = useFiltersContext()
@@ -32,6 +36,7 @@ const Home = () => {
       <RandomCars />
       <PopularBrands />
       <FAQ />
+      {/* {!cookies.cookieConsent && <CookieConsent />} */}
     </>
   )
 }
