@@ -15,7 +15,6 @@ import Link from 'next/link'
 import moment from 'moment/moment'
 import { useRouter } from 'next/navigation'
 import LoadingSpinner from '@app/components/ui/LoadingSpinner'
-import Button from '@app/components/Button'
 
 const CarPage = ({ params }) => {
   const { data, loading } = useFetch(`/api/car/${params.id}`)
@@ -133,16 +132,22 @@ const CarPage = ({ params }) => {
               </div>
             </aside>
             <div className="flex flex-col col-span-2">
-              {otherCars && (
+              {otherCars.length ? (
                 <CarsSlider
                   cars={otherCars}
                   title="Other cars from this seller"
                 />
+              ) : (
+                ' '
               )}
             </div>
-            <div className="flex flex-col col-span-2">
-              <CarsSlider cars={similarCars} title="Similar cars" />
-            </div>
+            {similarCars.length ? (
+              <div className="flex flex-col col-span-2">
+                <CarsSlider cars={similarCars} title="Similar cars" />
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         ) : (
           <div className="h-[700px] mt-10 flex justify-center">
