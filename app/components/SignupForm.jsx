@@ -171,6 +171,7 @@ const Signup = () => {
     password: '',
     confirmPassword: '',
   })
+  const [mainError, setMainError] = useState('')
 
   const router = useRouter()
 
@@ -207,6 +208,13 @@ const Signup = () => {
         },
         body: JSON.stringify(user),
       })
+
+      console.log(res)
+      if (res.status === 409) {
+        setMainError('User with this email already exists!')
+      } else {
+        setMainError('')
+      }
 
       if (res.ok) {
         setSubmitting(false)
@@ -282,6 +290,7 @@ const Signup = () => {
       </div>
       <div className="flex flex-col gap-5">
         <div>
+          <p className="text-sm text-red-500">{mainError}</p>
           <input
             className="input-full"
             type="text"

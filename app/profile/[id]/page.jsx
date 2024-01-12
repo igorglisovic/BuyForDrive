@@ -21,7 +21,7 @@ const page = ({ params }) => {
         <div>
           <Profile
             name={`${userName}'s`}
-            desc={`Welcome to ${userName}'s personalized profile page.`}
+            desc={`Welcome to ${userName}'s personalized profile page!`}
             data={cars}
             loading={loading}
             image={cars && cars[0].creator.image}

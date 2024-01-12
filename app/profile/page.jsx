@@ -51,7 +51,7 @@ const page = () => {
         <div>
           <Profile
             name="My"
-            desc="Welcome to your personalazed profile page"
+            desc="Welcome to your personalazed profile page!"
             data={filteredCars.length ? filteredCars : cars}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
