@@ -322,9 +322,11 @@ const Select = ({
     updateFunction(selectedOption)
   }
 
+  console.log(placeholder)
+
   return (
     <>
-      {!mediaMatches ? (
+      {!mediaMatches || !options?.length ? (
         <div
           className={`flex flex-col md-plus:w-full relative ${
             className ? className : ''
