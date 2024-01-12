@@ -4,6 +4,7 @@ import { useState } from 'react'
 import GoogleImage from '@public/assets/google.png'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 
 const validateUsername = (value, setError) => {
   if (value.length < 4) {
@@ -354,6 +355,7 @@ const Signup = () => {
         <div className="h-[1px] w-full bg-[#ddd]"></div>
       </div>
       <button
+        type="button"
         className="flex justify-center gap-2 items-center border-[#ddd] border-[1px] text-[#525252] py-2 rounded-full text-sm font-medium"
         onClick={() => {
           signIn('google', {

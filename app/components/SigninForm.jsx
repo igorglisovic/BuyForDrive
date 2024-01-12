@@ -81,6 +81,7 @@ const SigninForm = () => {
               </button> */}
       </div>
       <button
+        type="submit"
         disabled={submitting}
         className="bg-[#8D8D8D] disabled:bg-[#adadad] text-white py-2 rounded-full text-sm font-medium"
       >
@@ -92,6 +93,7 @@ const SigninForm = () => {
         <div className="h-[1px] w-full bg-[#ddd]"></div>
       </div>
       <button
+        type="button"
         className="flex justify-center gap-2 items-center border-[#ddd] border-[1px] text-[#525252] py-2 rounded-full text-sm font-medium"
         onClick={() => {
           signIn('google', {
