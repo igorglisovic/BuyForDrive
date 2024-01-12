@@ -16,7 +16,7 @@ const mostWantedModelsArray = [
   },
   {
     label: 'Toyota Supra',
-    link: '/',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a1ee1001e9ff03de18b5&model_id=65a1b6041c19d219a353358d',
   },
   {
     label: 'Audi A7',
@@ -24,7 +24,7 @@ const mostWantedModelsArray = [
   },
   {
     label: 'Volkswagen Arteon',
-    link: '/',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1de&model_id=65a1b6d81c19d219a353358f',
   },
   {
     label: 'Audi A6',
@@ -40,23 +40,23 @@ const mostWantedModelsArray = [
   },
   {
     label: 'Porsche 911',
-    link: '/',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e5&model_id=65a1b4191c19d219a353356a',
   },
   {
     label: 'Volkswagen Golf 6',
-    link: '/',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1de&model_id=65a1b6d81c19d219a3533596',
   },
   {
-    label: 'Mercedes Benz C63',
-    link: '/',
+    label: 'MB G Class',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a1ee1001e9ff03de18b0&model_id=656ae546b31933d23e020e06',
   },
   {
     label: 'Nissan GTR',
-    link: '/',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a1ee1001e9ff03de18b2&model_id=656ae878b31933d23e020e23',
   },
   {
     label: 'Skoda Octavia',
-    link: '/',
+    link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a1ee1001e9ff03de18b6&model_id=65a1b5251c19d219a3533580',
   },
 ]
 

@@ -204,8 +204,6 @@ const Select = ({
   // If select is disabled, restart value to ''
   useEffect(() => {
     if (disabled) {
-      // setValue('')
-      // updateFunction(null)
       setFilteredOptions([])
     }
   }, [disabled])

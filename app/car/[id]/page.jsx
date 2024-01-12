@@ -46,7 +46,6 @@ const CarPage = ({ params }) => {
     const hasConfirmed = confirm('Are you sure you want to delete this car?')
 
     if (hasConfirmed) {
-      console.log(car)
       try {
         const res = await fetch(`/api/car/${car._id.toString()}`, {
           method: 'DELETE',

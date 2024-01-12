@@ -9,7 +9,6 @@ export const POST = async req => {
     await connectToDB()
 
     const userExist = await User.findOne({ email })
-    // console.log(username, email, password, userExist)
 
     if (userExist) {
       return new Response('User with this email already exists.', {

@@ -18,12 +18,10 @@ const handler = NextAuth({
         // Add logic here to look up the user from the credentials supplied
         const { email, password } = credentials
 
-        // console.log(email, password)
         const user = await User.findOne({ email })
 
         if (user) {
           const validPassword = await bcryptjs.compare(password, user.password)
-          // console.log(validPassword)
 
           if (!validPassword) {
             const error = new Error('Email or password are not correct!')
@@ -49,14 +47,11 @@ const handler = NextAuth({
     async session({ session }) {
       const sessionUser = await User.findOne({ email: session.user.email })
 
-      // console.log('sessionUser ', session)
-
       session.user.id = sessionUser._id.toString()
 
       return session
     },
     async signIn({ profile, credentials }) {
-      // console.log(profile, credentials)
       try {
         await connectToDB()
 

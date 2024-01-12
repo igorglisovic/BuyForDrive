@@ -18,7 +18,6 @@ const CarsSlider = ({ title, cars }) => {
     if (media.matches) {
       setMediaMatches(true)
     } else {
-      // setMediaMatches(true)
       setMediaMatches(false)
     }
   }
@@ -33,7 +32,6 @@ const CarsSlider = ({ title, cars }) => {
       <div className="min-w-full">
         <div className="keen-slider">
           <Swiper
-            // loop={true}
             spaceBetween={10}
             slidesPerView={mediaMatches ? 2 : 4}
             modules={[Navigation, Thumbs]}

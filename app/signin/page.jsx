@@ -2,7 +2,7 @@
 
 import Container from '@app/components/Container'
 import { useRouter } from 'next/navigation'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import Link from 'next/link'
 import SigninForm from '@app/components/SigninForm'

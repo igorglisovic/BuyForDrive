@@ -1,11 +1,12 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import LoadingBar from '@app/components/LoadingBar'
 import Container from '@app/components/Container'
 import { usePostCarContext } from '@app/store/post-car'
 import CarForm from '@app/components/CarForm'
 import useFetch from '@app/hooks/useFetch'
+import { useSession } from 'next-auth/react'
 
 const EditCar = () => {
   const searchParams = useSearchParams()
@@ -14,6 +15,16 @@ const EditCar = () => {
   const { headerInView } = usePostCarContext()
 
   let { data: car, loading } = useFetch(`api/car/${carId}`, [carId], carId)
+
+  const { data: session, status } = useSession()
+  const router = useRouter()
+
+  // Redirect user if not logged in
+  useEffect(() => {
+    if (!session?.user && status === 'unauthenticated') {
+      router.replace('/signin')
+    }
+  }, [session])
 
   return (
     <div>

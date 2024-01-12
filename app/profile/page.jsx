@@ -5,7 +5,7 @@ import Profile from '@app/components/Profile'
 import useFetch from '@app/hooks/useFetch'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const page = () => {
   const [filteredCars, setFilteredCars] = useState([])

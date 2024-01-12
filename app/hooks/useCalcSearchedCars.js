@@ -162,7 +162,6 @@ const useCalcSearchedCars = () => {
           param => !param.startsWith('page=') && !param.startsWith('limit=')
         )
         .join('&')
-      // console.log('first ', apiUrl)
 
       const data = await fetchSearchedCars(urlWithoutPageAndLimit)
 

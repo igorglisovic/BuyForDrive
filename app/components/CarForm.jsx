@@ -17,12 +17,12 @@ const CarForm = ({ type, car, loading }) => {
   const [submitting, setSubmitting] = useState(false)
   const [files, setFiles] = useState([])
 
-  const { basicInfo, modelDetails, pricingDetails, headerInView, resetStates } =
+  const { basicInfo, modelDetails, pricingDetails, resetStates } =
     usePostCarContext()
-  const { setLoadingBar, resetLoadingBar, loadingBar, updateLoadingBar } =
+  const { resetLoadingBar, loadingBar, updateLoadingBar } =
     useLoadingBarContext()
 
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const router = useRouter()
 
   useEffect(() => {
@@ -30,13 +30,6 @@ const CarForm = ({ type, car, loading }) => {
       setFiles(car.images)
     }
   }, [car])
-
-  // Redirect user if not logged in
-  useEffect(() => {
-    if (!session?.user && status === 'unauthenticated') {
-      // router.replace('/signin')
-    }
-  }, [session])
 
   useEffect(() => {
     if (files.length) {

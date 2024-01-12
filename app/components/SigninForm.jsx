@@ -27,8 +27,6 @@ const SigninForm = () => {
 
     const login = await signIn('credentials', loginData)
 
-    console.log(login)
-
     if (login.error) {
       setError(login.error)
     } else {

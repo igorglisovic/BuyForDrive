@@ -6,8 +6,6 @@ export const GET = async (req, { params }) => {
   const limit = 15
   const pipeline = []
 
-  // console.log('params.page ', params.page)
-
   try {
     await connectToDB()
 
@@ -48,13 +46,6 @@ export const GET = async (req, { params }) => {
       }
     )
 
-    // const skip = (+page - 1) * +limit
-
-    // pipeline.push({
-    //   $skip: +skip,
-    // })
-
-    // pipeline.push({ $limit: +limit })
     pipeline.push({ $sample: { size: +limit } })
 
     const cars = await Car.aggregate(pipeline)

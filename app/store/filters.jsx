@@ -90,19 +90,14 @@ export const FiltersContextProvider = ({ children }) => {
     addFromToFilter(filterPriceFrom, filterPriceTo, 'Price', 'price')
     addFromToFilter(filterPowerFrom, filterPowerTo, 'Power', 'power')
 
-    console.log('farray ', uniqueFilters)
-
     // Convert from JSON back to set
     let formattedSet = [...uniqueFilters].map(item => {
       if (typeof item === 'string') return JSON.parse(item)
       else if (typeof item === 'object') return item
     })
 
-    console.log('farray update ', formattedSet)
     // Convert the Set back to an array and update filtersArray.
     setFiltersArray(Array.from(formattedSet))
-
-    console.log('filterYearFrom ', filterMileageFrom)
   }, [
     filterBrand,
     filterModel,

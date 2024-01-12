@@ -216,7 +216,11 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
             filter => filter._id === filterModel2?._id
           )
 
-          if (filterModel?._id !== filterModel2?._id && !filtersArrayHasModel) {
+          if (
+            filterModel2 &&
+            filterModel?._id !== filterModel2?._id &&
+            !filtersArrayHasModel
+          ) {
             updateFilterModel(filterModel2)
           }
           break

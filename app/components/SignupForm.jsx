@@ -193,11 +193,8 @@ const Signup = () => {
       !isPasswordValid ||
       !isConfirmPasswordValid
     ) {
-      console.log('greska')
       return
     }
-
-    console.log('process')
 
     try {
       setSubmitting(true)
@@ -209,7 +206,6 @@ const Signup = () => {
         body: JSON.stringify(user),
       })
 
-      console.log(res)
       if (res.status === 409) {
         setMainError('User with this email already exists!')
       } else {
