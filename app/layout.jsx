@@ -24,7 +24,9 @@ export default function RootLayout({ children }) {
               <FiltersContextProvider>
                 <Provider>
                   <Nav />
-                  <main className="pt-16">{children}</main>
+                  <main className="pt-16 min-h-[calc(100vh-340px)]">
+                    {children}
+                  </main>
                   <Footer />
                 </Provider>
               </FiltersContextProvider>
