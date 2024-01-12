@@ -26,7 +26,6 @@ const Nav = () => {
   const profileImgRef = useRef()
 
   const { data: session, status } = useSession()
-  console.log(session?.user)
   const { headerInView, updateHeaderInView } = usePostCarContext()
   const { isFilterMenuOpen } = useSearchContext()
 
@@ -188,8 +187,8 @@ const Nav = () => {
                 <Image
                   onClick={handleOpenMenu}
                   className={`w-full rounded-full border-gray-200 border-[1px]`}
-                  width={32}
-                  height={32}
+                  width={100}
+                  height={100}
                   alt="avatar"
                   src={session?.user.image}
                 />

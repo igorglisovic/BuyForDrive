@@ -8,6 +8,8 @@ import SmallCard from './cards/SmallCard'
 import SmallCardLoad from './cards/SmallCardLoad'
 import LoadingSpinner from './ui/LoadingSpinner'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 const loadCarsArray = [1, 2, 3, 4, 5, 6, 7]
 
@@ -22,6 +24,16 @@ const Profile = ({
 }) => {
   const [mediaMatches, setMediaMatches] = useState(false)
   const [media, setMedia] = useState(false)
+
+  const router = useRouter()
+  const { data: session, status } = useSession()
+
+  // Redirect user if not logged in
+  useEffect(() => {
+    if (!session?.user && status === 'unauthenticated') {
+      router.replace('/signin')
+    }
+  }, [session])
 
   useEffect(() => {
     setMedia(window.matchMedia('(max-width: 520px)'))
@@ -46,7 +58,7 @@ const Profile = ({
           width={150}
           height={150}
           alt="avatar"
-          src={image ? image : ''}
+          src={image ? image : null}
         />
         <h1 className="md:text-left text-center mt-4">
           <span className="md:text-4xl text-3xl font-medium capitalize">

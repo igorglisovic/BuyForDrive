@@ -12,12 +12,13 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     CredentialsProvider({
+      id: 'credentials',
+      name: 'Credentials',
       async authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
         const { email, password } = credentials
 
         console.log(email, password)
-
         const user = await User.findOne({ email })
 
         if (user) {
@@ -25,15 +26,21 @@ const handler = NextAuth({
           console.log(validPassword)
 
           if (!validPassword) {
-            return new Response({ error: 'Invalid password' }, { status: 400 })
+            const error = new Error('Email or password are not correct!')
+            error.code = 400
+            throw error
           }
 
           return {
             id: user._id,
-            email: user.email,
+            email: email,
             name: user.username,
             image: user.image,
           }
+        } else {
+          const error = new Error('Email or password are not correct!')
+          error.code = 400
+          throw error
         }
       },
     }),
