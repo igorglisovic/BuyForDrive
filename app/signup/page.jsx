@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import SignupForm from '@app/components/SignupForm'
+import Link from 'next/link'
 
 const SignUp = () => {
   const { data: session } = useSession()
@@ -21,6 +22,12 @@ const SignUp = () => {
       <Container>
         <div className="flex flex-col items-center gap-4">
           <SignupForm />
+          <p className="text-gray-500">
+            Already has an account?{' '}
+            <Link className="text-black ml-1" href="/signin">
+              Sign in!
+            </Link>
+          </p>
         </div>
       </Container>
     </div>

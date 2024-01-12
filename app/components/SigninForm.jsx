@@ -29,16 +29,13 @@ const SigninForm = () => {
 
     console.log(login)
 
-    if (login.error === 'Email or password are not correct!') {
+    if (login.error) {
       setError(login.error)
     } else {
       setError('')
     }
 
-    if (login.ok && login.error !== 'Email or password are not correct!') {
-      console.log('radi')
-      setSubmitting(false)
-    } else {
+    if (login.ok) {
       setSubmitting(false)
     }
   }

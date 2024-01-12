@@ -53,13 +53,15 @@ const Profile = ({
   return (
     <section className="w-full">
       <div className="bg-white py-5 px-6 shadow-md rounded-[33px]">
-        <Image
-          className={`rounded-full md:m-0 m-auto md:w-[150px] md:h-[150px] w-[120px] h-[120px]`}
-          width={150}
-          height={150}
-          alt="avatar"
-          src={image ? image : null}
-        />
+        {image && (
+          <Image
+            className={`rounded-full md:m-0 m-auto md:w-[150px] md:h-[150px] w-[120px] h-[120px]`}
+            width={150}
+            height={150}
+            alt="avatar"
+            src={image ? image : null}
+          />
+        )}
         <h1 className="md:text-left text-center mt-4">
           <span className="md:text-4xl text-3xl font-medium capitalize">
             {name} Profile
