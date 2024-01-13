@@ -85,7 +85,7 @@ const Nav = () => {
     <header
       ref={ref}
       className={`bg-white shadow-md absolute top-0 left-0 w-full ${
-        isFilterMenuOpen && 'z-[-1]'
+        isFilterMenuOpen && '-z-10'
       }`}
     >
       <Container>

@@ -59,7 +59,7 @@ const Radio = ({
               {option.label}
             </label>
             <input
-              className="opacity-0 absolute z-[-1]"
+              className="opacity-0 absolute -z-10"
               name={name}
               id={option._id}
               type="radio"

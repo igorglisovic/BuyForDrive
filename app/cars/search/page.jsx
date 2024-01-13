@@ -83,7 +83,7 @@ const page = ({ searchParams }) => {
       <section
         ref={ref}
         className={`bg-hero-pattern pb-2 shadow-lg ${
-          isFilterMenuOpen && 'overflow-hidden fixed z-[-1]'
+          isFilterMenuOpen && 'overflow-hidden fixed -z-10'
         }`}
       >
         <Container>

@@ -22,7 +22,7 @@ const CookieConsent = () => {
     <></>
   ) : (
     <section
-      className="fixed bottom-0 left-0 z-[99999999999999999999999999999] bg-white flex justify-between items-center sm:flex-row flex-col sm:text-left text-left sm:gap-3 px-4 gap-5 lg:px-28 md:px-16 sm:px-5 sm:py-5 py-6 w-full"
+      className="fixed bottom-0 left-0 z-50 bg-white flex justify-between items-center sm:flex-row flex-col sm:text-left text-left sm:gap-3 px-4 gap-5 lg:px-28 md:px-16 sm:px-5 sm:py-5 py-6 w-full"
       style={{ boxShadow: '0px 3px 8px 0 rgba(0,0,0,0.3)' }}
     >
       <p>

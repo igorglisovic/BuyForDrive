@@ -128,7 +128,7 @@ const PostACarModel = ({ setGoToFinish, type, car }) => {
             <Image alt="car interior" src={steeringLeft} />
           </label>
           <input
-            className="opacity-0 absolute z-[-1]"
+            className="opacity-0 absolute -z-10"
             name="steering-side"
             id="steering-left"
             type="radio"
@@ -145,7 +145,7 @@ const PostACarModel = ({ setGoToFinish, type, car }) => {
             <Image alt="car interior" src={steeringRight} />
           </label>
           <input
-            className="opacity-0 absolute z-[-1]"
+            className="opacity-0 absolute -z-10"
             name="steering-side"
             id="steering-right"
             type="radio"

@@ -161,7 +161,7 @@ const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
             ref={infoRef}
             className="absolute z-10 bottom-[1.95rem] left-[84%] bg-white shadow-lg py-2 px-3 rounded-md"
           >
-            <div className="absolute top-[92%] left-2 z-[1] border-l-[11px] border-l-transparent border-t-[11px] border-t-white border-r-[10px] border-r-transparent shadow-xs"></div>
+            <div className="absolute top-[92%] left-2 -z-10 border-l-[11px] border-l-transparent border-t-[11px] border-t-white border-r-[10px] border-r-transparent shadow-xs"></div>
             <p className="text-xs font-normal whitespace-nowrap">
               Maximum image size: 1MB
             </p>

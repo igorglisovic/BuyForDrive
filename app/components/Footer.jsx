@@ -82,7 +82,7 @@ const Footer = () => {
     <footer
       ref={ref}
       className={`bg-white py-14 shadow-2xl relative ${
-        isFilterMenuOpen ? 'z-[-1]' : ''
+        isFilterMenuOpen ? '-z-10' : ''
       }`}
     >
       <Container>
