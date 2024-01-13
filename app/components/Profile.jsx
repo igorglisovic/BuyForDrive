@@ -25,7 +25,7 @@ const Profile = ({
 
   // Redirect user if not logged in
   useEffect(() => {
-    if (!session?.user && status === 'unauthenticated') {
+    if (!session?.user && status === 'unauthenticated' && name === 'My') {
       router.replace('/signin')
     }
   }, [session])

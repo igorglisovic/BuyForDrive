@@ -1,15 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true,
     serverComponentsExternalPackages: ['mongoose'],
-    serverActions: true,
   },
   images: {
-    domains: [
-      'lh3.googleusercontent.com',
-      'res.cloudinary.com',
-      'static.vecteezy.com',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'static.vecteezy.com',
+        pathname: '**',
+      },
     ],
   },
   webpack(config) {
