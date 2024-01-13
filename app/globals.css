@@ -81,7 +81,8 @@ option {
 
 @media screen and (max-width: 810px) {
   .open-close[aria-expanded='true'] {
-    @apply flex visible w-screen h-screen top-0 left-0 overflow-y-auto z-[99999999999999999999999999] rounded-none flex-col;
+    @apply flex visible w-screen h-screen top-0 left-0 overflow-y-auto  rounded-none flex-col;
+    z-index: 999999999999999999999999999;
   }
 
   .open-close[aria-expanded='false'] {
