@@ -322,8 +322,6 @@ const Select = ({
     updateFunction(selectedOption)
   }
 
-  console.log(placeholder)
-
   return (
     <>
       {!mediaMatches || !options?.length ? (
