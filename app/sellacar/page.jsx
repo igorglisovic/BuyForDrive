@@ -17,7 +17,7 @@ const SellACar = () => {
   // Redirect user if not logged in
   useEffect(() => {
     if (!session?.user && status === 'unauthenticated') {
-      router.replace('/signin')
+      // router.replace('/signin')
     }
   }, [session])
 
@@ -32,7 +32,7 @@ const SellACar = () => {
         <Container>
           <div className="flex justify-center">
             <div
-              className={`py-8 px-10 bg-white mb-16 rounded-[30px] w-full md:w-[60%] shadow-lg ${
+              className={`py-8 sm:px-10 px-5 bg-white mb-16 rounded-[30px] w-full md:w-[60%] shadow-lg ${
                 !headerInView ? 'mt-28' : 'mt-8'
               }`}
             >
