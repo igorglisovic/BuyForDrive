@@ -17,7 +17,7 @@ const SellACar = () => {
   // Redirect user if not logged in
   useEffect(() => {
     if (!session?.user && status === 'unauthenticated') {
-      // router.replace('/signin')
+      router.replace('/signin')
     }
   }, [session])
 
