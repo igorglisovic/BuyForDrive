@@ -7,6 +7,7 @@ import { usePostCarContext } from '@app/store/post-car'
 import CarForm from '@app/components/CarForm'
 import useFetch from '@app/hooks/useFetch'
 import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
 
 const EditCar = () => {
   const searchParams = useSearchParams()
