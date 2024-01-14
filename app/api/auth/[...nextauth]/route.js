@@ -51,34 +51,34 @@ const handler = NextAuth({
 
       return session
     },
-    async signIn({ profile, credentials }) {
-      try {
-        await connectToDB()
+    // async signIn({ profile, credentials }) {
+    //   try {
+    //     await connectToDB()
 
-        let userExist
+    //     let userExist
 
-        if (profile) {
-          userExist = await User.findOne({ email: profile.email })
-        }
+    //     if (profile) {
+    //       userExist = await User.findOne({ email: profile.email })
+    //     }
 
-        if (credentials) {
-          userExist = await User.findOne({ email: credentials.email })
-        }
+    //     if (credentials) {
+    //       userExist = await User.findOne({ email: credentials.email })
+    //     }
 
-        if (!userExist && profile) {
-          await User.create({
-            username: profile.name.replace(' ', '').toLowerCase(),
-            email: profile.email,
-            image: profile.picture,
-          })
-        }
+    //     if (!userExist && profile) {
+    //       await User.create({
+    //         username: profile.name.replace(' ', '').toLowerCase(),
+    //         email: profile.email,
+    //         image: profile.picture,
+    //       })
+    //     }
 
-        return true
-      } catch (error) {
-        console.log(error)
-        return false
-      }
-    },
+    //     return true
+    //   } catch (error) {
+    //     console.log(error)
+    //     return false
+    //   }
+    // },
   },
 })
 
