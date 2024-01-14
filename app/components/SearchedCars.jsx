@@ -136,6 +136,7 @@ const SearchedCars = ({
         <Container>
           <div className="flex gap-4 justify-between items-center py-2 px-2 bg-white rounded-xl">
             <button
+              aria-label="Open filters"
               onClick={() => {
                 updateIsFilterMenuOpen(true)
               }}
@@ -264,7 +265,10 @@ const SearchedCars = ({
                   looking for.
                 </h3>
                 <Link href="/sellacar">
-                  <button className="self-end py-1.5 px-8 rounded-3xl bg-gray-300 font-semibold ">
+                  <button
+                    aria-label="Sell a car"
+                    className="self-end py-1.5 px-8 rounded-3xl bg-gray-300 font-semibold "
+                  >
                     Sell a car
                   </button>
                 </Link>
@@ -277,6 +281,7 @@ const SearchedCars = ({
                     <>
                       <li>
                         <button
+                          aria-label="Previous page"
                           className="flex items-center"
                           onClick={handlePrevPage}
                         >
@@ -336,6 +341,7 @@ const SearchedCars = ({
                     return (
                       <li key={page.title}>
                         <button
+                          aria-label={`Page ${page.title}`}
                           className={`${
                             page.active
                               ? 'shadow-md cursor-default'
@@ -361,6 +367,7 @@ const SearchedCars = ({
                           )}
                         <li>
                           <button
+                            aria-label="Next page"
                             className="flex items-center"
                             onClick={handleNextPage}
                           >

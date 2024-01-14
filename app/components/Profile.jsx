@@ -74,7 +74,10 @@ const Profile = ({
           <>
             <p>You don't have any cars yet.</p>
             <Link href="/sellacar">
-              <button className="self-end py-1.5 px-8 rounded-3xl bg-gray-300 font-semibold ">
+              <button
+                aria-label="Sell a car"
+                className="self-end py-1.5 px-8 rounded-3xl bg-gray-300 font-semibold "
+              >
                 Sell a car
               </button>
             </Link>

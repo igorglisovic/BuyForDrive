@@ -36,6 +36,7 @@ const RandomCars = () => {
         {cars && (
           <div className="flex justify-center pt-4 gap-7">
             <button
+              aria-label="Slide left"
               onClick={() => {
                 setPage(prev => (prev === 2 ? prev - 1 : prev + 1))
               }}
@@ -44,6 +45,7 @@ const RandomCars = () => {
               <FontAwesomeIcon className="text-4xl" icon={faAngleLeft} />
             </button>
             <button
+              aria-label="Slide right"
               onClick={() => {
                 setPage(prev => (prev === 2 ? prev - 1 : prev + 1))
               }}

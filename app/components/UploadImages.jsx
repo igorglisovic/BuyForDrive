@@ -216,6 +216,7 @@ const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
                 className="h-full w-full rounded-md object-contain"
               />
               <button
+                aria-label="Remove file"
                 type="button"
                 className="absolute -right-3 -top-3 flex h-7 w-7 items-center justify-center rounded-full border border-gray-400 transition-colors "
                 onClick={() => removeFile(file.name || file.public_id)}
@@ -244,6 +245,7 @@ const UploadImages = ({ setImagesArray, files, setFiles, carImages }) => {
                 </ul>
               </div>
               <button
+                aria-label="Remove rejected file"
                 type="button"
                 className="mt-1 rounded-md border border-rose-400 px-3 py-1 text-[12px] font-bold uppercase tracking-wider text-stone-500 transition-colors hover:bg-rose-400 hover:text-white"
                 onClick={() => removeRejected(file.name)}

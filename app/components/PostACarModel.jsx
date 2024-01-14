@@ -185,6 +185,7 @@ const PostACarModel = ({ setGoToFinish, type, car }) => {
       />
       {type !== 'edit' && (
         <button
+          aria-label="Go further"
           type="button"
           disabled={
             modelDetails.airConditioning &&

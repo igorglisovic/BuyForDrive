@@ -172,6 +172,7 @@ const CarForm = ({ type, car, loading }) => {
           {goToFinish && <PostACarFinish type={type} />}
           {goFurther && goToFinish && goToBasic && (
             <button
+              aria-label="Post a car"
               disabled={submitting || loadingBar !== 100}
               type="submit"
               className="py-1 px-8 hover:bg-gray-200 disabled:hover:bg-gray-100 rounded-full self-center font-semibold bg-btn-2"
@@ -197,6 +198,7 @@ const CarForm = ({ type, car, loading }) => {
           <PostACarModel car={car} setGoToFinish={setGoToFinish} type={type} />
           <PostACarFinish car={car} type={type} />
           <button
+            aria-label="Edit car"
             disabled={submitting || loadingBar !== 100}
             type="submit"
             className="py-1 px-8 hover:bg-gray-200 disabled:hover:bg-gray-100 rounded-full self-center font-semibold bg-btn-2"

@@ -33,6 +33,7 @@ const CookieConsent = () => {
         </Link>
       </p>
       <button
+        aria-label="Accept cookies"
         className="bg-gray-300 py-1 rounded-full self-center px-5 font-semibold hover:bg-gray-200"
         onClick={giveCookieConsent}
       >

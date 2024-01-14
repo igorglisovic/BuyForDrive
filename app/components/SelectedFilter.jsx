@@ -96,7 +96,11 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
           className={`flex h-fit items-center whitespace-nowrap gap-2 capitalize md-plus:bg-white bg-stone-100 shadow-sm md-plus:max-w-fit py-1 px-4 rounded-full md-plus:hover:text-gray-600`}
         >
           <span className="text-sm">{children}</span>
-          <button className="text-gray-800 text-sm" onClick={handleDelete}>
+          <button
+            aria-label="Remove filter"
+            className="text-gray-800 text-sm"
+            onClick={handleDelete}
+          >
             <FontAwesomeIcon icon={faClose} />
           </button>
         </div>

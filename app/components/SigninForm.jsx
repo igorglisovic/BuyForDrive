@@ -63,6 +63,7 @@ const SigninForm = () => {
             onChange={e => setUser({ ...user, password: e.target.value })}
           />
           <button
+            aria-label="Show/Hide password"
             type="button"
             onClick={() => {
               setShowPassword(prev => !prev)
@@ -76,11 +77,9 @@ const SigninForm = () => {
             )}
           </button>
         </div>
-        {/* <button className="self-start mt-1.5 text-sm">
-                Forgot password?
-              </button> */}
       </div>
       <button
+        aria-label="Sign in"
         type="submit"
         disabled={submitting}
         className="bg-[#8D8D8D] disabled:bg-[#adadad] text-white py-2 rounded-full text-sm font-medium"
@@ -93,6 +92,7 @@ const SigninForm = () => {
         <div className="h-[1px] w-full bg-[#ddd]"></div>
       </div>
       <button
+        aria-label="Sign in with google"
         type="button"
         className="flex justify-center gap-2 items-center border-[#ddd] border-[1px] text-[#525252] py-2 rounded-full text-sm font-medium"
         onClick={() => {

@@ -24,6 +24,7 @@ const BigCardMobile = ({ car, handleEdit, handleDelete }) => {
       {handleDelete && handleEdit && (
         <div className="absolute right-4 bottom-20 flex flex-col gap-1 z-30">
           <Button
+            aria-label="Edit car"
             onClick={handleEdit}
             ref={buttonRef}
             className="!bg-btn-edit !py-1 !pr-3 !pl-10 !text-sm "
@@ -31,6 +32,7 @@ const BigCardMobile = ({ car, handleEdit, handleDelete }) => {
             Edit
           </Button>
           <Button
+            aria-label="Remove car"
             onClick={handleDelete}
             ref={buttonRef2}
             className="!bg-btn-delete !pr-3 !py-1 !pl-11  !text-sm"

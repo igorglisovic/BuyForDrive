@@ -176,6 +176,7 @@ const FAQ = () => {
               key={card.title}
             >
               <button
+                aria-label="Car title"
                 onClick={() => handleClick(i)}
                 className="flex justify-between items-center w-full py-3.5"
               >

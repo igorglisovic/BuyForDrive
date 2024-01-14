@@ -1,7 +1,10 @@
 import React from 'react'
 
 const Button = React.forwardRef(
-  ({ onClick, children, tabIndex, style, className }, ref) => {
+  (
+    { onClick, children, tabIndex, style, className, 'aria-label': ariaLabel },
+    ref
+  ) => {
     return (
       <button
         type="submit"
@@ -10,6 +13,7 @@ const Button = React.forwardRef(
         tabIndex={tabIndex}
         style={style}
         ref={ref}
+        aria-label={ariaLabel}
       >
         {children}
       </button>

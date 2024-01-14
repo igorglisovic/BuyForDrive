@@ -87,6 +87,7 @@ const PostACarBasic = ({ setGoFurther, car, type }) => {
       />
       {type !== 'edit' && (
         <button
+          aria-label="Go further"
           type="button"
           disabled={
             basicInfo.brand &&

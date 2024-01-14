@@ -316,6 +316,7 @@ const Signup = () => {
               onChange={e => handlePasswordChange(e)}
             />
             <button
+              aria-label="Show/Hide password"
               type="button"
               onClick={() => {
                 setShowPassword(prev => !prev)
@@ -343,6 +344,7 @@ const Signup = () => {
         </div>
       </div>
       <button
+        aria-label="Sign up"
         type="submit"
         className="bg-[#8D8D8D] text-white py-2 rounded-full text-sm font-medium disabled:bg-[#adadad]"
         disabled={submitting}
@@ -355,6 +357,7 @@ const Signup = () => {
         <div className="h-[1px] w-full bg-[#ddd]"></div>
       </div>
       <button
+        aria-label="Sign in with google"
         type="button"
         className="flex justify-center gap-2 items-center border-[#ddd] border-[1px] text-[#525252] py-2 rounded-full text-sm font-medium"
         onClick={() => {

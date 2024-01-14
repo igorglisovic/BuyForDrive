@@ -405,6 +405,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
               Filter cars
             </h2>
             <button
+              aria-label="Close filters"
               onClick={() => updateIsFilterMenuOpen(false)}
               className="md-plus:hidden md-plus:invisible flex visible mt-1 text-xl"
             >
@@ -527,7 +528,10 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
                 lastValue={powerTo}
               />
             </div>
-            <Button className="md-plus:!self-start md-plus:mt-2 !self-center">
+            <Button
+              aria-label="Search cars"
+              className="md-plus:!self-start md-plus:mt-2 !self-center"
+            >
               {countOffers && (
                 <CountUp
                   end={countOffers}

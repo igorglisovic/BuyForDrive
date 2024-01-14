@@ -223,6 +223,7 @@ const SearchForm = () => {
           className="sm:flex-1"
         />
         <Button
+          aria-label="Search cars"
           className="hidden invisible md-form:visible md-form:inline-block"
           tabIndex={13}
         >
@@ -237,6 +238,7 @@ const SearchForm = () => {
         </Button>
       </div>
       <Button
+        aria-label="Search cars"
         className="md-form:hidden md-form:invisible col-span-2 justify-self-center"
         tabIndex={13}
       >

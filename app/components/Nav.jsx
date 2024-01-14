@@ -238,6 +238,7 @@ const Nav = () => {
                   </li>
                   <li className={`animation mx-2`}>
                     <button
+                      aria-label="Sign out"
                       onClick={() => {
                         setIsOpened(false)
                         signOut()
