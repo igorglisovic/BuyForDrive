@@ -96,7 +96,7 @@ const Nav = () => {
         >
           <ul className="xs:flex xs:visible hidden invisible justify-center gap-3">
             <li className="flex items-center">
-              <Link href="/">
+              <Link aria-label="Home page" href="/">
                 <FontAwesomeIcon icon={faHouse} width={18} />
               </Link>
             </li>
@@ -114,6 +114,7 @@ const Nav = () => {
                   <ul className="flex flex-col gap-1 capitalize whitespace-nowrap text-sm font-normal">
                     <li className="hover:bg-gray-100 rounded-md">
                       <Link
+                        aria-label="New cars"
                         className="block p-2"
                         href="/cars/search?sort=default_sorting&page=1&limit=10&mileage_from=6561e557b5da05ccfa539bc3_0&mileage_to=6561e557b5da05ccfa539bc3_0"
                       >
@@ -122,6 +123,7 @@ const Nav = () => {
                     </li>
                     <li className="hover:bg-gray-100 rounded-md">
                       <Link
+                        aria-label="Newest offers"
                         className="block p-2"
                         href="/cars/search?sort=latest_offers&page=1&limit=10"
                       >
@@ -130,6 +132,7 @@ const Nav = () => {
                     </li>
                     <li className="hover:bg-gray-100 rounded-md">
                       <Link
+                        aria-label="Used cars under €5000"
                         className="block p-2"
                         href="/cars/search?sort=default_sorting&page=1&limit=10&price_to=654efe97bbdce944b04ad63e_5,000"
                       >
@@ -138,6 +141,7 @@ const Nav = () => {
                     </li>
                     <li className="hover:bg-gray-100 rounded-md">
                       <Link
+                        aria-label="Used cars under 200,000km"
                         className="block p-2"
                         href="/cars/search?sort=default_sorting&page=1&limit=10&mileage_to=654f0537bbdce944b04ad661_200,000"
                       >
@@ -155,12 +159,14 @@ const Nav = () => {
               </span>
             </li> */}
             <li className="cursor-pointer">
-              <Link href="/sellacar">Sell your car</Link>
+              <Link aria-label="Sell your car" href="/sellacar">
+                Sell your car
+              </Link>
             </li>
           </ul>
           <ul className="flex visible xs:hidden xs:invisible items-center justify-center gap-3">
             <li>
-              <Link className="flex visible" href="/">
+              <Link aria-label="Home page" className="flex visible" href="/">
                 <FontAwesomeIcon icon={faHouse} width="20px" />
               </Link>
             </li>
@@ -170,10 +176,14 @@ const Nav = () => {
           ) : !session?.user && status === 'unauthenticated' ? (
             <ul className="flex justify-center gap-3">
               <li>
-                <Link href="/signin">Sign in</Link>
+                <Link aria-label="Sign in" href="/signin">
+                  Sign in
+                </Link>
               </li>
               <li>
-                <Link href="/signup">Join now</Link>
+                <Link aria-label="Sign up" href="/signup">
+                  Join now
+                </Link>
               </li>
             </ul>
           ) : (
@@ -212,6 +222,7 @@ const Nav = () => {
                 <ul className="w-full flex-col text-left">
                   <li className={`animation mx-2`}>
                     <Link
+                      aria-label="Your profile"
                       href="/profile"
                       onClick={() => {
                         setIsOpened(false)
@@ -226,6 +237,7 @@ const Nav = () => {
                     className={`animation mx-2 border-b-[1px] border-gray-200`}
                   >
                     <Link
+                      aria-label="Sell a car"
                       href="/sellacar"
                       onClick={() => {
                         setIsOpened(false)

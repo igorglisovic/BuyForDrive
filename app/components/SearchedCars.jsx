@@ -264,7 +264,7 @@ const SearchedCars = ({
                   We advise you to advertise the purchase of the vehicle you are
                   looking for.
                 </h3>
-                <Link href="/sellacar">
+                <Link aria-label="Sell a car" href="/sellacar">
                   <button
                     aria-label="Sell a car"
                     className="self-end py-1.5 px-8 rounded-3xl bg-gray-300 font-semibold "

@@ -30,7 +30,11 @@ const CookieConsent = () => {
       <p>
         We use cookies to enhance your user experience. By using out website,
         you agree to our use of cookies.{' '}
-        <Link href="/privacy-policy" className="underline">
+        <Link
+          aria-label="Learn more"
+          href="/privacy-policy"
+          className="underline"
+        >
           Learn more
         </Link>
       </p>

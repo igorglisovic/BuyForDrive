@@ -102,6 +102,7 @@ const CarPage = ({ params }) => {
                   <>
                     <div className="flex flex-col gap-0 items-center">
                       <Link
+                        aria-label="Edit car"
                         className="underline hover:text-gray-500"
                         href={`/edit-car?id=${car?._id}`}
                       >
@@ -119,7 +120,9 @@ const CarPage = ({ params }) => {
                       aria-label="Check dealer"
                       className="bg-btn-2 hover:bg-gray-200 py-2 px-8 rounded-full font-semibold"
                     >
-                      <Link href="/profile">Check dealer</Link>
+                      <Link aria-label="Check dealer" href="/profile">
+                        Check dealer
+                      </Link>
                     </button>
                   </>
                 )}
@@ -129,6 +132,7 @@ const CarPage = ({ params }) => {
                     className="bg-btn-2 hover:bg-gray-200 py-2 px-8 rounded-full font-semibold"
                   >
                     <Link
+                      aria-label="Check profile"
                       href={`/profile/${car?.creator._id}?name=${car?.creator.username}`}
                     >
                       Check profile

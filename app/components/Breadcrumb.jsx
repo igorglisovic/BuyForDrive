@@ -5,10 +5,13 @@ const Breadcrumb = ({ items = false }) => {
   const pathname = usePathname()
   const breadcrumbString = pathname.split('/').filter(item => item !== '')
 
+  console.log(items)
   return (
     <div className="mt-2 flex gap-1">
       <span className="text-xs">
-        <Link href="/">Home page</Link>
+        <Link aria-label="Home page" href="/">
+          Home page
+        </Link>
       </span>
       <span className="text-xs flex gap-1">
         {!items.length
@@ -23,7 +26,11 @@ const Breadcrumb = ({ items = false }) => {
                 {' '}
                 /
                 {item.link ? (
-                  <Link href={item.link} className="capitalize">
+                  <Link
+                    aria-label={item.label}
+                    href={item.link}
+                    className="capitalize"
+                  >
                     {' '}
                     {item.label}
                   </Link>

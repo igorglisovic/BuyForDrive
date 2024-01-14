@@ -117,7 +117,11 @@ const PopularBrands = () => {
             >
               {BRANDS?.map((brand, index) => (
                 <SwiperSlide key={index}>
-                  <Link href={brand.link} className="hover:saturate-200">
+                  <Link
+                    aria-label={brand.label}
+                    href={brand.link}
+                    className="hover:saturate-200"
+                  >
                     <Image width={198} src={brand.img} alt={brand.label} />
                   </Link>
                 </SwiperSlide>

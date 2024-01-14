@@ -24,7 +24,11 @@ const SignUp = () => {
           <SignupForm />
           <p className="text-gray-500">
             Already has an account?{' '}
-            <Link className="text-black ml-1" href="/signin">
+            <Link
+              aria-label="Sign in"
+              className="text-black ml-1"
+              href="/signin"
+            >
               Sign in!
             </Link>
           </p>

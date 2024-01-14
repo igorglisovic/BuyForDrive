@@ -95,6 +95,7 @@ const Footer = () => {
               {mostWantedModelsArray?.map((item, i) => (
                 <li key={i} className={`${i}`}>
                   <Link
+                    aria-label={item.label}
                     className="bg-gray-200 w-full hover:bg-gray-300 sm:text-base text-[0.9rem] font-medium block text-center py-1.5 rounded-[10px]"
                     href={item.link}
                   >
@@ -111,20 +112,29 @@ const Footer = () => {
                 <ul className="text-base">
                   {session?.user ? (
                     <li>
-                      <Link href="/profile">View profile</Link>
+                      <Link aria-label="View profile" href="/profile">
+                        View profile
+                      </Link>
                     </li>
                   ) : (
                     <>
                       <li>
-                        <Link href="/signin">Sign in</Link>
+                        <Link aria-label="Sign in" href="/signin">
+                          Sign in
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/signup">Join now!</Link>
+                        <Link aria-label="Sign up" href="/signup">
+                          Join now!
+                        </Link>
                       </li>
                     </>
                   )}
                   <li>
-                    <Link href="/terms-and-conditions">
+                    <Link
+                      aria-label="Terms and Conditions"
+                      href="/terms-and-conditions"
+                    >
                       Terms and Conditions
                     </Link>
                   </li>
@@ -134,7 +144,9 @@ const Footer = () => {
                 <h3 className="font-semibold text-lg">Legal</h3>
                 <ul className="text-base">
                   <li>
-                    <Link href="/privacy-policy">Privacy policy</Link>
+                    <Link aria-label="Privacy policy" href="/privacy-policy">
+                      Privacy policy
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -144,12 +156,17 @@ const Footer = () => {
                 <h3 className="font-semibold text-lg">Developed by</h3>
                 <ul className="text-base">
                   <li>
-                    <Link href="https://www.igorglisovic.com" target="blank">
+                    <Link
+                      aria-label="Igor Glisovic portfolio"
+                      href="https://www.igorglisovic.com"
+                      target="blank"
+                    >
                       Igor Glišović
                     </Link>
                   </li>
                   <li className="flex justify-center gap-3 mt-1">
                     <Link
+                      aria-label="Igor Glisovic LinkedIn"
                       href="https://www.linkedin.com/in/igor-glisovic/"
                       target="blank"
                       className="text-2xl"
@@ -157,6 +174,7 @@ const Footer = () => {
                       <FontAwesomeIcon icon={faLinkedin} />
                     </Link>
                     <Link
+                      aria-label="Igor Glisovic GitHub"
                       href="https://github.com/igorglisovic"
                       target="blank"
                       className="text-2xl"
