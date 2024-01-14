@@ -5,7 +5,6 @@ const Breadcrumb = ({ items = false }) => {
   const pathname = usePathname()
   const breadcrumbString = pathname.split('/').filter(item => item !== '')
 
-  console.log(items)
   return (
     <div className="mt-2 flex gap-1">
       <span className="text-xs">
