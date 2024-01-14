@@ -21,14 +21,22 @@ const SmallCard = ({ car }) => {
             src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${car?.images[0]?.version}/${car?.images[0]?.public_id}`}
             width={220}
             height={150}
-            alt=""
+            alt={
+              (car?.brand_id.label || car?.brand.label) +
+              ' ' +
+              (car?.model_id.label || car?.model.label)
+            }
             className="absolute top-0 left-0 w-full h-full object-cover"
           />
         ) : (
           <Image
             src={Car}
             className="absolute top-0 left-0 w-full h-full object-cover"
-            alt=""
+            alt={
+              (car?.brand_id.label || car?.brand.label) +
+              ' ' +
+              (car?.model_id.label || car?.model.label)
+            }
           />
         )}
       </div>

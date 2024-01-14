@@ -41,20 +41,27 @@ const BigCardMobile = ({ car, handleEdit, handleDelete }) => {
       )}
       <div className="flex">
         <div className="flex relative pb-[56.25%] overflow-hidden max-h-[170px] xxs:max-h-[210px] min-h-[85px] min-w-full shadow-md">
-          {/* <Image className="object-cover" src={Car} alt="" /> */}
           {car?.images?.length ? (
             <Image
               src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${car?.images[0]?.version}/${car?.images[0]?.public_id}`}
               width={220}
               height={150}
-              alt=""
+              alt={
+                (car?.brand_id.label || car?.brand.label) +
+                ' ' +
+                (car?.model_id.label || car?.model.label)
+              }
               className="absolute top-0 left-0 w-full h-full object-cover"
             />
           ) : (
             <Image
               src={Car}
               className="absolute top-0 left-0 w-full h-full object-cover"
-              alt=""
+              alt={
+                (car?.brand_id.label || car?.brand.label) +
+                ' ' +
+                (car?.model_id.label || car?.model.label)
+              }
             />
           )}
         </div>

@@ -45,11 +45,23 @@ const BigCard = ({ car, handleEdit, handleDelete }) => {
             src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${car?.images[0]?.version}/${car?.images[0]?.public_id}`}
             width={220}
             height={150}
-            alt=""
+            alt={
+              (car?.brand_id.label || car?.brand.label) +
+              ' ' +
+              (car?.model_id.label || car?.model.label)
+            }
             className="object-cover w-full h-full"
           />
         ) : (
-          <Image src={Car} className="w-full h-full object-cover" alt="" />
+          <Image
+            src={Car}
+            className="w-full h-full object-cover"
+            alt={
+              (car?.brand_id.label || car?.brand.label) +
+              ' ' +
+              (car?.model_id.label || car?.model.label)
+            }
+          />
         )}
       </div>
       <article className="flex flex-1 flex-grow-[1.6] flex-col justify-between bg-white px-6 py-5 ">

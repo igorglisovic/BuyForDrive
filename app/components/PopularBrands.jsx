@@ -27,42 +27,52 @@ const BRANDS = [
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e3',
     img: lambo,
+    label: 'Lamborghini',
   },
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e7',
     img: bmw,
+    label: 'BMW',
   },
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e5',
     img: porsche,
+    label: 'Porsche',
   },
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a08e1001e9ff03de189d',
     img: bentley,
+    label: 'Bentley',
   },
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e4',
     img: ferrari,
+    label: 'Ferrari',
   },
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e8',
     img: audi,
+    label: 'Audi',
   },
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a1ee1001e9ff03de18b0',
     img: mercedes,
+    label: 'Mercedes',
   },
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64f9a0ae1001e9ff03de18a2',
     img: alfa,
+    label: 'Alfa Romeo',
   },
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1de',
     img: volkswagen,
+    label: 'Volkswagen',
   },
   {
     link: '/cars/search?sort=default_sorting&page=1&limit=10&brand_id=64d8c0efd7a49bfd5341e1e0',
     img: peugeot,
+    label: 'Peugeot',
   },
 ]
 
@@ -108,7 +118,7 @@ const PopularBrands = () => {
               {BRANDS?.map((brand, index) => (
                 <SwiperSlide key={index}>
                   <Link href={brand.link} className="hover:saturate-200">
-                    <Image width={198} src={brand.img} alt="" />
+                    <Image width={198} src={brand.img} alt={brand.label} />
                   </Link>
                 </SwiperSlide>
               ))}

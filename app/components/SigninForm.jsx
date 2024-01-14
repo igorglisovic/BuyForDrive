@@ -101,7 +101,7 @@ const SigninForm = () => {
           })
         }}
       >
-        <Image className="max-w-[1rem]" src={GoogleImage} alt="google" />
+        <Image className="max-w-[1rem]" src={GoogleImage} alt="Google logo" />
         Sign in with Google
       </button>
     </form>
