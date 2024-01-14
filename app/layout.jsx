@@ -11,6 +11,9 @@ import CookieConsent from './components/CookieConsent'
 export const metadata = {
   title: 'Cars',
   description: 'Cars',
+  icons: {
+    icon: '/assets/bmw.webp',
+  },
 }
 
 export default function RootLayout({ children }) {

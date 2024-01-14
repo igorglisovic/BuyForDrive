@@ -61,9 +61,9 @@ const handler = NextAuth({
           userExist = await User.findOne({ email: profile.email })
         }
 
-        // if (credentials) {
-        //   userExist = await User.findOne({ email: credentials.email })
-        // }
+        if (credentials) {
+          userExist = await User.findOne({ email: credentials.email })
+        }
 
         if (!userExist && profile) {
           await User.create({
