@@ -11,37 +11,37 @@ const handler = NextAuth({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    CredentialsProvider({
-      id: 'credentials',
-      name: 'Credentials',
-      async authorize(credentials) {
-        // Add logic here to look up the user from the credentials supplied
-        const { email, password } = credentials
+    // CredentialsProvider({
+    //   id: 'credentials',
+    //   name: 'Credentials',
+    //   async authorize(credentials) {
+    //     // Add logic here to look up the user from the credentials supplied
+    //     const { email, password } = credentials
 
-        const user = await User.findOne({ email })
+    //     const user = await User.findOne({ email })
 
-        if (user) {
-          const validPassword = await bcryptjs.compare(password, user.password)
+    //     if (user) {
+    //       const validPassword = await bcryptjs.compare(password, user.password)
 
-          if (!validPassword) {
-            const error = new Error('Email or password are not correct!')
-            error.code = 400
-            throw error
-          }
+    //       if (!validPassword) {
+    //         const error = new Error('Email or password are not correct!')
+    //         error.code = 400
+    //         throw error
+    //       }
 
-          return {
-            id: user._id,
-            email: email,
-            name: user.username,
-            image: user.image,
-          }
-        } else {
-          const error = new Error('Email or password are not correct!')
-          error.code = 400
-          throw error
-        }
-      },
-    }),
+    //       return {
+    //         id: user._id,
+    //         email: email,
+    //         name: user.username,
+    //         image: user.image,
+    //       }
+    //     } else {
+    //       const error = new Error('Email or password are not correct!')
+    //       error.code = 400
+    //       throw error
+    //     }
+    //   },
+    // }),
   ],
   callbacks: {
     async session({ session }) {
@@ -51,34 +51,34 @@ const handler = NextAuth({
 
       return session
     },
-    // async signIn({ profile, credentials }) {
-    //   try {
-    //     await connectToDB()
+    async signIn({ profile, credentials }) {
+      try {
+        await connectToDB()
 
-    //     let userExist
+        let userExist
 
-    //     if (profile) {
-    //       userExist = await User.findOne({ email: profile.email })
-    //     }
+        if (profile) {
+          userExist = await User.findOne({ email: profile.email })
+        }
 
-    //     if (credentials) {
-    //       userExist = await User.findOne({ email: credentials.email })
-    //     }
+        // if (credentials) {
+        //   userExist = await User.findOne({ email: credentials.email })
+        // }
 
-    //     if (!userExist && profile) {
-    //       await User.create({
-    //         username: profile.name.replace(' ', '').toLowerCase(),
-    //         email: profile.email,
-    //         image: profile.picture,
-    //       })
-    //     }
+        if (!userExist && profile) {
+          await User.create({
+            username: profile.name.replace(' ', '').toLowerCase(),
+            email: profile.email,
+            image: profile.picture,
+          })
+        }
 
-    //     return true
-    //   } catch (error) {
-    //     console.log(error)
-    //     return false
-    //   }
-    // },
+        return true
+      } catch (error) {
+        console.log(error)
+        return false
+      }
+    },
   },
 })
 
