@@ -258,7 +258,7 @@ export const GET = async req => {
       case 'latest_offers':
         pipeline.push({
           $sort: {
-            created_at: 1,
+            createdAt: -1,
           },
         })
         break
