@@ -1,8 +1,9 @@
 import { connectToDB } from '@utils/database'
 import { Car } from '@models/car'
 import mongoose from 'mongoose'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export const GET = async (req, { params }) => {
+export const GET = async req => {
   const sorting = req.nextUrl.searchParams.get('sort')
   const brandId =
     req.nextUrl.searchParams.get('brand_id') &&
@@ -59,37 +60,15 @@ export const GET = async (req, { params }) => {
     await connectToDB()
 
     const pipeline = []
-    if (brandId) {
-      pipeline.push({
-        $match: {
-          brand_id: brandId,
-        },
-      })
-    }
 
-    if (modelId) {
-      pipeline.push({
-        $match: {
-          model_id: modelId,
-        },
-      })
-    }
-
-    if (bodyTypeId) {
-      pipeline.push({
-        $match: {
-          body_type_id: bodyTypeId,
-        },
-      })
-    }
-
-    if (fuelTypeId) {
-      pipeline.push({
-        $match: {
-          fuel_type_id: fuelTypeId,
-        },
-      })
-    }
+    pipeline.push({
+      $match: {
+        brand_id: brandId || { $exists: 1 },
+        model_id: modelId || { $exists: 1 },
+        body_type_id: bodyTypeId || { $exists: 1 },
+        fuel_type_id: fuelTypeId || { $exists: 1 },
+      },
+    })
 
     pipeline.push(
       {
