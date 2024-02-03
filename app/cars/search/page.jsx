@@ -54,6 +54,8 @@ const page = ({ searchParams }) => {
   }, [inView])
 
   useEffect(() => {
+    console.log('test3 ', searchParams)
+
     const { url, paramsArray: paramsArrayValue } = makeUrl(
       '/api/searched_cars?',
       searchParams
