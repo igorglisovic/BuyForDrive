@@ -50,6 +50,8 @@ const SearchedCars = ({
   const { sorting, isFilterMenuOpen, updateSorting, updateIsFilterMenuOpen } =
     useSearchContext()
 
+  console.log(sorting)
+
   const handleSortingChange = e => {
     const newSorting = e.target.value
     updateSorting(newSorting)
