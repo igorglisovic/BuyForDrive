@@ -358,7 +358,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
     paramsArray?.forEach(param => {
       if (param.name === 'sort') {
         if (sorting !== param.value) {
-          updateSorting(param.value)
+          // updateSorting(param.value)
           console.log('test2 ', paramsArray, param.name, sorting)
         }
       }
