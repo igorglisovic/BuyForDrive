@@ -9,8 +9,8 @@ import Footer from './components/Footer'
 import CookieConsent from './components/CookieConsent'
 
 export const metadata = {
-  title: 'Cars',
-  description: 'Cars',
+  title: 'BuyForDrive',
+  description: 'BuyForDrive',
   icons: {
     icon: '/assets/bmw.webp',
   },

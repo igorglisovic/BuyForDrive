@@ -151,6 +151,8 @@ const useCalcSearchedCars = () => {
 
     setApiUrl(apiUrlValue)
     setRouteUrl(routeUrlValue)
+
+    console.log(queriesArray)
   }, [queriesArray])
 
   // Count number of searched cars
