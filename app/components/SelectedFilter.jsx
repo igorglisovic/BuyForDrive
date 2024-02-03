@@ -31,7 +31,9 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
         }
 
         if (param.value === filter._id) {
-          const urlParts = url.split('&')
+          const urlParts = url.includes('api')
+            ? url.split('?')[1].split('&')
+            : url.split('&')
 
           let filteredUrlParts
 
@@ -50,14 +52,16 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
 
           // Join the filtered parts back into a single string
           const updatedUrl =
-            '/cars/search?' + filteredUrlParts.join('&').split('?')[1]
+            '/cars/search?' + filteredUrlParts.join('&').split('?')
 
           setIsHidden(true)
           router.push(updatedUrl)
         }
       })
     } else {
-      let urlParts = url.split('&')
+      let urlParts = url.includes('api')
+        ? url.split('?')[1].split('&')
+        : url.split('&')
       let filteredUrlParts
       let indexFromPrevious
 
@@ -81,8 +85,7 @@ const SelectedFilter = ({ paramsArray, filter, url, children }) => {
           // Join the filtered parts back into a single string
         }
       })
-      const updatedUrl =
-        '/cars/search?' + filteredUrlParts.join('&').split('?')[1]
+      const updatedUrl = '/cars/search?' + filteredUrlParts.join('&').split('?')
 
       setIsHidden(true)
       router.push(updatedUrl)
