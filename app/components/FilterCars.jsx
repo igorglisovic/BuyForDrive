@@ -359,6 +359,7 @@ const FilterCars = ({ paramsArray, url, subHeaderInView }) => {
       if (param.name === 'sort') {
         if (sorting !== param.name) {
           updateSorting(param.value)
+          console.log('test2 ', paramsArray, param.value, sorting)
         }
       }
     })
