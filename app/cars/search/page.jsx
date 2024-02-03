@@ -54,8 +54,6 @@ const page = ({ searchParams }) => {
   }, [inView])
 
   useEffect(() => {
-    console.log('test3 ', searchParams)
-
     const { url, paramsArray: paramsArrayValue } = makeUrl(
       '/api/searched_cars?',
       searchParams
@@ -72,6 +70,8 @@ const page = ({ searchParams }) => {
 
     setApiUrl(url)
     setParamsArray(paramsArrayValue)
+
+    console.log('test3 ', searchParams)
   }, [searchParams])
 
   // Fetch cars based on api url every time if url changed
