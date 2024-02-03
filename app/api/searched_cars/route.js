@@ -1,7 +1,6 @@
 import { connectToDB } from '@utils/database'
 import { Car } from '@models/car'
 import mongoose from 'mongoose'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 export const GET = async req => {
   const sorting = req.nextUrl.searchParams.get('sort')
