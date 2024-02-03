@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   experimental: {
     serverComponentsExternalPackages: ['mongoose'],
   },
@@ -23,13 +22,13 @@ const nextConfig = {
       },
     ],
   },
-  // webpack(config) {
-  //   config.experiments = {
-  //     ...config.experiments,
-  //     topLevelAwait: true,
-  //   }
-  //   return config
-  // },
+  webpack(config) {
+    config.experiments = {
+      ...config.experiments,
+      topLevelAwait: true,
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig
