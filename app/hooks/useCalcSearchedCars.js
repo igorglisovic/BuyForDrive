@@ -191,9 +191,7 @@ const useCalcSearchedCars = () => {
   // Count number of all cars
   useEffect(() => {
     const countNumOfAllOffers = async () => {
-      const allCars = await fetchSearchedCars(
-        '/api/searched_cars?sort=default_sorting'
-      )
+      const allCars = await fetchSearchedCars('/api/searched_cars?')
       setCountOffers(allCars?.length)
     }
     if (
@@ -229,6 +227,8 @@ const useCalcSearchedCars = () => {
   // Handle form submition
   const handleSubmit = e => {
     e.preventDefault()
+    console.log('routeUrl ', routeUrl)
+
     router.push(routeUrl)
   }
 
