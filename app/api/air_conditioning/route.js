@@ -7,7 +7,7 @@ export const GET = async req => {
 
     const airConditioning = await AirConditioning.find({}).sort({ label: 1 })
 
-    return new Response(JSON.stringify(airConditioning), { status: 200 })
+    return new Response('', { status: 200 })
   } catch (error) {
     return new Response('Failed to fetch air conditioning', { status: 500 })
   }
