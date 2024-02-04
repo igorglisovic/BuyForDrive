@@ -47,7 +47,7 @@ const CarPage = ({ params }) => {
 
     if (hasConfirmed) {
       try {
-        const res = await fetch(`/api/car/${car._id.toString()}`, {
+        const res = await fetch(`/api/car/${car?._id?.toString()}`, {
           method: 'DELETE',
         })
 

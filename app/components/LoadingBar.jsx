@@ -24,7 +24,7 @@ const LoadingBar = () => {
                 loadingBar === 100 && 'rounded-e-full'
               }`}
               style={{
-                width: `${loadingBar.toString()}%`,
+                width: `${loadingBar?.toString()}%`,
                 transition: 'all 1s',
               }}
             ></div>

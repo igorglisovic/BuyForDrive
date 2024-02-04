@@ -32,7 +32,7 @@ const page = () => {
 
     if (hasConfirmed) {
       try {
-        await fetch(`/api/car/${car._id.toString()}`, {
+        await fetch(`/api/car/${car._id?.toString()}`, {
           method: 'DELETE',
         })
 

@@ -79,7 +79,7 @@ const CarForm = ({ type, car, loading }) => {
         if (file.lastModifiedDate) {
           imagesArray.push({
             public_id: data.public_id,
-            version: data.version.toString(),
+            version: data.version?.toString(),
           })
 
           // write to database using server actions

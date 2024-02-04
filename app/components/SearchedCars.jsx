@@ -24,7 +24,7 @@ const loadCars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 const changePageInUrl = (url, newPage) => {
   const urlSearchParams = new URLSearchParams(url)
   urlSearchParams.set('page', newPage)
-  return `/cars/search?${urlSearchParams.toString()}`
+  return `/cars/search?${urlSearchParams?.toString()}`
 }
 
 const SearchedCars = ({
