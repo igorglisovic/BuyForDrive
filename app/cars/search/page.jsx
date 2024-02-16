@@ -70,8 +70,6 @@ const page = ({ searchParams }) => {
 
     setApiUrl(url)
     setParamsArray(paramsArrayValue)
-
-    console.log('test3 ', searchParams)
   }, [searchParams])
 
   // Fetch cars based on api url every time if url changed
@@ -90,7 +88,15 @@ const page = ({ searchParams }) => {
       >
         <Container>
           <div className="flex flex-col gap-16 justify-between">
-            <Breadcrumb />
+            <Breadcrumb
+              items={[
+                {
+                  label: 'Cars',
+                  link: `/cars/search?sort=default_sorting&page=1&limit=10`,
+                },
+                { label: 'Search' },
+              ]}
+            />
             <p className="self-end font-medium">
               <span className="font-semibold">{countCars?.length}</span> offers
               match your criteria

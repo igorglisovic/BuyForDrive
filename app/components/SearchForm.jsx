@@ -4,8 +4,11 @@ import { useSearchContext } from '@app/store/search-car'
 import useFetch from '@app/hooks/useFetch'
 import useCalcSearchedCars from '@app/hooks/useCalcSearchedCars'
 import CountUp from 'react-countup'
+import { useState } from 'react'
 
 const SearchForm = () => {
+  const [showMore, setShowMore] = useState(false)
+
   const {
     brand,
     model,
@@ -66,9 +69,9 @@ const SearchForm = () => {
     <form
       onKeyDown={handleKeyDown}
       onSubmit={handleSubmit}
-      className="md-form:flex md-form:gap-4 gap-y-4 sm:gap-x-2 gap-x-2 grid grid-cols-2 "
+      className="md-form:flex md-form:gap-4 gap-y-3 sm:gap-x-2 gap-x-2 grid grid-cols-2 "
     >
-      <div className="flex flex-col md-form:gap-7 gap-4 sm:flex-1">
+      <div className="flex flex-col md-form:gap-7 gap-3 sm:flex-1">
         <div className="relative">
           <Select
             placeholder="All brands"
@@ -119,7 +122,7 @@ const SearchForm = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col md-form:gap-7 gap-4 col-start-2 col-end-3 sm:flex-1">
+      <div className="flex flex-col md-form:gap-7 gap-3 col-start-2 col-end-3 sm:flex-1">
         <Select
           placeholder="All models"
           options={models}
@@ -156,8 +159,8 @@ const SearchForm = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-4 col-span-2 sm:hidden sm:invisible">
-        <div className="flex gap-2">
+      <div className="flex flex-col gap-3 col-span-2 sm:hidden sm:invisible">
+        <div className={`gap-2 flex `}>
           <Select
             placeholder="Km from"
             options={mileages}
@@ -175,7 +178,7 @@ const SearchForm = () => {
             lastValue={mileageTo}
           />
         </div>
-        <div className="flex gap-2">
+        <div className={`gap-2 flex`}>
           <Select
             placeholder="Power from"
             options={powers}
@@ -194,8 +197,12 @@ const SearchForm = () => {
           />
         </div>
       </div>
-      <div className="flex md-form:flex-col sm:flex-row flex-col col-start-1 col-end-3 md-form:gap-7 sm:gap-2 gap-4 md-form:flex-1">
-        <div className="flex gap-2 sm:flex-1">
+      <div className="flex md-form:flex-col sm:flex-row flex-col col-start-1 col-end-3 md-form:gap-7 sm:gap-2 gap-3 md-form:flex-1">
+        <div
+          className={`gap-2 sm:flex sm:visible ${
+            showMore ? 'flex visible' : 'hidden invisible'
+          } gap-2 sm:flex-1`}
+        >
           <Select
             placeholder="Price from"
             options={prices}
@@ -213,15 +220,28 @@ const SearchForm = () => {
             lastValue={priceTo}
           />
         </div>
-        <Select
-          placeholder="Fuel types"
-          options={fuelTypes}
-          type="full"
-          updateFunction={updateFuelType}
-          lastValue={fuelType}
-          tabIndex={8}
-          className="sm:flex-1"
-        />
+        <div
+          className={`sm:flex sm:visible ${
+            showMore ? 'flex visible' : 'hidden invisible'
+          }`}
+        >
+          <Select
+            placeholder="Fuel types"
+            options={fuelTypes}
+            type="full"
+            updateFunction={updateFuelType}
+            lastValue={fuelType}
+            tabIndex={8}
+            className="sm:flex-1"
+          />
+        </div>
+        <button
+          onClick={() => setShowMore(prev => !prev)}
+          className="sm:hidden sm:invisible flex visible w-fit text-sm self-center"
+          type="button"
+        >
+          {showMore ? 'Show less' : 'Show more'}
+        </button>
         <Button
           aria-label="Search cars"
           className="hidden invisible md-form:visible md-form:inline-block"

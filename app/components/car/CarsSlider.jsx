@@ -37,6 +37,7 @@ const CarsSlider = ({ title, cars }) => {
             modules={[Navigation, Thumbs]}
             className="product-images-slider-thumbs"
             navigation
+            loop={true}
           >
             {cars?.map((car, index) => (
               <SwiperSlide key={index}>

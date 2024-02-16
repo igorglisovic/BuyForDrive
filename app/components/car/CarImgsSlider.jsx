@@ -31,6 +31,7 @@ const CarSlider = ({ car }) => {
             thumbs={{ swiper: activeThumb }}
             className="product-images-slider"
             initialSlide={0}
+            loop={true}
           >
             {car?.images.map((image, index) => (
               <SwiperSlide key={index}>

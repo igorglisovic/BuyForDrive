@@ -81,7 +81,7 @@ const PopularBrands = () => {
   const [media, setMedia] = useState(false)
 
   useEffect(() => {
-    setMedia(window.matchMedia('(max-width: 520px)'))
+    setMedia(window.matchMedia('(max-width: 600px)'))
   }, [])
 
   const getMediaMatches = () => {

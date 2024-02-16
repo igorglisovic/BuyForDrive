@@ -39,8 +39,13 @@ const CarPage = ({ params }) => {
     car?.body_type_id
   )
 
-  otherCars = otherCars?.filter(otherCar => otherCar._id !== car._id)
-  similarCars = similarCars?.filter(similarCar => similarCar._id !== car._id)
+  otherCars = otherCars
+    ?.filter(otherCar => otherCar._id !== car._id)
+    .slice(0, 10)
+
+  similarCars = similarCars
+    ?.filter(similarCar => similarCar._id !== car._id)
+    .slice(0, 10)
 
   const handleDelete = async () => {
     const hasConfirmed = confirm('Are you sure you want to delete this car?')

@@ -151,8 +151,6 @@ const useCalcSearchedCars = () => {
 
     setApiUrl(apiUrlValue)
     setRouteUrl(routeUrlValue)
-
-    console.log(queriesArray)
   }, [queriesArray])
 
   // Count number of searched cars
@@ -227,7 +225,6 @@ const useCalcSearchedCars = () => {
   // Handle form submition
   const handleSubmit = e => {
     e.preventDefault()
-    console.log('routeUrl ', routeUrl)
 
     router.push(routeUrl)
   }
