@@ -190,7 +190,7 @@ const useCalcSearchedCars = () => {
   useEffect(() => {
     const countNumOfAllOffers = async () => {
       const allCars = await fetchSearchedCars('/api/searched_cars?')
-      console.log(allCars)
+
       setCountOffers(allCars?.length)
     }
     if (
