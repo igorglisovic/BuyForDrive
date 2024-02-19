@@ -2,9 +2,8 @@
 
 import Breadcrumb from '@app/components/Breadcrumb'
 import Container from '@app/components/Container'
-import React from 'react'
 
-const page = () => {
+const PrivacyPolicy = () => {
   return (
     <>
       <Container>
@@ -95,4 +94,4 @@ const page = () => {
   )
 }
 
-export default page
+export default PrivacyPolicy

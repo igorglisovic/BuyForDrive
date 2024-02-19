@@ -156,6 +156,8 @@ const validateConfirmPassword = (value, setError, user) => {
   }
 }
 
+const validateTimeout = () => {}
+
 const Signup = () => {
   const [submitting, setSubmitting] = useState(false)
   const [showPassword, setShowPassword] = useState(false)

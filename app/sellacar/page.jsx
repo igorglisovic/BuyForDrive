@@ -10,11 +10,10 @@ import { useEffect } from 'react'
 
 const SellACar = () => {
   const { headerInView, resetStates } = usePostCarContext()
-
   const { data: session, status } = useSession()
+
   const router = useRouter()
 
-  // Redirect user if not logged in
   useEffect(() => {
     if (!session?.user && status === 'unauthenticated') {
       router.replace('/signin')

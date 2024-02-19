@@ -36,9 +36,22 @@ const RandomCars = () => {
     window.addEventListener('resize', getMediaMatches)
   }, [media])
 
+  const handleClick = async () => {
+    const res = await fetch('/api/cars/fillDB', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const car = await res.json()
+
+    console.log(car)
+  }
+
   return (
     <section className="py-10">
       <Container>
+        <button onClick={handleClick}>Insert Many</button>
         <h2 className="text-2xl font-bold mb-3.5 capitalize">Random cars</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-3 gap-3 md:gap-3.5">
           {mediaMatches

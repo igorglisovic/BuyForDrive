@@ -12,7 +12,7 @@ export const metadata = {
   title: 'BuyForDrive',
   description: 'BuyForDrive',
   icons: {
-    icon: '/assets/bmw.webp',
+    icon: '/assets/car.png',
   },
 }
 

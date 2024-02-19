@@ -103,7 +103,7 @@ const CarPage = ({ params }) => {
                 <span className="text-lg capitalize">
                   {car?.creator.username}
                 </span>
-                {session?.user.id === car?.creator._id && (
+                {car && session?.user.id === car?.creator._id && (
                   <>
                     <div className="flex flex-col gap-0 items-center">
                       <Link
