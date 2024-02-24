@@ -45,8 +45,8 @@ const BigCard = ({ car, handleEdit, handleDelete }) => {
         {car?.images?.length ? (
           <Image
             src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/image/upload/v${car?.images[0]?.version}/${car?.images[0]?.public_id}`}
-            width={220}
-            height={150}
+            width={400}
+            height={200}
             alt={
               (car?.brand_id.label || car?.brand.label) +
               ' ' +
