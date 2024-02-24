@@ -11,7 +11,7 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'hero-pattern': 'url("/assets/bg1.jpg")',
+        'hero-pattern': 'url("/assets/bg-2.png")',
         car: 'url("/assets/car.jpg")',
         'search-icon': '',
         btn: 'linear-gradient(273.12deg, #38A0FF -36.12%, rgba(69, 69, 69, 0.424219) -36.1%, rgba(240, 240, 240, 0.33) 131.29%), url("/assets/search-icon.png")',

@@ -46,7 +46,7 @@ const page = () => {
   }
 
   return (
-    <div className="py-10">
+    <div className="py-10 bg-hero-pattern">
       <Container>
         <div>
           <Profile

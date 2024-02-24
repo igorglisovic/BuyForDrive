@@ -33,6 +33,7 @@ const Profile = ({
   useEffect(() => {
     setMedia(window.matchMedia('(max-width: 520px)'))
   }, [])
+
   const getMediaMatches = () => {
     if (media.matches) {
       setMediaMatches(true)
@@ -40,6 +41,7 @@ const Profile = ({
       setMediaMatches(false)
     }
   }
+
   useEffect(() => {
     getMediaMatches()
     window.addEventListener('resize', getMediaMatches)
