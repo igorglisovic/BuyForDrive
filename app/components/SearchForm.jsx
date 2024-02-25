@@ -45,10 +45,6 @@ const SearchForm = () => {
   const { data: mileagesData } = useFetch('/api/mileages', [], true)
   const { data: powersData } = useFetch('/api/powers', [], true)
 
-  useEffect(() => {
-    console.log('regYears ', regYears)
-  }, [regYears])
-
   // Convert price to numeric and add €
   const prices = pricesData?.map(price => ({
     ...price,
