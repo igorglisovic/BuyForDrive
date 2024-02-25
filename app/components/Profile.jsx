@@ -52,7 +52,7 @@ const Profile = ({
       <div className="bg-white py-5 px-6 shadow-md rounded-[33px]">
         {image && (
           <Image
-            className={`rounded-full md:m-0 m-auto md:w-[150px] md:h-[150px] w-[120px] h-[120px]`}
+            className={`rounded-full md:m-0 m-auto md:w-[150px] md:h-[150px] w-[120px] h-[120px] border-4 border-gray-300`}
             width={150}
             height={150}
             alt="avatar"

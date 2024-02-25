@@ -4,7 +4,7 @@ import { useSearchContext } from '@app/store/search-car'
 import useFetch from '@app/hooks/useFetch'
 import useCalcSearchedCars from '@app/hooks/useCalcSearchedCars'
 import CountUp from 'react-countup'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const SearchForm = () => {
   const [showMore, setShowMore] = useState(false)
@@ -44,6 +44,10 @@ const SearchForm = () => {
   const { data: pricesData } = useFetch('/api/prices', [], true)
   const { data: mileagesData } = useFetch('/api/mileages', [], true)
   const { data: powersData } = useFetch('/api/powers', [], true)
+
+  useEffect(() => {
+    console.log('regYears ', regYears)
+  }, [regYears])
 
   // Convert price to numeric and add €
   const prices = pricesData?.map(price => ({
